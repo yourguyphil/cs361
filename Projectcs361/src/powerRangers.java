@@ -4,7 +4,7 @@ public class powerRangers {
 		System.out.print("Yellow ranger IN!");
 		System.out.print("Green ranger IN!");
 		System.out.println("Purple ranger IN!");
-		System.out.println("Gold ranger IN!");
+		System.out.println("Red ranger IN!");
 	}
 
 }
