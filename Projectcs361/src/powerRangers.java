@@ -5,6 +5,8 @@ public class powerRangers {
 		System.out.print("Green ranger IN!");
 		System.out.println("Purple ranger IN!");
 		System.out.println("Black ranger IN!");
+		System.out.println("Red ranger IN!");
+
 	}
 
 }
