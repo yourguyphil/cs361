@@ -6,7 +6,7 @@ public class powerRangers {
 		System.out.println("Purple ranger IN!");
 		System.out.println("BLACK ranger IN!");
 		System.out.println("Red ranger IN!");
-
+		System.out.println("testing how branches work with eclipse");
 	}
 
 }
