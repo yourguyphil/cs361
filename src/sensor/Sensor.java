@@ -1,6 +1,5 @@
+package sensor;
 import java.util.ArrayList;
-import java.util.EventListener;
-
 
 /**
  * Represents a sensor that can be connected to a ChronoTimer in order
@@ -11,10 +10,6 @@ public class Sensor {
 	private ArrayList<SensorListener> listeners;
 	private boolean isArmed;
 	private SensorType type;
-
-	public enum SensorType {
-		PUSH_BUTTON, ELECTRIC_EYE, GATE, PAD
-	}
 
 	public Sensor(SensorType type){
 		listeners = new ArrayList<SensorListener>();
@@ -77,9 +72,5 @@ public class Sensor {
 		// Call sensorTripped() on all listeners associated with this Sensor
 		for(SensorListener l : listeners)
 			l.sensorTripped();
-	}
-	
-	public interface SensorListener extends EventListener{
-		public void sensorTripped();
 	}
 }
