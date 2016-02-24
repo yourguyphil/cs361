@@ -44,13 +44,14 @@ public class CommandParser {
         readCommand(consoleLine);
     }
     
-    /*deprecated test function. Do not use
+   
     private void fileCommandTest(String [] command){	
       for(String i : command){
     	  System.out.print(i + " ");
       }
+      
     }
-    */
+  
     
     
     /**	parses commands 
@@ -64,72 +65,89 @@ public class CommandParser {
     			readFile(command[2]);
     			break;
     		case "FINISH":
+    			fileCommandTest(command);
     			//finish 
     			break;
     		case "START":	
+    			fileCommandTest(command);
     			//start 
     			break;
-    		case "CANCEL":    			
+    		case "CANCEL":    		
+    			fileCommandTest(command);
     			//cancel
     			break;
-    		case "ON":   			
+    		case "ON":   	
+    			fileCommandTest(command);
     			//on 
     			break;
-    		case "OFF":    			
+    		case "OFF":    		
+    			fileCommandTest(command);
     			//off
     			break;
-    		case "DNF":   			
+    		case "DNF":   	
+    			fileCommandTest(command);
     			//DNF
     			break;
     		case "RESET":    			
+    			fileCommandTest(command);
     			//reset 
     			break;
     		case "PRINT":
+    			fileCommandTest(command);
     			//print
     			break;
     		case "TRIG":
     			if(!trigNumToggle(command)){
     				break;
     			}
+    			fileCommandTest(command);
     			//trig @param command[2]
     			break;
     		case "NUM" :
     			if(!trigNumToggle(command)){
     				break;
     			}
+    			fileCommandTest(command);
     			//num @param command[2]
     			break;
     		case "ENDRUN":
     			//endrun
+    			fileCommandTest(command);
     			break;
     		case "NEWRUN":
+    			fileCommandTest(command);
     			//newrun
     			break;
     		case "EXIT":
+    			fileCommandTest(command);
     			//exit
     			break;
     		case "EVENT":
     			if(!EVENT(command)){
     				break;
     			}
+    			fileCommandTest(command);
     			//event @param command[2]
     			break;
     		case "TIME":
     			if(!TIME(command)){
     				break;
     			}
+    			fileCommandTest(command);
     			//TIME pass @param command[2]
     			break;
     		case "TOGGLE":
     			if(!trigNumToggle(command)){
     				break;
     			}
+    			fileCommandTest(command);
     			//toggle @param command[2]
     			break;
     		case "CONN":
     			if(!CONN(command)){
     				break;
     			}
+    			fileCommandTest(command);
     			//conn @param command[2] and command[3]
    				break;
     		default:

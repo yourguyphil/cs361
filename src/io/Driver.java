@@ -1,5 +1,6 @@
 package io;
 
+import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -9,6 +10,10 @@ public class Driver {
 		Scanner stdIn = new Scanner(System.in);
 		
 		Time racerTime = new Time();
+		Date dnow = new Date();
+		System.out.println(dnow);
+		
+		
 		
 		System.out.println("Enter start to begin race:");
 		String input = stdIn.nextLine();
