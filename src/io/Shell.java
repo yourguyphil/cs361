@@ -10,7 +10,7 @@ public class Shell {
 	// use the parser written by Adarsh to parse live commands from the console
 	public static void main(String[] args){
 		Scanner input = new Scanner(System.in);
-		CommandParser n = new CommandParser();
+		Parser n = new Parser();
 		Date currentTime = new Date();
 		SimpleDateFormat ft = new SimpleDateFormat ("hh:mm:ss.s");
 		ft.format(currentTime);

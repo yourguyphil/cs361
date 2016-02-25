@@ -1,76 +1,23 @@
 package sensor;
-import java.util.ArrayList;
 
-/**
- * Represents a sensor that can be connected to a ChronoTimer in order
- * to sense when a racer starts or finishes.
- */
+import java.time.Clock;
+import java.time.LocalDateTime;
+import static sensor.SensorType.*;
+
 public class Sensor {
-
-	private ArrayList<SensorListener> listeners;
-	private boolean isArmed;
-	private SensorType type;
-
-	public Sensor(SensorType type){
-		listeners = new ArrayList<SensorListener>();
-		this.type = type;
-	}
-
-	/**
-	 * Sets whether or not the sensor is armed. If the sensor is not armed,
-	 * it cannot fire events.
-	 * @param isArmed if true, the sensor will be armed
-	 */
-	public void setArmed(boolean isArmed){
-		this.isArmed = isArmed;
-	}
-
-	/**
-	 * Checks is the sensor is armed
-	 * @return true if the sensor is armed
-	 */
-	public boolean isArmed(){
-		return isArmed;
-	}
 	
-	/**
-	 * Gets the sensor type. Either PUSH_BUTTON, ELECTRIC_EYE, GATE, or PAD
-	 * @return sensor type
-	 */
+	private SensorType type = NONE;
+
+	public LocalDateTime trigger(Clock clock) {
+		return LocalDateTime.now(clock);
+	}
+
 	public SensorType getType() {
 		return type;
 	}
 
-	/**
-	 * Sets the sensor type to PUSH_BUTTON, ELECTRIC_EYE, GATE, or PAD
-	 * @param type the type to set the sensor to
-	 */
 	public void setType(SensorType type) {
 		this.type = type;
 	}
-
-	/**
-	 * Add a listener to the sensor
-	 * @param l the listener to be added
-	 */
-	public void addListener(SensorListener l){
-		listeners.add(l);
-	}
-
-	/**
-	 * Remove a listener from the sensor
-	 * @param l the listener to be removed
-	 */
-	synchronized public void removeListener(SensorListener l){
-		listeners.remove(l);
-	}
-
-	/**
-	 * Manually trip the sensor
-	 */
-	public void trip(){
-		// Call sensorTripped() on all listeners associated with this Sensor
-		for(SensorListener l : listeners)
-			l.sensorTripped();
-	}
+	
 }
