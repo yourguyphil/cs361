@@ -49,6 +49,7 @@ public class Parser {
       for(String i : command){
     	  System.out.print(i + " ");
       }
+      System.out.println();
       
     }
   
@@ -120,6 +121,7 @@ public class Parser {
     			break;
     		case "EXIT":
     			fileCommandTest(command);
+    			System.exit(0);
     			//exit
     			break;
     		case "EVENT":
