@@ -34,7 +34,7 @@ public class ChronoTimer {
 	public void reset() {
 		System.out.println("RESET");
 		if (isOn) {
-			// TODO
+			
 		}
 	}
 
@@ -120,7 +120,7 @@ public class ChronoTimer {
 
 	// CLR <NUMBER> Clear <NUMBER> as the next competitor 
 	public void clear(int bibNumber) {
-		System.out.println("");
+		System.out.println("CLR");
 		if (isOn) {
 			
 		}
@@ -128,7 +128,7 @@ public class ChronoTimer {
 
 	// SWAP Exchange next two competitors to finish in IND 
 	public void swap() {
-		System.out.println("");
+		System.out.println("SWAP");
 		if (isOn) {
 			
 		}
@@ -136,7 +136,7 @@ public class ChronoTimer {
 
 	// DNF The next competitor to finish will not finish 
 	public void DNF() {
-		System.out.println("");
+		System.out.println("DNF");
 		if (isOn) {
 			
 		}
@@ -144,7 +144,7 @@ public class ChronoTimer {
 
 	// TRIG <NUM> Trigger channel <NUM>
 	public void trigger(int channel) {
-		System.out.println("");
+		System.out.println("TRIG");
 		if (isOn) {
 			
 		}
@@ -152,7 +152,7 @@ public class ChronoTimer {
 
 	// START Start trigger channel 1 (shorthand for TRIG 1) 
 	public void start() {
-		System.out.println("");
+		System.out.println("START");
 		if (isOn) {
 			
 		}
@@ -160,13 +160,10 @@ public class ChronoTimer {
 
 	// FINISH Finish trigger channel 2 (shorthand for TRIG 2)
 	public void finish() {
-		System.out.println("");
+		System.out.println("FINISH");
 		if (isOn) {
 			
 		}
 	}
-	
-
-	
 
 }
