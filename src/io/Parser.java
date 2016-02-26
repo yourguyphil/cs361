@@ -42,7 +42,7 @@ public class Parser {
         	cache = null;
         	return;
         }
-        readCommand(buffer);
+        readCommand();
     }
     
    /**
@@ -67,106 +67,107 @@ public class Parser {
      *	matches command[1] to command cases, executes command if legal
      *	calls readFile() in case 'File'
      */
-    private void readCommand(String [] command){
-    	switch (command[1]){
+    private void readCommand(){
+    	switch (buffer[1]){
     		case "FILE":
-    			cache = command;
+    			cache = buffer;
     			break;
     		case "FINISH":
-    			cache = command;
+    			cache = buffer;
     			//finish 
     			break;
     		case "START":	
-    			cache = command;
+    			cache = buffer;
     			//start 
     			break;
     		case "CANCEL":    		
-    			cache = command;
+    			cache = buffer;
     			//cancel
     			break;
     		case "ON":   	
-    			cache = command;
+    			cache = buffer;
     			//on 
     			break;
     		case "OFF":    		
-    			cache = command;
+    			cache = buffer;
     			//off
     			break;
     		case "DNF":   	
-    			cache = command;
+    			cache = buffer;
     			//DNF
     			break;
     		case "RESET":    			
-    			cache = command;
+    			cache = buffer;
     			//reset 
     			break;
     		case "PRINT":
-    			cache = command;
+    			cache = buffer;
     			//print
     			break;
     		case "TRIG":
-    			if(!trigNumToggle(command)){
+    			if(!trigNumToggle()){
     				cache = null;
     				break;
     			}
-    			cache = command;
-    			//trig @param command[2]
+    			cache = buffer;
+    			//trig @param buffer[2]
     			break;
     		case "NUM" :
-    			if(!trigNumToggle(command)){
+    			if(!trigNumToggle()){
     				cache = null;
     				break;
     			}
-    			cache = command;
-    			//num @param command[2]
+    			cache = buffer;
+    			//num @param buffer[2]
     			break;
     		case "ENDRUN":
     			//endrun
-    			cache = command;
+    			cache = buffer;
     			break;
     		case "NEWRUN":
-    			cache = command;
+    			cache = buffer;
     			//newrun
     			break;
     		case "EXIT":
-    			cache = command;
+    			cache = buffer;
+    			System.out.println("------EXITING------");
     			System.exit(0);
     			//exit
     			break;
     		case "EVENT":
-    			if(!EVENT(command)){
+    			if(!EVENT()){
     				cache = null;
     				break;
     			}
-    			cache = command;
-    			//event @param command[2]
+    			cache = buffer;
+    			//event @param buffer[2]
     			break;
     		case "TIME":
-    			if(!TIME(command)){
+    			if(!TIME()){
     				cache = null;
     				break;
     			}
-    			cache = command;
-    			//TIME pass @param command[2]
+    			cache = buffer;
+    			//TIME pass @param buffer[2]
     			break;
     		case "TOGGLE":
-    			if(!trigNumToggle(command)){
+    			if(!trigNumToggle()){
     				cache = null;
     				break;
     			}
-    			cache = command;
-    			//toggle @param command[2]
+    			cache = buffer;
+    			//toggle @param buffer[2]
     			break;
     		case "CONN":
-    			if(!CONN(command)){
+    			if(!CONN()){
     				cache = null;
     				break;
     			}
-    			cache = command;
-    			//conn @param command[2] and command[3]
+    			cache = buffer;
+    			//conn @param buffer[2] and buffer[3]
    				break;
     		default:
-    			System.out.println("Unrecognized command. Please try again");
+    			System.out.println("Unrecognized buffer. Please try again");
     			cache = null;
     			break;
     	}
@@ -179,7 +180,6 @@ public class Parser {
      */
     private void readFile(String input){
         Scanner fileReader = null;
-        String [] command;
         try {
             fileReader = new Scanner(Paths.get(input));
         } catch (IOException e) {
@@ -191,19 +191,19 @@ public class Parser {
             if(token.isEmpty()){
                 continue;
             }
-            command = token.split("\\s+");
-            if(command.length <= 1){
+            buffer = token.split("\\s+");
+            if(buffer.length <= 1){
             	System.out.println("Illegal command format in FILE");
             	continue;
             }
-            if(!checkTime(command[0])){
+            if(!checkTime(buffer[0])){
             	System.out.println("Illegal time format");
             	continue;
             }
-            if(command[1].equals("File")){System.out.println("Illegal command in FILE: File"); continue;}
-            readCommand(command);
+            if(buffer[1].equals("File")){System.out.println("Illegal command in FILE: File"); continue;}
+            readCommand();
+            fileReader.close();
         }
-        fileReader.close();
     }
     
     /**
@@ -216,11 +216,11 @@ public class Parser {
     /**@param command [] : check format
      * 
      */
-    private boolean trigNumToggle(String [] command){
-    	if(!checkSize3(command)){
+    private boolean trigNumToggle(){
+    	if(!checkSize3()){
     		return false;
     	}
-		if(!command[2].matches("\\d+")){
+		if(!(buffer[2].matches("\\d+"))){
 			System.out.println("Illegal command format: Number: NaN");
 			return false;
 		}
@@ -230,11 +230,11 @@ public class Parser {
     /**@param command [] : check format
      * 
      */
-    private boolean TIME(String [] command){
-    	if(!checkSize3(command)){
+    private boolean TIME(){
+    	if(!checkSize3()){
     		return false;
     	}
-		if(!checkTime(command[2])){
+		if(!checkTime(buffer[2])){
 			System.out.println("Time format illegal");
 			return false;
 		}
@@ -244,16 +244,16 @@ public class Parser {
     /**@param command [] : check format
      * 
      */
-    private boolean CONN(String [] command){
-    	if(!(command.length == 4)){
+    private boolean CONN(){
+    	if(!(buffer.length == 4)){
 			System.out.println("Illegal command format: CONN");
 			return false;
 		}
-		if(!(command[2].equals("GATE") || command[2].equals("EYE"))){
+		if(!(buffer[2].equals("GATE") || buffer[2].equals("EYE"))){
 			System.out.println("Illegal CONN command: (must be GATE OR EYE)"); 
 			return false;
 		}
-		if(!(command[3].matches("\\d+"))){
+		if(!(buffer[3].matches("\\d+"))){
 			System.out.println("Illegal command format: Number: NaN");
 			return false;
 		}
@@ -263,11 +263,11 @@ public class Parser {
     /**@param command [] : check format
      * 
      */
-    private boolean EVENT(String [] command){
-    	if(!checkSize3(command)){
+    private boolean EVENT(){
+    	if(!checkSize3()){
     		return false;
     	}
-    	if(!(command[2].equals("IND"))){
+    	if(!(buffer[2].equals("IND"))){
     		System.out.println("Illegal command: EVENT : EVENT TYPE");
     		return false;
     	}
@@ -277,8 +277,8 @@ public class Parser {
     /**@param command [] : check format
      * 
      */
-    private boolean checkSize3(String [] command){
-    	if(!(command.length == 3)){
+    private boolean checkSize3(){
+    	if(!(buffer.length == 3)){
 			System.out.println("Illegal command format: TIME");
 			return false;
 		}
