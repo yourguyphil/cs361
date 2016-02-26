@@ -1,4 +1,4 @@
-package io;
+package chronotimer;
 public class Time {
 
 	// All different units of time (hunds = hundredth of a second)

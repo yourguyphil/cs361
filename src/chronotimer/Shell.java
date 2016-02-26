@@ -1,4 +1,4 @@
-package io;
+package chronotimer;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

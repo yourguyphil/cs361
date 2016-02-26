@@ -2,7 +2,6 @@ package sensor;
 import java.time.Clock;
 import java.time.LocalDateTime;
 
-import sensor.Sensor;
 import static sensor.SensorType.*;
 
 public class Channel {

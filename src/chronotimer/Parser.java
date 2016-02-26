@@ -8,7 +8,7 @@
     	All commands are matched by readCommand() and executed <--- I can't be more specific about this since we haven't written a main or decided how we're going to generate events and store information.
  		------------- Black Ranger
      */
-package io;
+package chronotimer;
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -68,103 +68,88 @@ public class Parser {
      *	calls readFile() in case 'File'
      */
     private void readCommand(String [] command){
+		cache = command;
     	switch (command[1]){
     		case "FILE":
-    			cache = command;
     			break;
+    			
     		case "FINISH":
-    			cache = command;
-    			//finish 
+    			
     			break;
-    		case "START":	
-    			cache = command;
-    			//start 
+    			
+    		case "START":
     			break;
-    		case "CANCEL":    		
-    			cache = command;
-    			//cancel
+    			
+    		case "CANCEL":
     			break;
-    		case "ON":   	
-    			cache = command;
-    			//on 
+    			
+    		case "ON":
     			break;
-    		case "OFF":    		
-    			cache = command;
-    			//off
+    			
+    		case "OFF":
     			break;
-    		case "DNF":   	
-    			cache = command;
-    			//DNF
+    			
+    		case "DNF":
     			break;
-    		case "RESET":    			
-    			cache = command;
-    			//reset 
+    			
+    		case "RESET":
     			break;
+    			
     		case "PRINT":
-    			cache = command;
-    			//print
     			break;
+    			
     		case "TRIG":
     			if(!trigNumToggle(command)){
     				cache = null;
     				break;
     			}
-    			cache = command;
-    			//trig @param command[2]
     			break;
+    			
     		case "NUM" :
     			if(!trigNumToggle(command)){
     				cache = null;
     				break;
     			}
-    			cache = command;
-    			//num @param command[2]
     			break;
+    			
     		case "ENDRUN":
-    			//endrun
-    			cache = command;
     			break;
+    			
     		case "NEWRUN":
-    			cache = command;
-    			//newrun
     			break;
+    			
     		case "EXIT":
-    			cache = command;
     			System.exit(0);
-    			//exit
     			break;
+    			
     		case "EVENT":
     			if(!EVENT(command)){
     				cache = null;
     				break;
     			}
-    			cache = command;
-    			//event @param command[2]
     			break;
+    			
     		case "TIME":
     			if(!TIME(command)){
     				cache = null;
     				break;
     			}
-    			cache = command;
-    			//TIME pass @param command[2]
     			break;
+    			
     		case "TOGGLE":
     			if(!trigNumToggle(command)){
     				cache = null;
     				break;
     			}
-    			cache = command;
-    			//toggle @param command[2]
     			break;
+    			
     		case "CONN":
     			if(!CONN(command)){
     				cache = null;
     				break;
     			}
-    			cache = command;
-    			//conn @param command[2] and command[3]
    				break;
+   				
     		default:
     			System.out.println("Unrecognized command. Please try again");
     			cache = null;
