@@ -2,6 +2,7 @@ package sensor;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
+
 import static sensor.SensorType.*;
 
 public class Sensor {

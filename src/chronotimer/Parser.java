@@ -8,12 +8,10 @@
     	All commands are matched by readCommand() and executed <--- I can't be more specific about this since we haven't written a main or decided how we're going to generate events and store information.
  		------------- Black Ranger
      */
-package io;
+package chronotimer;
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 public class Parser {
 	private String [] buffer;
 	private String [] cache;

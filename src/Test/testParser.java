@@ -1,8 +1,10 @@
 package Test;
 import static org.junit.Assert.*;
-import io.Parser;
+
 import org.junit.After;
 import org.junit.Before;
+
+import chronotimer.Parser;
 
 public class testParser {
 	private Parser parser;
