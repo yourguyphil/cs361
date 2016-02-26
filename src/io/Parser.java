@@ -20,7 +20,7 @@ public class Parser {
 	private String regex = "\\d+:\\d{2,2}:\\d{2,2}\\.\\d{1,3}";	//<------------------ DO NOT MODIFY
 	
     public Parser(){
-    	String regex = "\\d+:\\d{2,2}:\\d{2,2}\\.\\d{1,3}";	//<------------------ DO NOT MODIFY
+ 
     }
     
     /**	reads all Strings from console
