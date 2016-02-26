@@ -15,13 +15,12 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class Parser {
-	private String [] consoleLine;
-	private Pattern timePattern;
-	private Matcher match;
+	private String [] buffer;
+	private String [] cache;
+	private String regex = "\\d+:\\d{2,2}:\\d{2,2}\\.\\d{1,3}";	//<------------------ DO NOT MODIFY
 	
     public Parser(){
     	String regex = "\\d+:\\d{2,2}:\\d{2,2}\\.\\d{1,3}";	//<------------------ DO NOT MODIFY
-		timePattern = Pattern.compile(regex);
     }
     
     /**	reads all Strings from console
@@ -32,24 +31,32 @@ public class Parser {
         	System.out.println("No command found");
             return;
         }
-        consoleLine = input.split("\\s+");
-        if(consoleLine.length <= 1){
+        buffer = input.split("\\s+");
+        if(buffer.length <= 1){
         	System.out.println("Illegal command format");
+        	cache = null;
         	return;
         }
-        if(!checkTime(consoleLine[0])){
+        if(!checkTime(buffer[0])){
         	System.out.println("Illegal time format");
+        	cache = null;
         	return;
         }
-        readCommand(consoleLine);
+        readCommand(buffer);
     }
     
-   
-    private void fileCommandTest(String [] command){	
-      for(String i : command){
-    	  System.out.print(i + " ");
-      }
-      System.out.println();
+   /**
+    * @return current command stored in cache
+    * */
+    public String Current(){
+    	if(cache == null){
+    		return "BAD";
+    	}
+    	String c = "";
+    	for(String i : cache){
+    		c += i + " ";
+    	}
+    	return c;
       
     }
   
@@ -63,97 +70,104 @@ public class Parser {
     private void readCommand(String [] command){
     	switch (command[1]){
     		case "FILE":
-    			readFile(command[2]);
+    			cache = command;
     			break;
     		case "FINISH":
-    			fileCommandTest(command);
+    			cache = command;
     			//finish 
     			break;
     		case "START":	
-    			fileCommandTest(command);
+    			cache = command;
     			//start 
     			break;
     		case "CANCEL":    		
-    			fileCommandTest(command);
+    			cache = command;
     			//cancel
     			break;
     		case "ON":   	
-    			fileCommandTest(command);
+    			cache = command;
     			//on 
     			break;
     		case "OFF":    		
-    			fileCommandTest(command);
+    			cache = command;
     			//off
     			break;
     		case "DNF":   	
-    			fileCommandTest(command);
+    			cache = command;
     			//DNF
     			break;
     		case "RESET":    			
-    			fileCommandTest(command);
+    			cache = command;
     			//reset 
     			break;
     		case "PRINT":
-    			fileCommandTest(command);
+    			cache = command;
     			//print
     			break;
     		case "TRIG":
     			if(!trigNumToggle(command)){
+    				cache = null;
     				break;
     			}
-    			fileCommandTest(command);
+    			cache = command;
     			//trig @param command[2]
     			break;
     		case "NUM" :
     			if(!trigNumToggle(command)){
+    				cache = null;
     				break;
     			}
-    			fileCommandTest(command);
+    			cache = command;
     			//num @param command[2]
     			break;
     		case "ENDRUN":
     			//endrun
-    			fileCommandTest(command);
+    			cache = command;
     			break;
     		case "NEWRUN":
-    			fileCommandTest(command);
+    			cache = command;
     			//newrun
     			break;
     		case "EXIT":
-    			fileCommandTest(command);
+    			cache = command;
     			System.exit(0);
     			//exit
     			break;
     		case "EVENT":
     			if(!EVENT(command)){
+    				cache = null;
     				break;
     			}
-    			fileCommandTest(command);
+    			cache = command;
     			//event @param command[2]
     			break;
     		case "TIME":
     			if(!TIME(command)){
+    				cache = null;
     				break;
     			}
-    			fileCommandTest(command);
+    			cache = command;
     			//TIME pass @param command[2]
     			break;
     		case "TOGGLE":
     			if(!trigNumToggle(command)){
+    				cache = null;
     				break;
     			}
-    			fileCommandTest(command);
+    			cache = command;
     			//toggle @param command[2]
     			break;
     		case "CONN":
     			if(!CONN(command)){
+    				cache = null;
     				break;
     			}
-    			fileCommandTest(command);
+    			cache = command;
     			//conn @param command[2] and command[3]
    				break;
     		default:
     			System.out.println("Unrecognized command. Please try again");
+    			cache = null;
     			break;
     	}
     }
@@ -196,8 +210,7 @@ public class Parser {
      * @param time: time to check for correct format
      */
     private boolean checkTime(String time){
-    	match = timePattern.matcher(time);
-    	return match.find();
+    	return time.matches(regex);
     }
     
     /**@param command [] : check format
