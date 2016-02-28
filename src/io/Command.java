@@ -3,30 +3,23 @@ package io;
 import java.time.LocalTime;
 
 import race.EventType;
-import sensor.SensorType;
 import chronotimer.ChronoTimer;
+import chronotimer.Sensor;
 
 public class Command {
-
-	private LocalTime timeStamp;
-	private String commandName;
-	private String[] args;
-
-	public Command(LocalTime timeStamp, String cmdName, String[] args) {
-		this.timeStamp = timeStamp;
-		this.commandName = cmdName;
-		this.args = args;
-	}
 	
 	/**
 	 * @param chronoTimer
 	 * @return true if the command successfully executed, false otherwise
 	 */
-	public boolean execute( ) {
+	public static boolean execute(LocalTime timeStamp, String cmdName, String[] args) {
 		try {
 			ChronoTimer chronoTimer = ChronoTimer.getInstance();
 			
-			switch (commandName){
+			// Set the chronotimer time to that of the command's timestamp
+			chronoTimer.setTime(timeStamp);
+			
+			switch (cmdName){
 			case "ON":
 				chronoTimer.turnOn();
 				break;
@@ -52,7 +45,7 @@ public class Command {
 				break;
 
 			case "CONN":
-				chronoTimer.connectSensor(SensorType.valueOf(args[0]), Integer.parseInt(args[1]));
+				chronoTimer.connectSensor(Sensor.valueOf(args[0]), Integer.parseInt(args[1]));
 				break;
 
 			case "DISC":

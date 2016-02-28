@@ -32,7 +32,7 @@ public class Parser {
 			if (cmdName.equals("FILE")) {
 				parseFile(args[0]);
 			} else {
-				return (new Command(timeStamp, cmdName, args)).execute();
+				return Command.execute(timeStamp, cmdName, args);
 			}
 		} catch (Exception e) {
 			System.out.println("Error parsing command");

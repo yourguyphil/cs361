@@ -1,20 +1,17 @@
 package chronotimer;
 
-import java.time.Clock;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
 import race.EventType;
 import race.IND;
-import sensor.Channel;
-import sensor.SensorType;
 
 public class ChronoTimer {
 
 	private boolean isOn;
 	ArrayList<IND> runs;
 	Channel[] channels;
-	Clock clock;
+	LocalTime time;
 	
 	private static ChronoTimer singleton = new ChronoTimer();
 	
@@ -27,7 +24,7 @@ public class ChronoTimer {
 		for (int i = 0; i < channels.length; i++)
 			channels[i] = new Channel();
 		
-		clock=Clock.systemUTC();
+		time = LocalTime.now();
 	}
 	
 	// Static 'instance' method
@@ -63,7 +60,7 @@ public class ChronoTimer {
 	// TIME <hour>:<min>:<sec> Set the current time 
 	public void setTime(LocalTime time) {
 		if (isOn) {
-			// TODO
+			this.time = time;
 		}
 	}
 
@@ -75,9 +72,9 @@ public class ChronoTimer {
 	}
 
 	// CONN <sensor> <NUM> Connect a type of sensor to channel <NUM> <sensor> = {EYE, GATE, PAD} 
-	public void connectSensor(SensorType type, int channel) {
+	public void connectSensor(Sensor sensor, int channel) {
 		if (isOn) {
-			channels[channel-1].connect(type);
+			channels[channel-1].connect(sensor);
 		}
 	}
 
@@ -161,11 +158,11 @@ public class ChronoTimer {
 
 	// TRIG <NUM> Trigger channel <NUM>
 	public void trigger(int channel) {
-		if (isOn) {
+		if (isOn && channels[channel - 1].trigger()) {
 			if (channel % 2 == 1) {
-				getCurrentRun().startRacer(channels[channel - 1].trigger(clock));
+				getCurrentRun().startRacer(time);
 			} else if (channel % 2 == 0) {
-				getCurrentRun().finishRacer(channels[channel - 1].trigger(clock));
+				getCurrentRun().finishRacer(time);
 			}
 		}
 	}
