@@ -8,7 +8,7 @@ public class Driver {
 	public static void main(String[] args){
 		Scanner input = new Scanner(System.in);
 		Parser parser = new Parser();
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mm:ss.S");
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mm:ss.SS");
 		
 		// Use the parser to read commands from the console
 		while(true){

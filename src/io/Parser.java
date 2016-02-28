@@ -21,7 +21,7 @@ public class Parser {
 	 * 
 	 * @param input, the String to be parsed, calls execute() on the parsed command
 	 */
-	public void parse(String input) {
+	public boolean parse(String input) {
 		try {
 			String[] buffer = input.split("\\s+");
 
@@ -32,11 +32,12 @@ public class Parser {
 			if (cmdName.equals("FILE")) {
 				parseFile(args[0]);
 			} else {
-				(new Command(timeStamp, cmdName, args)).execute();
+				return (new Command(timeStamp, cmdName, args)).execute();
 			}
 		} catch (Exception e) {
 			System.out.println("Error parsing command");
 		}
+		return false;
 	}
 
 	/**
