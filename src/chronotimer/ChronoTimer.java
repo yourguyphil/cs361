@@ -7,7 +7,17 @@ import sensor.SensorType;
 
 public class ChronoTimer {
 	
-	boolean isOn;
+	
+	private boolean isOn;
+	private static ChronoTimer singleton = new ChronoTimer();
+	
+	// A private Constructor prevents any other class from instantiating.
+	private ChronoTimer() { }
+	
+	// Static 'instance' method
+	public static ChronoTimer getInstance() {
+		return singleton;
+	}
 
 	// ON(if off) Turn system on, enter quiescent state 
 	public void turnOn() {
@@ -52,7 +62,7 @@ public class ChronoTimer {
 	}
 
 	// CONN <sensor> <NUM> Connect a type of sensor to channel <NUM> <sensor> = {EYE, GATE, PAD} 
-	public void connectSensor(int channel, SensorType type) {
+	public void connectSensor(SensorType type, int channel) {
 		if (isOn) {
 			System.out.println("CONN");
 		}

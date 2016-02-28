@@ -2,8 +2,6 @@ package io;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.Callable;
-
 import race.EventType;
 import sensor.SensorType;
 import chronotimer.ChronoTimer;
@@ -19,143 +17,106 @@ public class Command {
 		this.commandName = cmdName;
 		this.args = args;
 	}
-
 	
 	/**
 	 * @param chronoTimer
 	 * @return true if the command successfully executed, false otherwise
 	 */
-	public boolean execute(ChronoTimer chronoTimer) {
-		switch (commandName){
-		case "ON":
-			chronoTimer.turnOn();
-			return true;
+	public boolean execute( ) {
+		try {
+			ChronoTimer chronoTimer = ChronoTimer.getInstance();
+			
+			switch (commandName){
+			case "ON":
+				chronoTimer.turnOn();
+				break;
 
-		case "OFF":
-			chronoTimer.turnOff();
-			return true;
+			case "OFF":
+				chronoTimer.turnOff();
+				break;
 
-		case "EXIT":
-			chronoTimer.exit();
-			return true;
+			case "EXIT":
+				chronoTimer.exit();
+				break;
 
-		case "RESET":
-			chronoTimer.reset();
-			return true;
+			case "RESET":
+				chronoTimer.reset();
+				break;
 
-		case "TIME":
-			return isValid(1, () -> {
+			case "TIME":
 				LocalDateTime time = LocalDateTime.parse(args[0], DateTimeFormatter.ofPattern("hh:mm:ss.s"));
 				chronoTimer.setTime(time);
-				return null;
-			});
+				break;
 
-		case "TOGGLE":
-			return isValid(1, () -> {
-				int channel = Integer.parseInt(args[0]);
-				chronoTimer.toggleChannel(channel);
-				return null;
-			});
+			case "TOGGLE":
+				chronoTimer.toggleChannel(Integer.parseInt(args[0]));
+				break;
 
-		case "CONN":
-			return isValid(2, () -> {
-				SensorType type = SensorType.valueOf(args[0]);
-				int channel = Integer.parseInt(args[1]);
-				chronoTimer.connectSensor(channel, type);
-				return null;
-			});
+			case "CONN":
+				chronoTimer.connectSensor(SensorType.valueOf(args[0]), Integer.parseInt(args[1]));
+				break;
 
-		case "DISC":
-			return isValid(1, () -> {
-				int channel = Integer.parseInt(args[0]);
-				chronoTimer.disconnectSensor(channel);
-				return null;
-			});
-			
-		case "EVENT":
-			return isValid(1, () -> {
-				EventType type = EventType.valueOf(args[0]);
-				chronoTimer.setEvent(type);
-				return null;
-			});
+			case "DISC":
+				chronoTimer.disconnectSensor(Integer.parseInt(args[0]));
+				break;
+				
+			case "EVENT":
+				chronoTimer.setEvent(EventType.valueOf(args[0]));
+				break;
 
-		case "NEWRUN" :
-			chronoTimer.newRun();
-			return true;
+			case "NEWRUN" :
+				chronoTimer.newRun();
+				break;
 
-		case "ENDRUN":
-			chronoTimer.endRun();
-			return true;
+			case "ENDRUN":
+				chronoTimer.endRun();
+				break;
 
-		case "PRINT":
-			return isValid(1, () -> {
-				int runNumber = Integer.parseInt(args[0]);
-				chronoTimer.printRun(runNumber);
-				return null;
-			});
+			case "PRINT":
+				chronoTimer.printRun(Integer.parseInt(args[0]));
+				break;
 
-		case "EXPORT":
-			return isValid(1, () -> {
-				int runNumber = Integer.parseInt(args[0]);
-				chronoTimer.exportRun(runNumber);
-				return null;
-			});
+			case "EXPORT":
+				chronoTimer.exportRun(Integer.parseInt(args[0]));
+				break;
 
-		case "NUM":
-			return isValid(1, () -> {
-				int bibNumber = Integer.parseInt(args[0]);
-				chronoTimer.setNextCompetitor(bibNumber);
-				return null;
-			});
+			case "NUM":
+				chronoTimer.setNextCompetitor(Integer.parseInt(args[0]));
+				break;
 
-		case "CLR":
-			return isValid(1, () -> {
-				int bibNumber = Integer.parseInt(args[0]);
-				chronoTimer.clearNextCompetitor(bibNumber);
-				return null;
-			});
+			case "CLR":
+				chronoTimer.clearNextCompetitor(Integer.parseInt(args[0]));
+				break;
 
-		case "SWAP":
-			chronoTimer.swap();
-			return true;
+			case "SWAP":
+				chronoTimer.swap();
+				break;
 
-		case "DNF":
-			chronoTimer.DNF();
-			return true;
-			
-		case "TRIG":
-			return isValid(1, () -> {
-				int channel = Integer.parseInt(args[0]);
-				chronoTimer.trigger(channel);
-				return null;
-			});
-			
-		case "START":
-			chronoTimer.start();
-			return true;
-			
-		case "FINISH":
-			chronoTimer.finish();
-			return true;
+			case "DNF":
+				chronoTimer.DNF();
+				break;
+				
+			case "TRIG":
+				chronoTimer.trigger(Integer.parseInt(args[0]));
+				break;
+				
+			case "START":
+				chronoTimer.start();
+				break;
+				
+			case "FINISH":
+				chronoTimer.finish();
+				break;
 
-		default:
-			System.out.println("Unrecognized command");
+			default:
+				System.out.println("Illegal command");
+				return false;
+			}
+		} catch (Exception e) {
+			System.out.println("Illegal argument format");
 			return false;
 		}
-	}
-	
-	private boolean isValid(int requiredNumArgs, Callable<Void> c) {
-		if (args.length == requiredNumArgs) {
-			try {
-				c.call();
-				return true;
-			} catch (Exception e) {
-				System.out.println("Illegal argument format");
-			}
-		} else {
-			System.out.println("Illegal number of arguments");
-		}
-		return false;
+		return true;
 	}
 
 }
