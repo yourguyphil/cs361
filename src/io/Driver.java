@@ -1,7 +1,9 @@
 package io;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import chronotimer.ChronoTimer;
@@ -19,7 +21,12 @@ public class Driver {
 			// Retrieves input command and prepends time label to command passed to parser
 			// For testing from file use command: FILE followed by address---> location of testCommands.txt
 			String time = ft.format(new Date().getTime());
-            parser.parse(time + " " + input.nextLine());		
+			ArrayList<Command> commands = parser.parse(time + " " + input.nextLine());
+			
+			if (commands != null) {
+				for (Command command : commands)
+					command.execute(chronoTimer);
+			}
 		}																			
 	}
 }
