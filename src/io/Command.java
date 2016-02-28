@@ -1,6 +1,8 @@
 package io;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
+import java.util.Arrays;
 
 import race.EventType;
 import chronotimer.ChronoTimer;
@@ -18,6 +20,8 @@ public class Command {
 			
 			// Set the chronotimer time to that of the command's timestamp
 			chronoTimer.setTime(timeStamp);
+			
+			System.out.println(timeStamp + " " + cmdName + " " + Arrays.toString(args));
 			
 			switch (cmdName){
 			case "ON":
@@ -104,7 +108,7 @@ public class Command {
 				System.out.println("Illegal command");
 				return false;
 			}
-		} catch (Exception e) {
+		} catch (IndexOutOfBoundsException | DateTimeParseException | IllegalArgumentException e) {
 			System.out.println("Illegal argument format");
 			return false;
 		}

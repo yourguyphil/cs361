@@ -58,12 +58,12 @@ public class Racer {
 
 	public String toString() {
 		if (start == null && finish == null) {
-			return bib + "\tCANCEL"; 
+			return bib + " CANCEL"; 
 		} else if (start != null && finish == null) {
-			return bib + "\tDNF"; 
+			return bib + " DNF"; 
 		} else {
 			Duration duration = getDuration();
-			return bib + "\tELAPSED\t" + duration.getSeconds() + "." + duration.getNano();
+			return bib + " ELAPSED " + duration.getSeconds() + "." + duration.getNano();
 		}
 	}
 

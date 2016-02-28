@@ -16,6 +16,7 @@ public class IND {
 		startedRacers = new LinkedList<Racer>();
 		pendingRacers = new LinkedList<Racer>();
 		finishedRacers = new ArrayList<Racer>();
+		isOngoing = true;
 	}
 
 	public void num(int bibNumber) {

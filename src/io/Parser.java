@@ -11,6 +11,7 @@ package io;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -34,7 +35,7 @@ public class Parser {
 			} else {
 				return Command.execute(timeStamp, cmdName, args);
 			}
-		} catch (Exception e) {
+		} catch (DateTimeParseException | IndexOutOfBoundsException e) {
 			System.out.println("Error parsing command");
 		}
 		return false;

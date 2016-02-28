@@ -10,6 +10,8 @@ public class Driver {
 		Parser parser = new Parser();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mm:ss.SS");
 		
+		System.out.println("CHRONOTIMER");
+		
 		// Use the parser to read commands from the console
 		while(true){
 			
