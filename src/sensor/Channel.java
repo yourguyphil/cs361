@@ -1,8 +1,11 @@
 package sensor;
-import java.time.Clock;
-import java.time.LocalDateTime;
+import static sensor.SensorType.EYE;
+import static sensor.SensorType.GATE;
+import static sensor.SensorType.NONE;
+import static sensor.SensorType.PAD;
 
-import static sensor.SensorType.*;
+import java.time.Clock;
+import java.time.LocalTime;
 
 public class Channel {
 	
@@ -44,7 +47,7 @@ public class Channel {
 			throw new IllegalStateException("Must connect a sensor before arming");
 	}
 	
-	public LocalDateTime trigger(Clock clock) {
+	public LocalTime trigger(Clock clock) {
 		if(isArmed && hasSensor())
 			return sensor.trigger(clock);
 		else

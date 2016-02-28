@@ -8,9 +8,9 @@
  */
 package io;
 
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -25,9 +25,9 @@ public class Parser {
 		try {
 			String[] buffer = input.split("\\s+");
 
-			LocalDateTime timeStamp = LocalDateTime.parse(buffer[0], DateTimeFormatter.ofPattern("hh:mm:ss.s"));
+			LocalTime timeStamp = LocalTime.parse(buffer[0]);
 			String cmdName = buffer[1];
-			String[] args = Arrays.copyOfRange(buffer, 2, buffer.length + 1);
+			String[] args = Arrays.copyOfRange(buffer, 2, buffer.length);
 
 			if (cmdName.equals("FILE")) {
 				parseFile(args[0]);
@@ -46,12 +46,12 @@ public class Parser {
 	 */
 	private void parseFile(String path) {
 		try {
-			Scanner fileReader = new Scanner(Paths.get(path));
+			Scanner fileReader = new Scanner(new File("src\\Test\\" + path));
 			while (fileReader.hasNextLine())
 				parse(fileReader.nextLine());
 			
 			fileReader.close();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Error parsing command file");
 		}
 	}

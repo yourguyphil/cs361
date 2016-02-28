@@ -1,6 +1,6 @@
 package chronotimer;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import race.EventType;
 import sensor.SensorType;
@@ -48,7 +48,7 @@ public class ChronoTimer {
 	}
 
 	// TIME <hour>:<min>:<sec> Set the current time 
-	public void setTime(LocalDateTime time) {
+	public void setTime(LocalTime time) {
 		if (isOn) {
 			System.out.println("TIME");
 		}

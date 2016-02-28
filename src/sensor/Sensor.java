@@ -1,16 +1,16 @@
 package sensor;
 
-import java.time.Clock;
-import java.time.LocalDateTime;
+import static sensor.SensorType.NONE;
 
-import static sensor.SensorType.*;
+import java.time.Clock;
+import java.time.LocalTime;
 
 public class Sensor {
 	
 	private SensorType type = NONE;
 
-	public LocalDateTime trigger(Clock clock) {
-		return LocalDateTime.now(clock);
+	public LocalTime trigger(Clock clock) {
+		return LocalTime.now(clock);
 	}
 
 	public SensorType getType() {

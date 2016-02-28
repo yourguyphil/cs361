@@ -1,18 +1,18 @@
 package io;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalTime;
+
 import race.EventType;
 import sensor.SensorType;
 import chronotimer.ChronoTimer;
 
 public class Command {
 
-	private LocalDateTime timeStamp;
+	private LocalTime timeStamp;
 	private String commandName;
 	private String[] args;
 
-	public Command(LocalDateTime timeStamp, String cmdName, String[] args) {
+	public Command(LocalTime timeStamp, String cmdName, String[] args) {
 		this.timeStamp = timeStamp;
 		this.commandName = cmdName;
 		this.args = args;
@@ -44,8 +44,7 @@ public class Command {
 				break;
 
 			case "TIME":
-				LocalDateTime time = LocalDateTime.parse(args[0], DateTimeFormatter.ofPattern("hh:mm:ss.s"));
-				chronoTimer.setTime(time);
+				chronoTimer.setTime(LocalTime.parse(args[0]));
 				break;
 
 			case "TOGGLE":
