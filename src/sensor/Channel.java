@@ -1,8 +1,5 @@
 package sensor;
-import static sensor.SensorType.EYE;
-import static sensor.SensorType.GATE;
-import static sensor.SensorType.NONE;
-import static sensor.SensorType.PAD;
+import static sensor.SensorType.*;
 
 import java.time.Clock;
 import java.time.LocalTime;
@@ -20,17 +17,8 @@ public class Channel {
 		return sensor.getType() != NONE;
 	}
 	
-	public void connect(String sensorType) {
-		if(sensorType.equals("EYE"))
-			sensor.setType(EYE);
-		else if(sensorType.equals("GATE"))
-			sensor.setType(GATE);
-		else if(sensorType.equals("PAD"))
-			sensor.setType(PAD);
-		else {
-			sensor.setType(NONE);
-			throw new IllegalArgumentException("Invalid sensor type");
-		}
+	public void connect(SensorType type) {
+		sensor.setType(type);
 	}
 	
 	public void disconnect() {

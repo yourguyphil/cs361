@@ -80,7 +80,7 @@ public class Command {
 				break;
 
 			case "NUM":
-				chronoTimer.setNextCompetitor(Integer.parseInt(args[0]));
+				chronoTimer.num(Integer.parseInt(args[0]));
 				break;
 
 			case "CLR":
