@@ -11,6 +11,7 @@ public class IND {
 	private Queue<Racer> startedRacers;
 	private ArrayList<Racer> finishedRacers;
 	private boolean isOngoing;
+    
 
 	public IND() {
 		startedRacers = new LinkedList<Racer>();
@@ -18,7 +19,10 @@ public class IND {
 		finishedRacers = new ArrayList<Racer>();
 		isOngoing = true;
 	}
-
+    /**
+     * 
+     * @param bibNumber assign a bib number
+     */
 	public void num(int bibNumber) {
 		if (isOngoing) {
 			pendingRacers.add(new Racer(bibNumber));
@@ -26,7 +30,9 @@ public class IND {
 			throw new IllegalStateException("This event is ended");
 		}
 	}
-
+    /**
+     * cancels the next racer
+     */
 	public void cancelRacer() {
 		if (isOngoing) {
 			startedRacers.peek().cancel();
@@ -35,7 +41,10 @@ public class IND {
 			throw new IllegalStateException("This event is ended");
 		}
 	}
-
+    /**
+     *  Starts the next racer
+     * @param start The time the next racer starts
+     */
 	public void startRacer(LocalTime start) {
 		if (isOngoing) {
 			pendingRacers.peek().start(start);
@@ -44,7 +53,10 @@ public class IND {
 			throw new IllegalStateException("This event is ended");
 		}
 	}
-
+/**
+ * 
+ * @param finish the time the next racer finishes
+ */
 	public void finishRacer(LocalTime finish) {
 		if (isOngoing) {
 			startedRacers.peek().finish(finish);
@@ -53,7 +65,9 @@ public class IND {
 			throw new IllegalStateException("This event is ended");
 		}
 	}
-
+/**
+ * Assign the next racer a DNF
+ */
 	public void DNFRacer() {
 		if (isOngoing) {
 			startedRacers.peek().DNF();
@@ -62,11 +76,16 @@ public class IND {
 			throw new IllegalStateException("This event is ended");
 		}
 	}
-	
+	/**
+	 * returns true if IND is happening
+	 * @return
+	 */
 	public boolean isOngoing() {
 		return isOngoing;
 	}
-	
+	/**
+	 * set isOngoing to false;
+	 */
 	public void end() {
 		isOngoing = false;
 	}

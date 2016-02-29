@@ -2,7 +2,7 @@ package chronotimer;
 import static chronotimer.Sensor.NONE;
 
 public class Channel {
-	
+//TODO comment this class	
 	private boolean isArmed;
 	private Sensor sensor;
 	

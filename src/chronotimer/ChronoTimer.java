@@ -27,65 +27,91 @@ public class ChronoTimer {
 		time = LocalTime.now();
 	}
 	
-	// Static 'instance' method
+	/**
+	 *  Static 'instance' method
+	 * @return
+	 */
 	public static ChronoTimer getInstance() {
 		return singleton;
 	}
 
-	// ON(if off) Turn system on, enter quiescent state 
+	/**
+	 *  ON(if off) Turn system on, enter quiescent state 
+	 */
 	public void turnOn() {
 		if (!isOn) {
 			isOn = true;
 		}
 	}
-	// OFF(if on) Turn system off (but stay in simulator) 
+	/**
+	 *  OFF(if on) Turn system off (but stay in simulator) 
+	 */
 	public void turnOff() {
 		if (isOn) {
 			isOn = false;
 		}
 	}
 
-	// EXIT Exit the simulator 
+	/**
+	 *  EXIT Exit the simulator 
+	 */
 	public void exit() {
 		System.exit(0);
 	}
 
-	// RESET Resets the System to initial state 
+	/**
+	 *  RESET Resets the System to initial state 
+	 */
 	public void reset() {
 		if (isOn) {
 			singleton = new ChronoTimer();
 		}
 	}
 
-	// TIME <hour>:<min>:<sec> Set the current time 
+	/**
+	 *  
+	 * @param TIME <hour>:<min>:<sec> Set the current time 
+	 */
 	public void setTime(LocalTime time) {
 		if (isOn) {
 			this.time = time;
 		}
 	}
 
-	// TOGGLE <channel> Toggle the state of the channel <CHANNEL> 
+	/**
+	 *  TOGGLE <channel> Toggle the state of the channel <CHANNEL> 
+	 * @param channel to toggle
+	 */
 	public void toggleChannel(int channel) {
 		if (isOn) {
 			channels[channel-1].toggle();
 		}
 	}
 
-	// CONN <sensor> <NUM> Connect a type of sensor to channel <NUM> <sensor> = {EYE, GATE, PAD} 
+	/**
+	 *  CONN <sensor> <NUM> Connect a type of sensor to channel <NUM> <sensor> = {EYE, GATE, PAD} 
+	 * @param sensor the sensor to connect to
+	 * @param channel the channel to use
+	 */
 	public void connectSensor(Sensor sensor, int channel) {
 		if (isOn) {
 			channels[channel-1].connect(sensor);
 		}
 	}
 
-	// DISC <NUM> Disconnect a sensor from channel <NUM> 
+	/**
+	 *  DISC <NUM> Disconnect a sensor from channel <NUM> 
+	 */
 	public void disconnectSensor(int channel) {
 		if (isOn) {
 			channels[channel-1].disconnect();
 		}
 	}
 
-	// EVENT <TYPE> IND | PARIND | GRP | PARGRP 
+	/**
+	 *  EVENT <TYPE> IND | PARIND | GRP | PARGRP 
+	 * @param type
+	 */
 	public void setEvent(EventType type) {
 		if (isOn) {
 			switch (type) {
@@ -99,7 +125,9 @@ public class ChronoTimer {
 		}
 	}
 
-	// NEWRUN Create a new Run (must end a run first) 
+	/**
+	 *  NEWRUN Create a new Run (must end a run first) 
+	 */
 	public void newRun() {
 		if (isOn) {
 			endRun();
@@ -107,56 +135,77 @@ public class ChronoTimer {
 		}
 	}
 
-	// ENDRUN Done with a Run 
+	/**
+	 *  ENDRUN Done with a Run 
+	 */
 	public void endRun() {
 		if (isOn) {
 			getCurrentRun().end();
 		}
 	}
 
-	// PRINT <RUN> Print the run on stdout 
+	/**
+	 *  PRINT <RUN> Print the run on stdout 
+	 * @param runNumber
+	 */
 	public void printRun(int runNumber) {
 		if (isOn) {
 			System.out.println(runs.get(runNumber - 1));
 		}
 	}
 
-	// EXPORT <RUN> Export run in XML to file “RUN<RUN>” 
+	/**
+	 *  EXPORT <RUN> Export run in XML to file ï¿½RUN<RUN>ï¿½ 
+	 * @param runNumber
+	 */
 	public void exportRun(int runNumber) {
 		if (isOn) {
 			// TODO
 		}
 	}
 
-	// NUM <NUMBER> Set <NUMBER> as the next competitor to start. 
+	/**
+	 *  NUM <NUMBER> Set <NUMBER> as the next competitor to start. 
+	 * @param bibNumber
+	 */
 	public void num(int bibNumber) {
 		if (isOn) {
 			getCurrentRun().num(bibNumber);
 		}
 	}
 
-	// CLR <NUMBER> Clear <NUMBER> as the next competitor 
+	/**
+	 *  CLR <NUMBER> Clear <NUMBER> as the next competitor 
+	 * @param bibNumber
+	 */
 	public void clearNextCompetitor(int bibNumber) {
 		if (isOn) {
 			// TODO
 		}
 	}
 
-	// SWAP Exchange next two competitors to finish in IND 
+	/**
+	 *  SWAP Exchange next two competitors to finish in IND 
+	 */
 	public void swap() {
 		if (isOn) {
 			// TODO
 		}
 	}
 
-	// DNF The next competitor to finish will not finish 
+	/**
+	 *  DNF The next competitor to finish will not finish 
+	 */
 	public void DNF() {
 		if (isOn) {
 			getCurrentRun().DNFRacer();
 		}
 	}
 
-	// TRIG <NUM> Trigger channel <NUM>
+	/**
+	 *  TRIG <NUM> Trigger channel <NUM>
+	 * @param channel the channel to trigers
+	 */
 	public void trigger(int channel) {
 		if (isOn && channels[channel - 1].trigger()) {
 			if (channel % 2 == 1) {
@@ -167,20 +216,27 @@ public class ChronoTimer {
 		}
 	}
 
-	// START Start trigger channel 1 (shorthand for TRIG 1) 
+	/**
+	 *  START Start trigger channel 1 (shorthand for TRIG 1) 
+	 */
 	public void start() {
 		if (isOn) {
 			trigger(1);
 		}
 	}
 
-	// FINISH Finish trigger channel 2 (shorthand for TRIG 2)
+	/**
+	 *  FINISH Finish trigger channel 2 (shorthand for TRIG 2)
+	 */
 	public void finish() {
 		if (isOn) {
 			trigger(2);
 		}
 	}
-	
+	/**
+	 * 
+	 * @return return the current run
+	 */
 	private IND getCurrentRun() {
 		return runs.get(runs.size() - 1);
 	}
