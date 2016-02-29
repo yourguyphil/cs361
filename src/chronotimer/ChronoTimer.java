@@ -161,7 +161,7 @@ public class ChronoTimer {
 		if (isOn && channels[channel - 1].trigger()) {
 			if (channel % 2 == 1) {
 				getCurrentRun().startRacer(time);
-			} else if (channel % 2 == 0) {
+			} else {
 				getCurrentRun().finishRacer(time);
 			}
 		}

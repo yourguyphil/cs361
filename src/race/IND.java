@@ -76,6 +76,10 @@ public class IND {
 		String description = "";
 		for (Racer racer : finishedRacers)
 			description += racer + "\n";
+		for (Racer racer : startedRacers)
+			description += racer + "\n";
+		for (Racer racer : pendingRacers)
+			description += racer + "\n";
 		
 		return description;
 	}

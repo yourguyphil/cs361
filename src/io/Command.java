@@ -21,8 +21,6 @@ public class Command {
 			// Set the chronotimer time to that of the command's timestamp
 			chronoTimer.setTime(timeStamp);
 			
-			System.out.println(timeStamp + " " + cmdName + " " + Arrays.toString(args));
-			
 			switch (cmdName){
 			case "ON":
 				chronoTimer.turnOn();
