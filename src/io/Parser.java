@@ -17,10 +17,8 @@ import java.util.Scanner;
 
 public class Parser {
 
-	/**
-	 * reads all Strings from console
-	 * 
-	 * @param input, the String to be parsed, calls execute() on the parsed command
+	/** Attempts to parse the input into a command to be executed
+	 * @param input the string to be parsed
 	 */
 	public boolean parse(String input) {
 		try {
@@ -41,10 +39,8 @@ public class Parser {
 		return false;
 	}
 
-	/**
-	 * reads a file from given path
-	 * 
-	 * @param path: address of file location Reads commands from the file, one line at a time calls execute() on each command
+	/** Reads a file from the specified path and attempts to parse each line into a command
+	 * @param path the path of the file to read relative to the src\test\ directory
 	 */
 	private void parseFile(String path) {
 		try {

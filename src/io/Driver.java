@@ -3,6 +3,9 @@ package io;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+
+/** The main driver for the chronotimer. Reads in commands from the console including the FILE command
+ */
 public class Driver {
 	
 	public static void main(String[] args){

@@ -2,16 +2,19 @@ package io;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
-import java.util.Arrays;
 
 import race.EventType;
 import chronotimer.ChronoTimer;
 import chronotimer.Sensor;
 
+/** A command that can be executed
+ */
 public class Command {
 	
-	/**
-	 * @param chronoTimer
+	/** Attempts to execute a specified command
+	 * @param timeStamp command time stamp
+	 * @param cmdName command name
+	 * @param args command arguments
 	 * @return true if the command successfully executed, false otherwise
 	 */
 	public static boolean execute(LocalTime timeStamp, String cmdName, String[] args) {

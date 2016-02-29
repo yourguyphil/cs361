@@ -1,11 +1,15 @@
 package chronotimer;
 
+import io.Writer;
+
 import java.time.LocalTime;
 import java.util.ArrayList;
 
 import race.EventType;
 import race.IND;
 
+/** Used to time sports events.
+ */
 public class ChronoTimer {
 
 	private boolean isOn;
@@ -14,8 +18,9 @@ public class ChronoTimer {
 	LocalTime time;
 	
 	private static ChronoTimer singleton = new ChronoTimer();
-	
-	// A private Constructor prevents any other class from instantiating.
+
+	/** Private default constructor that prevents any other class from instantiating.
+	 */
 	private ChronoTimer() {
 		runs = new ArrayList<IND>();
 		runs.add(new IND());
@@ -27,65 +32,83 @@ public class ChronoTimer {
 		time = LocalTime.now();
 	}
 	
-	// Static 'instance' method
+	/** Gets a singleton instance of the chronotimer
+	 * @return singleton instance of the chronotimer
+	 */
 	public static ChronoTimer getInstance() {
 		return singleton;
 	}
 
-	// ON(if off) Turn system on, enter quiescent state 
+	/** Turn system on (if off), enter quiescent state
+	 */
 	public void turnOn() {
 		if (!isOn) {
 			isOn = true;
 		}
 	}
-	// OFF(if on) Turn system off (but stay in simulator) 
+	
+	/** Turn system off (if on), but stay in simulator
+	 */
 	public void turnOff() {
 		if (isOn) {
 			isOn = false;
 		}
 	}
 
-	// EXIT Exit the simulator 
+	/** Exit the simulator 
+	 */
 	public void exit() {
 		System.exit(0);
 	}
 
-	// RESET Resets the System to initial state 
+	/** Resets the System to initial state 
+	 */
 	public void reset() {
 		if (isOn) {
 			singleton = new ChronoTimer();
 		}
 	}
 
-	// TIME <hour>:<min>:<sec> Set the current time 
+	/** Set the current time 
+	 * @param time time to set the current time to
+	 */
 	public void setTime(LocalTime time) {
 		if (isOn) {
 			this.time = time;
 		}
 	}
 
-	// TOGGLE <channel> Toggle the state of the channel <CHANNEL> 
+	/** Toggle the state of the specified channel
+	 * @param channel channel number to toggle
+	 */
 	public void toggleChannel(int channel) {
 		if (isOn) {
 			channels[channel-1].toggle();
 		}
 	}
 
-	// CONN <sensor> <NUM> Connect a type of sensor to channel <NUM> <sensor> = {EYE, GATE, PAD} 
+	/** Connect a type of sensor to a channel 
+	 * @param sensor sensor type to connect
+	 * @param channel channel number to connect to
+	 */
 	public void connectSensor(Sensor sensor, int channel) {
 		if (isOn) {
 			channels[channel-1].connect(sensor);
 		}
 	}
 
-	// DISC <NUM> Disconnect a sensor from channel <NUM> 
+	/** Disconnect a sensor from channel
+	 * @param channel channel number to disconnect from
+	 */
 	public void disconnectSensor(int channel) {
 		if (isOn) {
 			channels[channel-1].disconnect();
 		}
 	}
 
-	// EVENT <TYPE> IND | PARIND | GRP | PARGRP 
+	/** Sets the event type of the current run
+	 * @param type type of event (IND | PARIND | GRP | PARGRP)
+	 */
 	public void setEvent(EventType type) {
 		if (isOn) {
 			switch (type) {
@@ -99,7 +122,8 @@ public class ChronoTimer {
 		}
 	}
 
-	// NEWRUN Create a new Run (must end a run first) 
+	/** Ends the current run and creates a new run
+	 */
 	public void newRun() {
 		if (isOn) {
 			endRun();
@@ -107,42 +131,53 @@ public class ChronoTimer {
 		}
 	}
 
-	// ENDRUN Done with a Run 
+	/** Ends the current run
+	 */
 	public void endRun() {
 		if (isOn) {
 			getCurrentRun().end();
 		}
 	}
 
-	// PRINT <RUN> Print the run on stdout 
+	/** Prints a run on stdout 
+	 * @param runNumber run number to print out
+	 */
 	public void printRun(int runNumber) {
 		if (isOn) {
 			System.out.println(runs.get(runNumber - 1));
 		}
 	}
 
-	// EXPORT <RUN> Export run in XML to file “RUN<RUN>” 
+	/** Exports run in XML to file
+	 * @param runNumber run number to export
+	 */
 	public void exportRun(int runNumber) {
 		if (isOn) {
-			// TODO
+			// TODO Implement the 'Writer' class in the 'io' package
+			Writer.write(runs.get(runNumber - 1).toString());
 		}
 	}
 
-	// NUM <NUMBER> Set <NUMBER> as the next competitor to start. 
+	/** Sets the next competitor to start
+	 * @param bibNumber the bib number of the next competitor to start
+	 */
 	public void num(int bibNumber) {
 		if (isOn) {
 			getCurrentRun().num(bibNumber);
 		}
 	}
 
-	// CLR <NUMBER> Clear <NUMBER> as the next competitor 
+	/** Clears the next competitor
+	 * @param bibNumber the bib number of the next competitor to clear
+	 */
 	public void clearNextCompetitor(int bibNumber) {
 		if (isOn) {
-			// TODO
+			// TODO Unsure of what they want us to do. Ask TA on Wednesday
 		}
 	}
 
-	// SWAP Exchange next two competitors to finish in IND 
+	/** Exchange next two competitors to finish in an IND event
+	 */
 	public void swap() {
 		if (isOn) {
 			// Project Description states : If there is more than one racer active, the finish event is associated with racers	
@@ -158,14 +193,17 @@ public class ChronoTimer {
 		}
 	}
 
-	// DNF The next competitor to finish will not finish 
+	/** Set the next competitor to finish to DNF
+	 */
 	public void DNF() {
 		if (isOn) {
 			getCurrentRun().DNFRacer();
 		}
 	}
 
-	// TRIG <NUM> Trigger channel <NUM>
+	/** Triggers a channels sensor
+	 * @param channel channel number to trigger
+	 */
 	public void trigger(int channel) {
 		if (isOn && channels[channel - 1].trigger()) {
 			if (channel % 2 == 1) {
@@ -176,20 +214,25 @@ public class ChronoTimer {
 		}
 	}
 
-	// START Start trigger channel 1 (shorthand for TRIG 1) 
+	/** Shorthand for trigger channel 1
+	 */
 	public void start() {
 		if (isOn) {
 			trigger(1);
 		}
 	}
 
-	// FINISH Finish trigger channel 2 (shorthand for TRIG 2)
+	/** Shorthand for trigger channel 2
+	 */
 	public void finish() {
 		if (isOn) {
 			trigger(2);
 		}
 	}
 	
+	/** Gets the current run
+	 * @return the current run
+	 */
 	private IND getCurrentRun() {
 		return runs.get(runs.size() - 1);
 	}
