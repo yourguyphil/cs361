@@ -145,7 +145,16 @@ public class ChronoTimer {
 	// SWAP Exchange next two competitors to finish in IND 
 	public void swap() {
 		if (isOn) {
-			// TODO
+			// Project Description states : If there is more than one racer active, the finish event is associated with racers	
+			// in a	FIFO (first	in,	first out) basis. 
+			// This means we just swap runs(0) with runs(1) since these two will be next two to finish according to FIFO rules.
+			
+			// Need at least two runners to perform a swap.
+			if(runs.size() < 2) throw new IllegalStateException("Not enough runners to perform a swap.");
+			IND swapSecondToFirst = runs.get(1);
+			// Add previous second racer to beginning of list to swap next two finishing racers
+			runs.remove(1);
+			runs.add(0,swapSecondToFirst);
 		}
 	}
 
