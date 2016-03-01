@@ -15,6 +15,8 @@ import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/** Parses strings and files into executable commands
+ */
 public class Parser {
 
 	/** Attempts to parse the input into a command to be executed

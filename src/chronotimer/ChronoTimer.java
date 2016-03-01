@@ -144,6 +144,7 @@ public class ChronoTimer {
 	 */
 	public void printRun(int runNumber) {
 		if (isOn) {
+			System.out.println("Run Number: " + runNumber);
 			System.out.println(runs.get(runNumber - 1));
 		}
 	}
@@ -180,16 +181,20 @@ public class ChronoTimer {
 	 */
 	public void swap() {
 		if (isOn) {
-			// Project Description states : If there is more than one racer active, the finish event is associated with racers	
-			// in a	FIFO (first	in,	first out) basis. 
-			// This means we just swap runs(0) with runs(1) since these two will be next two to finish according to FIFO rules.
-			
-			// Need at least two runners to perform a swap.
-			if(runs.size() < 2) throw new IllegalStateException("Not enough runners to perform a swap.");
-			IND swapSecondToFirst = runs.get(1);
-			// Add previous second racer to beginning of list to swap next two finishing racers
-			runs.remove(1);
-			runs.add(0,swapSecondToFirst);
+			if (getCurrentRun() instanceof IND) {
+				// Project Description states : If there is more than one racer active, the finish event is associated with racers	
+				// in a	FIFO (first	in,	first out) basis. 
+				// This means we just swap runs(0) with runs(1) since these two will be next two to finish according to FIFO rules.
+				
+				// Need at least two runners to perform a swap.
+				if(runs.size() < 2) throw new IllegalStateException("Not enough runners to perform a swap.");
+				IND swapSecondToFirst = runs.get(1);
+				// Add previous second racer to beginning of list to swap next two finishing racers
+				runs.remove(1);
+				runs.add(0,swapSecondToFirst);
+			} else {
+				throw new IllegalStateException("Cannot swap on a non-IND run");
+			}
 		}
 	}
 
