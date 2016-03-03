@@ -174,7 +174,8 @@ public class ChronoTimer {
 	 */
 	public void clearNextCompetitor(int bibNumber) {
 		if (isOn) {
-			// TODO Unsure of what they want us to do. Ask TA on Wednesday
+			// Clear competitor from pending queue
+			getCurrentRun().clear(bibNumber);
 		}
 	}
 

@@ -40,7 +40,21 @@ public class IND {
 			throw new IllegalStateException("This event is ended");
 		}
 	}
-
+	
+	public void clear(int bibNumber) {
+		// We need to clear the racer whose bibId matches from pending
+		Queue<Racer> replacePending = new LinkedList<Racer>();
+		
+		// If the next racers bib != bibId add it to new queue; don't add racer we want to clear.
+		while(!pendingRacers.isEmpty()) {
+			if(pendingRacers.peek().getBib() != bibNumber) 
+				replacePending.add(pendingRacers.remove());
+			else pendingRacers.remove();
+		}
+		
+		//set pending queue to new queue that doesn't include cleared racers
+		pendingRacers = replacePending;
+	}
 	
 	/** Marks the next active racer waiting to finish as canceled
 	 */
@@ -113,5 +127,8 @@ public class IND {
 		
 		return description;
 	}
-
+	// TESTING PURPOSES
+	public Queue<Racer> getStartedRacerQueue() { return startedRacers; }
+	public Queue<Racer> getPendingRacerQueue() { return pendingRacers; }
+	public ArrayList<Racer> getFinishedRacers() { return finishedRacers; }
 }
