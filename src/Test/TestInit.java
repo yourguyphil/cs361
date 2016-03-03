@@ -3,13 +3,25 @@ package Test;
 import static org.junit.Assert.*;
 import java.time.LocalTime;
 import io.Parser;
+
+import org.junit.Before;
 import org.junit.Test;
 import chronotimer.ChronoTimer;
 
 public class TestInit {
    Parser p = new Parser();
-   ChronoTimer chronoTimer = ChronoTimer.getInstance();
-   LocalTime timeStamp = LocalTime.now();
+   ChronoTimer chronoTimer; 
+   LocalTime timeStamp; 
+   
+   /**
+    * need to init a Chrontimer before each test so state is not persisted between jUnits
+    */
+   @Before 
+   public void initialize() {
+	   chronoTimer = ChronoTimer.getInstance();
+	   timeStamp = LocalTime.now();
+   }
+   
 	
 	/**
 	 * Test calling TRIG before on		
@@ -17,6 +29,7 @@ public class TestInit {
    @Test
 	public void testStartBeforeOn() {
 		assertFalse(chronoTimer.executeCommand(timeStamp, "TRIG", new String[]{ "I"}));
+		
 	}
 	/**
 	 * Test calling on works
@@ -48,6 +61,17 @@ public class TestInit {
     public void testOnOff(){
     	assertTrue(chronoTimer.executeCommand(timeStamp, "ON", new String[]{"1"}));
     	assertTrue(chronoTimer.executeCommand(timeStamp, "OFF", new String[]{"1"}));
+    	
+    }
+    
+    /**
+     * call on off off
+     */
+    @Test()
+    public void testOnOffCallCommand(){
+    	assertTrue(chronoTimer.executeCommand(timeStamp, "ON", new String[]{"1"}));
+    	assertTrue(chronoTimer.executeCommand(timeStamp, "OFF", new String[]{"1"}));
+    	assertFalse(chronoTimer.executeCommand(timeStamp, "START", new String[]{"1"}));
     }
 	
 }
