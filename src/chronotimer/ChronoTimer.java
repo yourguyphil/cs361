@@ -190,10 +190,7 @@ public class ChronoTimer {
 				
 				// Need at least two runners to perform a swap.
 				if(runs.size() < 2) throw new IllegalStateException("Not enough runners to perform a swap.");
-				IND swapSecondToFirst = runs.get(1);
-				// Add previous second racer to beginning of list to swap next two finishing racers
-				runs.remove(1);
-				runs.add(0,swapSecondToFirst);
+				getCurrentRun().swap();
 			} else {
 				throw new IllegalStateException("Cannot swap on a non-IND run");
 			}

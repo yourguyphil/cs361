@@ -115,6 +115,24 @@ public class IND {
 		isOngoing = false;
 	}
 
+	public void swap() {
+		if(startedRacers.size() < 2) throw new IllegalStateException("Need at least 2 racers to perform swap!");
+		Racer swapWithSecond = startedRacers.remove();
+		
+		// Need a temporary queue to replace current queue with swapped racers
+		Queue<Racer> newQueue = new LinkedList<Racer>();
+		
+		//swap first two racers
+		newQueue.add(startedRacers.remove());
+		newQueue.add(swapWithSecond);
+		
+		// Add rest of racers to temp queue
+		newQueue.addAll(startedRacers);
+		
+		// Relpace original Queue with temp queue
+		startedRacers = newQueue;
+	}
+	
 	@Override
 	public String toString() {
 		String description = "";
