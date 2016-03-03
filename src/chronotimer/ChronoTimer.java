@@ -67,19 +67,29 @@ public class ChronoTimer {
 	 */
 	public boolean executeCommand(LocalTime timeStamp, String cmdName,
 			String[] args) {
-
+		
 		// Set the chronotimer time to that of the command's timestamp
 		time = timeStamp;
 
-		// Check for ON/OFF commands
-		if (cmdName.equals("ON"))
+		// Check for commands independent of power state
+		switch (cmdName) {
+		case "ON": // Turn the system on
 			isOn = true;
-		else if (cmdName.equals("OFF"))
+			return true;
+			
+		case "OFF": // Turn the systen off
 			isOn = false;
-
-		// Check for EXIT command
-		if (cmdName.equals("EXIT"))
+			return true;
+			
+		case "EXIT": // Exit the system
 			System.exit(0);
+			return true;
+			
+		case "TIME": // Set the current time
+			time = Time.fromString(args[0]);
+			// TODO manage exception when parsing time
+			return true;
+		}
 
 		// All other commands are dependent upon an on state
 		if (isOn) {
@@ -87,10 +97,6 @@ public class ChronoTimer {
 				switch (cmdName) {
 				case "RESET": // Resets the System to initial state
 					singleton = new ChronoTimer();
-					return true;
-
-				case "TIME": // Set the current time
-					time = Time.fromString(args[0]);
 					return true;
 
 				case "TOGGLE": // Toggle the state of the specified channel
@@ -109,12 +115,11 @@ public class ChronoTimer {
 					switch (EventType.valueOf(args[0])) {
 					case IND:
 						runs.set(runs.size() - 1, new IND());
-						break;
+						return true;
 
 					default:
 						throw new IllegalArgumentException("Event type not yet implemented");
 					}
-					return true;
 
 				case "NEWRUN": // Ends the current run and creates a new run
 					getCurrentRun().end();
@@ -182,8 +187,7 @@ public class ChronoTimer {
 					System.out.println("Illegal command");
 					return false;
 				}
-			} catch (IndexOutOfBoundsException | DateTimeParseException
-					| IllegalArgumentException e) {
+			} catch (IndexOutOfBoundsException | DateTimeParseException | IllegalArgumentException e) {
 				System.out.println("Illegal argument format");
 				return false;
 			}
