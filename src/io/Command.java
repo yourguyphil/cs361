@@ -6,6 +6,7 @@ import java.time.format.DateTimeParseException;
 import race.EventType;
 import chronotimer.ChronoTimer;
 import chronotimer.Sensor;
+import chronotimer.Time;
 
 /** A command that can be executed
  */
@@ -42,7 +43,7 @@ public class Command {
 				break;
 
 			case "TIME":
-				chronoTimer.setTime(LocalTime.parse(args[0]));
+				chronoTimer.setTime(Time.fromString(args[0]));
 				break;
 
 			case "TOGGLE":

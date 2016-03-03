@@ -15,6 +15,8 @@ import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import chronotimer.Time;
+
 /** Parses strings and files into executable commands
  */
 public class Parser {
@@ -26,7 +28,7 @@ public class Parser {
 		try {
 			String[] buffer = input.split("\\s+");
 
-			LocalTime timeStamp = LocalTime.parse(buffer[0]);
+			LocalTime timeStamp = Time.fromString(buffer[0]);
 			String cmdName = buffer[1];
 			String[] args = Arrays.copyOfRange(buffer, 2, buffer.length);
 

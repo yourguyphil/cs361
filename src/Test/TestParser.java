@@ -3,7 +3,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import io.Parser;
 
-public class testParser {
+public class TestParser {
 	private Parser parser = new Parser();
 	
 	@org.junit.Test

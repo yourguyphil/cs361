@@ -156,6 +156,7 @@ public class ChronoTimer {
 		if (isOn) {
 			// TODO Implement the 'Writer' class in the 'io' package
 			Writer.write(runs.get(runNumber - 1).toString());
+			// Ask TA about output format
 		}
 	}
 

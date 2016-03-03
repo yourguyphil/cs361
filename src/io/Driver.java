@@ -4,6 +4,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+import chronotimer.Time;
+
 /** The main driver for the chronotimer. Reads in commands from the console including the FILE command
  */
 public class Driver {
@@ -20,8 +22,7 @@ public class Driver {
 			
 			// Retrieves input command and prepends time label to command passed to parser
 			// For testing from file use command: FILE followed by address---> location of testCommands.txt
-			String time = LocalTime.now().format(format);
-			parser.parse(time + " " + input.nextLine());
+			parser.parse(Time.toString(LocalTime.now()) + " " + input.nextLine());
 		}																			
 	}
 }
