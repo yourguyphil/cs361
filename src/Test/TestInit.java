@@ -1,34 +1,40 @@
 package Test;
 
 import static org.junit.Assert.*;
+
 import java.time.LocalTime;
+
 import io.Parser;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import chronotimer.ChronoTimer;
 
 public class TestInit {
-   Parser p = new Parser();
-   ChronoTimer chronoTimer; 
-   LocalTime timeStamp; 
+   ChronoTimer chronoTimer;
+   LocalTime timeStamp = LocalTime.now(); 
    
    /**
-    * need to init a Chrontimer before each test so state is not persisted between jUnits
+    * Need to reset the chronotimer before each test so state is not persisted between jUnits
     */
    @Before 
-   public void initialize() {
-	   chronoTimer = ChronoTimer.getInstance();
-	   timeStamp = LocalTime.now();
+   public void before() {
+	   chronoTimer = new ChronoTimer();
    }
    
+   @After
+   public void after() {
+	   chronoTimer = null;
+   }
 	
 	/**
 	 * Test calling TRIG before on		
 	 */
    @Test
 	public void testStartBeforeOn() {
-		assertFalse(chronoTimer.executeCommand(timeStamp, "TRIG", new String[]{ "I"}));
+		assertFalse(chronoTimer.executeCommand(timeStamp, "TRIG", new String[]{ "1"}));
 		
 	}
 	/**
@@ -36,13 +42,13 @@ public class TestInit {
 	 */
 	@Test
 	public void testStartAfterOn(){
-		assertTrue(chronoTimer.executeCommand(timeStamp, "ON", new String[]{ "DOES NOT EVER TOUCH THESE"}));
+		assertTrue(chronoTimer.executeCommand(timeStamp, "ON", null));
 	}
 	
 	/**
-	 * Test calling a DNF before ON has been called throws nullPointer
+	 * Test calling a DNF before ON
 	 */
-	@Test(expected=NullPointerException.class)
+	@Test
 	public void testDNFBeforeOn(){
 	    assertFalse(chronoTimer.executeCommand(timeStamp, "DNF", new String[]{ "1"}));	
 	}

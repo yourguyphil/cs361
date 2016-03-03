@@ -1,10 +1,11 @@
 package Test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import chronotimer.ChronoTimer;
 import io.Parser;
 
 public class TestParser {
-	private Parser parser = new Parser();
+	private Parser parser = new Parser(new ChronoTimer());
 	
 	@org.junit.Test
 	public void testBadFormat(){

@@ -4,11 +4,14 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import chronotimer.ChronoTimer;
+
 public class TestCommands {
 
+	private Parser parser = new Parser(new ChronoTimer());
+	
 	@Test
 	public void testOn() {
-		Parser parser = new Parser();
 		assertTrue(parser.parse("08:24:19.96 ON"));
 		assertFalse(parser.parse("08:24:19.96ON"));
 		assertFalse(parser.parse("ON 08:24:19.96"));
@@ -18,7 +21,6 @@ public class TestCommands {
 	
 	@Test
 	public void testFinish() {
-		Parser parser = new Parser();
 		assertFalse(parser.parse("23.232:23 FINISH"));
 		assertFalse(parser.parse("03.23:23 FINISH"));
 		assertTrue(parser.parse("23:23:23.23 FINISH"));
@@ -26,7 +28,6 @@ public class TestCommands {
 	
 	@Test
 	public void testReset() {
-		Parser parser = new Parser();
 		assertFalse(parser.parse("23.232:23 RESET"));
 		assertFalse(parser.parse("03.23:23 RESET"));
 		assertFalse(parser.parse("122:23:23 RESET"));
@@ -35,7 +36,6 @@ public class TestCommands {
 	
 	@Test
 	public void testClear() {
-		Parser parser = new Parser();
 		assertFalse(parser.parse("12:23:23 CLR"));
 		assertTrue(parser.parse("08:24:19.96 CLR 1"));
 		assertTrue(parser.parse("08:24:19.96 CLR 2"));
@@ -44,7 +44,6 @@ public class TestCommands {
 	
 	@Test
 	public void testNum() {
-		Parser parser = new Parser();
 		assertFalse(parser.parse("12:23:23 NUM"));
 		assertTrue(parser.parse("08:24:19.96 NUM 1"));
 		assertTrue(parser.parse("08:24:19.96 NUM 12"));
@@ -53,7 +52,6 @@ public class TestCommands {
 	
 	@Test
 	public void testSwap() {
-		Parser parser = new Parser();
 		assertTrue(parser.parse("12:23:23 SWAP"));
 		assertTrue(parser.parse("08:24:19.96 SWAP 1"));
 		assertTrue(parser.parse("08:24:19.96 SWAP 12"));
@@ -62,7 +60,6 @@ public class TestCommands {
 	
 	@Test
 	public void testDNF() {
-		Parser parser = new Parser();
 		assertTrue(parser.parse("12:23:23 DNF"));
 		assertTrue(parser.parse("08:24:19.96 DNF 1"));
 		assertTrue(parser.parse("08:24:19.96 DNF 12"));
@@ -71,7 +68,6 @@ public class TestCommands {
 	
 	@Test
 	public void testDisc() {
-		Parser parser = new Parser();
 		assertFalse(parser.parse("12:23:23.63 DISC"));
 		assertTrue(parser.parse("08:24:19.96 DISC 1"));
 		assertFalse(parser.parse("08:24:19.96 DISC AFDA"));

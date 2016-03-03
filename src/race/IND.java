@@ -34,11 +34,10 @@ public class IND {
 	 * @param bibNumber the bib number of the next competitor to start
 	 */
 	public void num(int bibNumber) {
-		if (isOngoing) {
-			pendingRacers.add(new Racer(bibNumber));
-		} else {
+		if (!isOngoing) 
 			throw new IllegalStateException("This event is ended");
-		}
+		
+		pendingRacers.add(new Racer(bibNumber));
 	}
 	
 	public void clear(int bibNumber) {
@@ -48,8 +47,8 @@ public class IND {
 		// If the next racers bib != bibId add it to new queue; don't add racer we want to clear.
 		while(!pendingRacers.isEmpty()) {
 			if(pendingRacers.peek().getBib() != bibNumber) 
-				replacePending.add(pendingRacers.remove());
-			else pendingRacers.remove();
+				replacePending.add(pendingRacers.poll());
+			else pendingRacers.poll();
 		}
 		
 		//set pending queue to new queue that doesn't include cleared racers
@@ -59,47 +58,55 @@ public class IND {
 	/** Marks the next active racer waiting to finish as canceled
 	 */
 	public void cancelRacer() {
-		if (isOngoing) {
-			startedRacers.peek().cancel();
-			finishedRacers.add(startedRacers.poll());
-		} else {
+		if (!isOngoing)
 			throw new IllegalStateException("This event is ended");
-		}
+
+		if (startedRacers.isEmpty())
+			throw new IllegalStateException("No started racers to cancel");
+
+		startedRacers.peek().cancel();
+		finishedRacers.add(startedRacers.poll());
 	}
 
 	/** Starts the next racer waiting to start
 	 * @param start the time the racer started at
 	 */
 	public void startRacer(LocalTime start) {
-		if (isOngoing) {
-			pendingRacers.peek().setStart(start);
-			startedRacers.add(pendingRacers.poll());
-		} else {
+		if (!isOngoing)
 			throw new IllegalStateException("This event is ended");
-		}
+
+		if (pendingRacers.isEmpty())
+			throw new IllegalStateException("No pending racers to start");
+
+		pendingRacers.peek().setStart(start);
+		startedRacers.add(pendingRacers.poll());
 	}
 
 	/** Finishes the next active racer waiting to finish
 	 * @param finish the time the racer finished at
 	 */
 	public void finishRacer(LocalTime finish) {
-		if (isOngoing) {
-			startedRacers.peek().setFinish(finish);
-			finishedRacers.add(startedRacers.poll());
-		} else {
+		if (!isOngoing)
 			throw new IllegalStateException("This event is ended");
-		}
+
+		if (startedRacers.isEmpty())
+			throw new IllegalStateException("No started racers to finish");
+
+		startedRacers.peek().setFinish(finish);
+		finishedRacers.add(startedRacers.poll());
 	}
 
 	/** Marks the next active racer waiting to finish as DNF
 	 */
 	public void DNFRacer() {
-		if (isOngoing) {
-			startedRacers.peek().DNF();
-			finishedRacers.add(startedRacers.poll());
-		} else {
+		if (!isOngoing)
 			throw new IllegalStateException("This event is ended");
-		}
+
+		if (startedRacers.isEmpty())
+			throw new IllegalStateException("No started racers to DNF");
+
+		startedRacers.peek().DNF();
+		finishedRacers.add(startedRacers.poll());
 	}
 	
 	/** Checks if the run is ongoing
@@ -116,14 +123,18 @@ public class IND {
 	}
 
 	public void swap() {
-		if(startedRacers.size() < 2) throw new IllegalStateException("Need at least 2 racers to perform swap!");
-		Racer swapWithSecond = startedRacers.remove();
+		if (!isOngoing)
+			throw new IllegalStateException("This event is ended");
 		
+		if(startedRacers.size() < 2)
+			throw new IllegalStateException("Need at least 2 racers to perform swap!");
+
 		// Need a temporary queue to replace current queue with swapped racers
 		Queue<Racer> newQueue = new LinkedList<Racer>();
 		
 		//swap first two racers
-		newQueue.add(startedRacers.remove());
+		Racer swapWithSecond = startedRacers.poll();
+		newQueue.add(startedRacers.poll());
 		newQueue.add(swapWithSecond);
 		
 		// Add rest of racers to temp queue
@@ -145,6 +156,7 @@ public class IND {
 		
 		return description;
 	}
+	
 	// TESTING PURPOSES
 	public Queue<Racer> getStartedRacerQueue() { return startedRacers; }
 	public Queue<Racer> getPendingRacerQueue() { return pendingRacers; }

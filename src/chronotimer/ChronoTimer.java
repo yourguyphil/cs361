@@ -5,6 +5,7 @@ import io.Writer;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import race.EventType;
 import race.IND;
@@ -19,13 +20,18 @@ public class ChronoTimer {
 	Channel[] channels;
 	LocalTime time;
 
-	private static ChronoTimer singleton = new ChronoTimer();
-
 	/**
 	 * Private default constructor that prevents any other class from
 	 * instantiating.
 	 */
-	private ChronoTimer() {
+	public ChronoTimer() {
+		reset();
+	}
+	
+	/**
+	 * Resets the chronotimer to its initial state
+	 */
+	private void reset() {
 		runs = new ArrayList<IND>();
 		runs.add(new IND());
 
@@ -34,15 +40,6 @@ public class ChronoTimer {
 			channels[i] = new Channel();
 
 		time = LocalTime.now();
-	}
-
-	/**
-	 * Gets a singleton instance of the chronotimer
-	 * 
-	 * @return singleton instance of the chronotimer
-	 */
-	public static ChronoTimer getInstance() {
-		return singleton;
 	}
 
 	/**
@@ -67,36 +64,37 @@ public class ChronoTimer {
 	 */
 	public boolean executeCommand(LocalTime timeStamp, String cmdName,
 			String[] args) {
-		
-		// Set the chronotimer time to that of the command's timestamp
-		time = timeStamp;
+		try {
+			// Set the chronotimer time to that of the command's timestamp
+			if (timeStamp != null)
+				time = timeStamp;
+			else
+				return false;
 
-		// Check for commands independent of power state
-		switch (cmdName) {
-		case "ON": // Turn the system on
-			isOn = true;
-			return true;
-			
-		case "OFF": // Turn the systen off
-			isOn = false;
-			return true;
-			
-		case "EXIT": // Exit the system
-			System.exit(0);
-			return true;
-			
-		case "TIME": // Set the current time
-			time = Time.fromString(args[0]);
-			// TODO manage exception when parsing time
-			return true;
-		}
+			// Check for commands independent of power state
+			switch (cmdName) {
+			case "ON": // Turn the system on
+				isOn = true;
+				return true;
 
-		// All other commands are dependent upon an on state
-		if (isOn) {
-			try {
+			case "OFF": // Turn the systen off
+				isOn = false;
+				return true;
+
+			case "EXIT": // Exit the system
+				System.exit(0);
+				return true;
+
+			case "TIME": // Set the current time
+				time = Time.fromString(args[0]);
+				return true;
+			}
+
+			// All other commands are dependent upon an on state
+			if (isOn) {
 				switch (cmdName) {
 				case "RESET": // Resets the System to initial state
-					singleton = new ChronoTimer();
+					reset();
 					return true;
 
 				case "TOGGLE": // Toggle the state of the specified channel
@@ -151,13 +149,13 @@ public class ChronoTimer {
 					return true;
 
 				case "SWAP": // Exchange next two competitors to finish in an
-								// IND event
+					// IND event
 					if (getCurrentRun() instanceof IND) {
 						getCurrentRun().swap();
+						return true;
 					} else {
 						throw new IllegalStateException("Cannot swap on a non-IND run");
 					}
-					return true;
 
 				case "DNF": // Set the next competitor to finish to DNF
 					getCurrentRun().DNFRacer();
@@ -185,16 +183,16 @@ public class ChronoTimer {
 
 				default:
 					System.out.println("Illegal command");
-					return false;
 				}
-			} catch (IndexOutOfBoundsException | DateTimeParseException | IllegalArgumentException e) {
-				System.out.println("Illegal argument format");
-				return false;
+			} else {
+				System.out.println("ChronoTimer is OFF. Can only take ON, OFF, TIME, and EXIT commands");
 			}
-		} else {
-			System.out.println("Illegal power state");
-			return false;
+
+		} catch (IndexOutOfBoundsException | DateTimeParseException | IllegalArgumentException e) {
+			System.out.print("Illegal argument format: ");
+			System.out.println(cmdName + " " + Arrays.toString(args));
 		}
+		return false;
 	}
 
 }

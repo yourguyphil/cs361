@@ -21,9 +21,23 @@ import chronotimer.Time;
 /** Parses strings and files into executable commands
  */
 public class Parser {
+	
+	private ChronoTimer chronoTimer;
+	
+	/**
+	 * Parses strings and files into executable commands
+	 * @param chronoTimer chronotimer to parse the commands for
+	 */
+	public Parser(ChronoTimer chronoTimer) {
+		this.chronoTimer = chronoTimer;
+	}
 
-	/** Attempts to parse the input into a command to be executed
+	/**
+	 * Attempts to parse the input into a command to be executed
+	 * 
 	 * @param input the string to be parsed
+	 * @return true if successfully parsed, false otherwise.
+	 * Doesn't guarantee the command was successfully executed
 	 */
 	public boolean parse(String input) {
 		try {
@@ -36,8 +50,9 @@ public class Parser {
 			if (cmdName.equals("FILE")) {
 				parseFile(args[0]);
 			} else {
-				return ChronoTimer.getInstance().executeCommand(timeStamp, cmdName, args);
+				chronoTimer.executeCommand(timeStamp, cmdName, args);
 			}
+			return true;
 		} catch (DateTimeParseException | IndexOutOfBoundsException e) {
 			System.out.println("Error parsing command");
 		}
@@ -46,16 +61,20 @@ public class Parser {
 
 	/** Reads a file from the specified path and attempts to parse each line into a command
 	 * @param path the path of the file to read relative to the src\test\ directory
+	 * @return true if file successfully read, false otherwise.
+	 * Doesn't guarantee every line was successfully parsed, nor executed
 	 */
-	private void parseFile(String path) {
+	public boolean parseFile(String path) {
 		try {
 			Scanner fileReader = new Scanner(new File("src\\Test\\" + path));
 			while (fileReader.hasNextLine())
 				parse(fileReader.nextLine());
 			
 			fileReader.close();
+			return true;
 		} catch (IOException e) {
 			System.out.println("Error parsing command file");
 		}
+		return false;
 	}
 }

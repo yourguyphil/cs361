@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+import chronotimer.ChronoTimer;
 import chronotimer.Time;
 
 /** The main driver for the chronotimer. Reads in commands from the console including the FILE command
@@ -12,7 +13,7 @@ public class Driver {
 	
 	public static void main(String[] args){
 		Scanner input = new Scanner(System.in);
-		Parser parser = new Parser();
+		Parser parser = new Parser(new ChronoTimer());
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mm:ss.SS");
 		
 		System.out.println("CHRONOTIMER");

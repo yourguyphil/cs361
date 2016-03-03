@@ -7,7 +7,7 @@ import org.junit.Test;
 import race.IND;
 import race.Racer;
 
-public class INDTest {
+public class TestIND {
 
 
 	@Test
