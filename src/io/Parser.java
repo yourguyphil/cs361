@@ -15,6 +15,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import chronotimer.ChronoTimer;
 import chronotimer.Time;
 
 /** Parses strings and files into executable commands
@@ -35,7 +36,7 @@ public class Parser {
 			if (cmdName.equals("FILE")) {
 				parseFile(args[0]);
 			} else {
-				return Command.execute(timeStamp, cmdName, args);
+				return ChronoTimer.getInstance().executeCommand(timeStamp, cmdName, args);
 			}
 		} catch (DateTimeParseException | IndexOutOfBoundsException e) {
 			System.out.println("Error parsing command");

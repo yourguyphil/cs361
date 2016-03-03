@@ -1,17 +1,14 @@
 package Test;
 
 import static org.junit.Assert.*;
-
 import java.time.LocalTime;
-
-import io.Command;
 import io.Parser;
-
 import org.junit.Test;
+import chronotimer.ChronoTimer;
 
 public class TestInit {
    Parser p = new Parser();
-   Command c = new Command();
+   ChronoTimer chronoTimer = ChronoTimer.getInstance();
    LocalTime timeStamp = LocalTime.now();
 	
 	/**
@@ -19,14 +16,14 @@ public class TestInit {
 	 */
    @Test
 	public void testStartBeforeOn() {
-		assertFalse(c.execute(timeStamp, "TRIG", new String[]{ "I"}));
+		assertFalse(chronoTimer.executeCommand(timeStamp, "TRIG", new String[]{ "I"}));
 	}
 	/**
 	 * Test calling on works
 	 */
 	@Test
 	public void testStartAfterOn(){
-		assertTrue(c.execute(timeStamp, "ON", new String[]{ "DOES NOT EVER TOUCH THESE"}));
+		assertTrue(chronoTimer.executeCommand(timeStamp, "ON", new String[]{ "DOES NOT EVER TOUCH THESE"}));
 	}
 	
 	/**
@@ -34,7 +31,7 @@ public class TestInit {
 	 */
 	@Test(expected=NullPointerException.class)
 	public void testDNFBeforeOn(){
-	    assertFalse(c.execute(timeStamp, "DNF", new String[]{ "1"}));	
+	    assertFalse(chronoTimer.executeCommand(timeStamp, "DNF", new String[]{ "1"}));	
 	}
 	
 	/**
@@ -42,15 +39,15 @@ public class TestInit {
 	 */
     @Test
     public void stopBeforeStart(){
-    	assertFalse(c.execute(timeStamp, "STOP", new String[]{"1"}));
+    	assertFalse(chronoTimer.executeCommand(timeStamp, "STOP", new String[]{"1"}));
     }
     /**
      *  call on and off in that order should work
      */
     @Test
     public void testOnOff(){
-    	assertTrue(c.execute(timeStamp, "ON", new String[]{"1"}));
-    	assertTrue(c.execute(timeStamp, "OFF", new String[]{"1"}));
+    	assertTrue(chronoTimer.executeCommand(timeStamp, "ON", new String[]{"1"}));
+    	assertTrue(chronoTimer.executeCommand(timeStamp, "OFF", new String[]{"1"}));
     }
 	
 }
