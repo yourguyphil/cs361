@@ -3,6 +3,8 @@ package race;
 import java.time.Duration;
 import java.time.LocalTime;
 
+import chronotimer.Time;
+
 /** Racer who runs in a race
  */
 public class Racer {
@@ -90,7 +92,7 @@ public class Racer {
 			return bibNumber + " DNF"; 
 		} else {
 			Duration duration = getDuration();
-			return bibNumber + " ELAPSED " + duration.getSeconds() + "." + duration.getNano();
+			return bibNumber + " ELAPSED " + Time.toString(LocalTime.MIDNIGHT.plus(duration));
 		}
 	}
 
