@@ -1,9 +1,14 @@
 package Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import io.Parser;
-import static org.junit.Assert.*;
+import race.IND;
+
+import java.time.LocalTime;
 
 import org.junit.Test;
 
+import race.Racer;
 import chronotimer.ChronoTimer;
 
 public class TestCommands {
@@ -12,15 +17,19 @@ public class TestCommands {
 	
 	@Test
 	public void testOn() {
-		assertTrue(parser.parse("08:24:19.96 ON"));
-		assertFalse(parser.parse("08:24:19.96ON"));
-		assertFalse(parser.parse("ON 08:24:19.96"));
-		assertFalse(parser.parse("ON"));
-		assertTrue(parser.parse("08:24:19.96  ON"));
+		// Need to set environment up to test
+		LocalTime time = LocalTime.now();
+		ChronoTimer ct = new ChronoTimer();
+		ct.executeCommand(time,"ON",null);
 	}
 	
 	@Test
 	public void testFinish() {
+		// Need to set environment up to test
+		LocalTime time = LocalTime.now();
+		String[] args = {""};
+		ChronoTimer ct = new ChronoTimer();
+		ct.executeCommand(time,"ON",null);
 		assertFalse(parser.parse("23.232:23 FINISH"));
 		assertFalse(parser.parse("03.23:23 FINISH"));
 		assertTrue(parser.parse("23:23:23.23 FINISH"));
@@ -28,51 +37,104 @@ public class TestCommands {
 	
 	@Test
 	public void testReset() {
-		assertFalse(parser.parse("23.232:23 RESET"));
-		assertFalse(parser.parse("03.23:23 RESET"));
-		assertFalse(parser.parse("122:23:23 RESET"));
-		assertTrue(parser.parse("23:23:23.23 RESET"));
+		ChronoTimer ct = new ChronoTimer();
+		LocalTime time = LocalTime.now();
+		String[] args = {"1"};
+		String[] args2 = {"123"};
+		// TURN TIMER ON
+		assertTrue(ct.executeCommand(time, "ON", null));
+		assertTrue(ct.executeCommand(time, "RESET", args2));
 	}
 	
 	@Test
 	public void testClear() {
-		assertFalse(parser.parse("12:23:23 CLR"));
-		assertTrue(parser.parse("08:24:19.96 CLR 1"));
-		assertTrue(parser.parse("08:24:19.96 CLR 2"));
-		assertFalse(parser.parse("08:24:19.96 CLR1"));
+		ChronoTimer ct = new ChronoTimer();
+		LocalTime time = LocalTime.now();
+		String[] args = {"1"};
+		String[] args2 = {"123"};
+		// TURN TIMER ON
+		assertTrue(ct.executeCommand(time, "ON", null));
+		
+		assertTrue(ct.executeCommand(time, "CLR", args2));
+		assertTrue(ct.executeCommand(time, "DISC", args));
 	}
 	
 	@Test
 	public void testNum() {
-		assertFalse(parser.parse("12:23:23 NUM"));
-		assertTrue(parser.parse("08:24:19.96 NUM 1"));
-		assertTrue(parser.parse("08:24:19.96 NUM 12"));
-		assertFalse(parser.parse("08:24:19.96 NUM1"));
+		// Need to set environment up to test
+				ChronoTimer ct = new ChronoTimer();
+				LocalTime time = LocalTime.now();
+				String[] args = {"1"};
+				String[] args2 = {"123"};
+				String[] args3 = {""};
+				// TURN TIMER ON
+				assertTrue(ct.executeCommand(time, "ON", null));
+				assertTrue(ct.executeCommand(time, "NUM", args));
+				
 	}
 	
 	@Test
 	public void testSwap() {
-		assertTrue(parser.parse("12:23:23 SWAP"));
-		assertTrue(parser.parse("08:24:19.96 SWAP 1"));
-		assertTrue(parser.parse("08:24:19.96 SWAP 12"));
-		assertFalse(parser.parse("08:24:19.96 SWAP1"));
+		// Need to set environment up to test
+		ChronoTimer ct = new ChronoTimer();
+		LocalTime time = LocalTime.now();
+		String[] args = {"123"};
+		String[] args2 = {"234"};
+		String[] args3 = {""};
+		
+		Racer racer1 = new Racer(123);
+		Racer racer2 = new Racer(234);
+		// TURN TIMER ON
+		assertTrue(ct.executeCommand(time, "ON", null));
+		assertTrue(ct.executeCommand(time, "NUM", args));
+		assertTrue(ct.executeCommand(time, "NUM", args2));
+		
+		assertTrue(ct.executeCommand(time, "START", args3));
+		assertTrue(ct.executeCommand(time, "START", args3));
+				
+		assertTrue(ct.executeCommand(time, "SWAP", args2));
 	}
 	
 	@Test
 	public void testDNF() {
-		assertTrue(parser.parse("12:23:23 DNF"));
-		assertTrue(parser.parse("08:24:19.96 DNF 1"));
-		assertTrue(parser.parse("08:24:19.96 DNF 12"));
-		assertFalse(parser.parse("08:24:19.96 DNF1"));
+		// Need to set environment up to test
+		ChronoTimer ct = new ChronoTimer();
+		LocalTime time = LocalTime.now();
+		String[] args = {"1"};
+		String[] args2 = {"123"};
+		String[] args3 = {""};
+		// TURN TIMER ON
+		assertTrue(ct.executeCommand(time, "ON", null));
+		assertTrue(ct.executeCommand(time, "NUM", args));
+		assertTrue(ct.executeCommand(time, "START", null));
+		
+		assertTrue(ct.executeCommand(time, "DNF", args2));
+	}
+	
+	@Test
+	public void testNewRun() {
+		ChronoTimer ct = new ChronoTimer();
+		LocalTime time = LocalTime.now();
+		String[] args = {"ABCDE"};
+		
+		// TURN TIMER ON
+		assertTrue(ct.executeCommand(time, "ON", null));
+		
+		assertTrue(ct.executeCommand(time, "NEWRUN", args));
+		assertTrue(ct.executeCommand(time, "NEWRUN", null));
 	}
 	
 	@Test
 	public void testDisc() {
-		assertFalse(parser.parse("12:23:23.63 DISC"));
-		assertTrue(parser.parse("08:24:19.96 DISC 1"));
-		assertFalse(parser.parse("08:24:19.96 DISC AFDA"));
-		assertTrue(parser.parse("08:24:19.96 DISC 12"));
-		assertFalse(parser.parse("08:24:19.96 DISC1"));
+		ChronoTimer ct = new ChronoTimer();
+		LocalTime time = LocalTime.now();
+		String[] args = {"1"};
+		String[] args2 = {"123"};
+		// TURN TIMER ON
+		assertTrue(ct.executeCommand(time, "ON", null));
+		
+		assertFalse(ct.executeCommand(time, "DISC", args2));
+		assertTrue(ct.executeCommand(time, "DISC", args));
 	}
 
 }
