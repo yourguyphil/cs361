@@ -10,6 +10,10 @@ import java.util.Arrays;
 import race.EventType;
 import race.IND;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+
 /**
  * Used to time sports events.
  */
@@ -19,6 +23,7 @@ public class ChronoTimer {
 	ArrayList<IND> runs;
 	Channel[] channels;
 	LocalTime time;
+	Gson g = new Gson();
 
 	/**
 	 * Private default constructor that prevents any other class from
@@ -134,7 +139,9 @@ public class ChronoTimer {
 
 				case "EXPORT": // Exports run in XML to file
 					// TODO Implement the 'Writer' class in the 'io' package
-					Writer.write(runs.get(Integer.parseInt(args[0]) - 1).toString());
+					String out = g.toJson(runs.get(Integer.parseInt(args[0]) - 1).toString());
+					//Writer.write(runs.get(Integer.parseInt(args[0]) - 1).toString());
+					Writer.write(out);
 					// Ask TA about output format
 					return true;
 
