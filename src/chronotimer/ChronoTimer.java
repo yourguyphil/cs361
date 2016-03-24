@@ -7,8 +7,10 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import race.AbstractEvent;
 import race.EventType;
 import race.IND;
+import race.PARIND;
 
 /**
  * Used to time sports events.
@@ -16,7 +18,7 @@ import race.IND;
 public class ChronoTimer {
 
 	private boolean isOn;
-	ArrayList<IND> runs;
+	ArrayList<AbstractEvent> runs;
 	Channel[] channels;
 	LocalTime time;
 
@@ -29,10 +31,10 @@ public class ChronoTimer {
 	}
 	
 	/**
-	 * Resets the chronotimer to its initial state
+	 * Resets the ChronoTimer to its initial state
 	 */
 	private void reset() {
-		runs = new ArrayList<IND>();
+		runs = new ArrayList<AbstractEvent>();
 		runs.add(new IND());
 
 		channels = new Channel[12];
@@ -44,11 +46,22 @@ public class ChronoTimer {
 
 	/**
 	 * Gets the current run
-	 * 
 	 * @return the current run
 	 */
-	private IND getCurrentRun() {
-		return runs.get(runs.size() - 1);
+	private AbstractEvent getCurrentRun() {
+		return getRun(runs.size());
+	}
+	
+	/**
+	 * Gets the at run specified run number (1-indexed)
+	 * @return the run with the specified run number
+	 */
+	private AbstractEvent getRun(int runNumber) {
+			AbstractEvent run = runs.get(runNumber - 1);
+			if (run == null)
+				throw new IllegalStateException("Run doesn't exist");
+			
+			return run;
 	}
 
 	/**
@@ -114,27 +127,34 @@ public class ChronoTimer {
 					case IND:
 						runs.set(runs.size() - 1, new IND());
 						return true;
+						
+					case PARIND:
+						runs.set(runs.size() - 1, new PARIND());
+						return true;
 
 					default:
 						throw new IllegalArgumentException("Event type not yet implemented");
 					}
 
-				case "NEWRUN": // Ends the current run and creates a new run
-					getCurrentRun().end();
-					runs.add(new IND());
-					return true;
+				case "NEWRUN": // Ends the current run and creates a new run of the same type as the previous run
+					try {
+						runs.add(getCurrentRun().getClass().newInstance());
+						return true;
+					} catch (InstantiationException | IllegalAccessException e) {
+						System.out.println("Error creating new run");
+					}
 
 				case "ENDRUN": // Ends the current run
-					getCurrentRun().end();
+					runs.add(null);
 					return true;
 
 				case "PRINT": // Prints a run on stdout
-					System.out.println(runs.get(Integer.parseInt(args[0]) - 1));
+					System.out.println(getRun(Integer.parseInt(args[0])));
 					return true;
 
 				case "EXPORT": // Exports run in XML to file
 					// TODO Implement the 'Writer' class in the 'io' package
-					Writer.write(runs.get(Integer.parseInt(args[0]) - 1).toString());
+					Writer.write(getRun(Integer.parseInt(args[0])).toString());
 					// Ask TA about output format
 					return true;
 
@@ -144,14 +164,12 @@ public class ChronoTimer {
 					return true;
 
 				case "CLR": // Clears the next competitor
-					// Clear competitor from pending queue
 					getCurrentRun().clear(Integer.parseInt(args[0]));
 					return true;
 
-				case "SWAP": // Exchange next two competitors to finish in an
-					// IND event
+				case "SWAP": // Exchange next two competitors to finish in an IND event
 					if (getCurrentRun() instanceof IND) {
-						getCurrentRun().swap();
+						((IND) getCurrentRun()).swap();
 						return true;
 					} else {
 						throw new IllegalStateException("Cannot swap on a non-IND run");
@@ -171,7 +189,6 @@ public class ChronoTimer {
 						}
 						return true;
 					}
-					return false;
 
 				case "START": // Start a racer on the current run
 					getCurrentRun().startRacer(time);
@@ -191,6 +208,8 @@ public class ChronoTimer {
 		} catch (IndexOutOfBoundsException | DateTimeParseException | IllegalArgumentException e) {
 			System.out.print("Illegal argument format: ");
 			System.out.println(cmdName + " " + Arrays.toString(args));
+		} catch (NullPointerException e) {
+			System.out.println("This event is ended");
 		}
 		return false;
 	}
