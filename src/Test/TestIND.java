@@ -22,7 +22,7 @@ public class TestIND {
 		ind.cancelRacer();
 
 		// Make sure racer removed from pending Queue
-		assertTrue(ind.getPendingRacerQueue().isEmpty());
+		assertTrue(ind.getPendingRacers().isEmpty());
 		assertEquals(racer1.getFinish(), null);
 	}
 
@@ -39,12 +39,12 @@ public class TestIND {
 		ind.startRacer(time);
 
 		// Pending queue shouldn't be empty yet, still 1 more racer.
-		assertFalse(ind.getPendingRacerQueue().isEmpty());
+		assertFalse(ind.getPendingRacers().isEmpty());
 		ind.startRacer(time);
 		// Now pending should be empty, but start shouldn't be.
-		assertTrue(ind.getPendingRacerQueue().isEmpty());
+		assertTrue(ind.getPendingRacers().isEmpty());
 
-		assertFalse(ind.getStartedRacerQueue().isEmpty());
+		assertFalse(ind.getStartedRacers().isEmpty());
 	}
 
 	@Test
@@ -59,12 +59,12 @@ public class TestIND {
 
 		ind.startRacer(time);
 
-		assertFalse(ind.getPendingRacerQueue().isEmpty());
+		assertFalse(ind.getPendingRacers().isEmpty());
 		// Clear last racer from pending queue
 		ind.clear(234);
-		assertTrue(ind.getPendingRacerQueue().isEmpty());
+		assertTrue(ind.getPendingRacers().isEmpty());
 
-		assertFalse(ind.getStartedRacerQueue().isEmpty());
+		assertFalse(ind.getStartedRacers().isEmpty());
 	}
 
 	@Test
