@@ -5,6 +5,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+	TestChannel.class,
 	TestCommands.class,
 	TestIND.class,
 	TestInit.class,

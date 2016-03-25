@@ -41,4 +41,20 @@ public class Channel {
 		return isArmed && sensor != NONE;
 	}
 
+	/** Gets the armed state of the channel
+	 * @return the armed state of the channel
+	 */
+	public boolean isArmed() {
+		return isArmed;
+	}
+	
+	/** Gets the sensor connected to the channel
+	 * @return the sensor connected to the channel
+	 */
+	public Sensor getSensor() {
+		return sensor;
+	}
+	
+	
+
 }
