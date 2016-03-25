@@ -1,10 +1,8 @@
 package io;
 
-import java.lang.reflect.InvocationTargetException;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
-
 import race.EventType;
 import chronotimer.ChronoTimer;
 import chronotimer.Sensor;
@@ -51,6 +49,14 @@ public class Command {
 				
 			} else {
 				switch (cmdName) {
+				case "OFF":
+					chronotimer.OFF();
+					return true;
+
+				case "RESET":
+					chronotimer.RESET();
+					return true;
+					
 				case "TOGGLE":
 					chronotimer.TOGGLE(Integer.parseInt(args[0]) - 1);
 					return true;
@@ -65,6 +71,14 @@ public class Command {
 
 				case "EVENT":
 					chronotimer.EVENT(EventType.valueOf(args[0]));
+					return true;
+
+				case "NEWRUN":
+					chronotimer.NEWRUN();
+					return true;
+
+				case "ENDRUN":
+					chronotimer.ENDRUN();
 					return true;
 
 				case "PRINT":
@@ -83,22 +97,28 @@ public class Command {
 					chronotimer.CLR(Integer.parseInt(args[0]));
 					return true;
 
+				case "SWAP":
+					chronotimer.SWAP();
+					return true;
+
+				case "DNF":
+					chronotimer.DNF();
+					return true;
+
 				case "TRIG":
 					chronotimer.TRIG(Integer.parseInt(args[0]) - 1);
 					return true;
 
+				case "START":
+					chronotimer.START();
+					return true;
+
+				case "FINISH":
+					chronotimer.FINISH();
+					return true;
+
 				default:
-					try {
-						// Try to invoke any of the remaining no-argument commands using reflection
-						chronotimer.getClass()
-							.getDeclaredMethod(cmdName, new Class[] {})
-							.invoke(chronotimer, new Object[] {});
-						return true;
-						
-					} catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException e) {
-						// No method that reflection could match
-						System.out.println("Illegal command");
-					}
+					System.out.println("Illegal command");
 					break;
 				}
 			}
