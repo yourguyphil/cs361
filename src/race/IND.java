@@ -1,10 +1,7 @@
 package race;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /** Individual timed events (such as ski races, bobsled runs) In the IND events,
  * racers queue up for single “runs” of the race. Each racer has a start event

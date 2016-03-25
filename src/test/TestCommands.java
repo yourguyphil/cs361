@@ -2,14 +2,12 @@ package test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import io.Parser;
-import race.IND;
 
 import java.time.LocalTime;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import race.Racer;
 import chronotimer.ChronoTimer;
 
 public class TestCommands {
