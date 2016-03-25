@@ -1,7 +1,12 @@
-package Test;
+package test;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+
+import test.chronotimer.TestChannel;
+import test.chronotimer.TestTime;
+import test.io.TestParser;
+import test.race.TestIND;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
