@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 import race.AbstractEvent;
 import race.EventType;
@@ -18,7 +19,7 @@ import race.PARIND;
 public class ChronoTimer {
 
 	private boolean isOn;
-	ArrayList<AbstractEvent> runs;
+	LinkedList<AbstractEvent> runs;
 	Channel[] channels;
 	LocalTime time;
 
@@ -34,7 +35,7 @@ public class ChronoTimer {
 	 * Resets the ChronoTimer to its initial state
 	 */
 	private void reset() {
-		runs = new ArrayList<AbstractEvent>();
+		runs = new LinkedList<AbstractEvent>();
 		runs.add(new IND());
 
 		channels = new Channel[12];
@@ -57,11 +58,7 @@ public class ChronoTimer {
 	 * @return the run with the specified run number
 	 */
 	private AbstractEvent getRun(int runNumber) {
-			AbstractEvent run = runs.get(runNumber - 1);
-			if (run == null)
-				throw new IllegalStateException("Run doesn't exist");
-			
-			return run;
+			return runs.get(runNumber - 1);
 	}
 
 	/**
@@ -73,7 +70,7 @@ public class ChronoTimer {
 	 *            command name
 	 * @param args
 	 *            command arguments
-	 * @return true if the command successfully executed, false otherwise
+	 * @return true if the command was executed, false otherwise
 	 */
 	public boolean executeCommand(LocalTime timeStamp, String cmdName,
 			String[] args) {
@@ -89,11 +86,7 @@ public class ChronoTimer {
 			case "ON": // Turn the system on
 				isOn = true;
 				return true;
-
-			case "OFF": // Turn the systen off
-				isOn = false;
-				return true;
-
+				
 			case "EXIT": // Exit the system
 				System.exit(0);
 				return true;
@@ -106,6 +99,10 @@ public class ChronoTimer {
 			// All other commands are dependent upon an on state
 			if (isOn) {
 				switch (cmdName) {
+				case "OFF": // Turn the systen off
+					isOn = false;
+					return true;
+				
 				case "RESET": // Resets the System to initial state
 					reset();
 					return true;
@@ -138,6 +135,9 @@ public class ChronoTimer {
 
 				case "NEWRUN": // Ends the current run and creates a new run of the same type as the previous run
 					try {
+						if (getCurrentRun() == null)
+							runs.removeLast();
+						
 						runs.add(getCurrentRun().getClass().newInstance());
 						return true;
 					} catch (InstantiationException | IllegalAccessException e) {
@@ -154,8 +154,7 @@ public class ChronoTimer {
 
 				case "EXPORT": // Exports run in XML to file
 					// TODO Implement the 'Writer' class in the 'io' package
-					Writer.write(getRun(Integer.parseInt(args[0])).toString());
-					// Ask TA about output format
+					Writer.write(getRun(Integer.parseInt(args[0])).toJSON());
 					return true;
 
 				case "NUM": // Sets the next competitor to start
@@ -172,8 +171,9 @@ public class ChronoTimer {
 						((IND) getCurrentRun()).swap();
 						return true;
 					} else {
-						throw new IllegalStateException("Cannot swap on a non-IND run");
+						System.out.println("Cannot swap on a non-IND run");
 					}
+					break;
 
 				case "DNF": // Set the next competitor to finish to DNF
 					getCurrentRun().DNFRacer();
@@ -188,25 +188,29 @@ public class ChronoTimer {
 							getCurrentRun().finishRacer(time);
 						}
 						return true;
+					} else {
+						System.out.println("Channel unarmed or no sensor connected");
 					}
+					break;
 
 				case "START": // Start a racer on the current run
-					getCurrentRun().startRacer(time);
+					executeCommand(time, "TRIG", new String[] {"1"});
 					return true;
 
 				case "FINISH": // Finish a racer on the current run
-					getCurrentRun().finishRacer(time);
+					executeCommand(time, "TRIG", new String[] {"2"});
 					return true;
 
 				default:
 					System.out.println("Illegal command");
+					break;
 				}
 			} else {
-				System.out.println("ChronoTimer is OFF. Can only take ON, OFF, TIME, and EXIT commands");
+				System.out.println("ChronoTimer is OFF. Valid commands: [ON, TIME, EXIT]");
 			}
 
 		} catch (IndexOutOfBoundsException | DateTimeParseException | IllegalArgumentException e) {
-			System.out.print("Illegal argument format: ");
+			System.out.print("Illegal argument(s): ");
 			System.out.println(cmdName + " " + Arrays.toString(args));
 		} catch (NullPointerException e) {
 			System.out.println("This event is ended");

@@ -1,84 +1,42 @@
 package Test;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.Assert.*;
 
 import java.time.LocalTime;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import chronotimer.ChronoTimer;
 import io.Parser;
 
 public class TestParser {
-	private Parser parser = new Parser(new ChronoTimer());
 	
+	private Parser parser;
+	private ChronoTimer chronotimer;
+	private LocalTime time;
 	
-	/*@org.junit.Test
-	public void testBadTimeFormat(){
-		assertFalse(parser.parse("08:24:193.96 START"));
-		assertFalse(parser.parse("008:24:19.96 START"));
-		assertTrue(parser.parse("08:24:19.960 START"));
-		assertFalse(parser.parse("08:245:19.96 START"));
-		assertFalse(parser.parse("08:24:19.96 TIME 9:15:19.94"));
-		assertFalse(parser.parse("08:24:19.96 TIME 9:15:193.94"));
-		assertTrue(parser.parse("08:24:19.96 TIME 09:15:19.94"));
-		assertFalse(parser.parse("08:24:19.96 TIME 9:15:19.940"));
-		assertFalse(parser.parse("08:24:19.96 TIME 9:153:19.94"));
-		assertFalse(parser.parse("08:24:19.96 TIME 9:15:19.9405"));
-	}*/
-	
-	@org.junit.Test
-	public void testIllegalCommand(){
-		ChronoTimer ct = new ChronoTimer();
-		LocalTime time = LocalTime.now();
-		String[] args = {"ABCDE"};
-		String[] args2 = {"1"};
-		String[] args3 = {"GATE 1"};
-		// TURN TIMER ON
-		assertFalse(ct.executeCommand(time, "BLACH", args2));
-		
-		assertFalse(ct.executeCommand(time, "COZNN", args));
-		assertFalse(ct.executeCommand(time, "CODNN", null));
-		assertFalse(ct.executeCommand(time, "CAONN", args3));
+	@Before
+	public void before() {
+		time = LocalTime.now();
+		chronotimer = new ChronoTimer();
+		parser = new Parser(chronotimer);
 	}
 	
-	@org.junit.Test
-	public void testConn(){
-		ChronoTimer ct = new ChronoTimer();
-		LocalTime time = LocalTime.now();
-		String[] args = {"ABCDE"};
-		String[] args2 = {"1"};
-		String[] args3 = {"GATE 1"};
-		// TURN TIMER ON
-		assertFalse(ct.executeCommand(time, "CONN", args2));
+	@Test
+	public void testParse(){
+		assertFalse(parser.parse("")); // No timestamp or cmd name
+		assertFalse(parser.parse("00:00:00.00")); // no cmd name
+		assertFalse(parser.parse("badTimeStamp cmdName")); // bad timestamp
 		
-		assertFalse(ct.executeCommand(time, "CONN", args));
-		assertFalse(ct.executeCommand(time, "CONN", null));
-		assertFalse(ct.executeCommand(time, "CONN", args3));
-		
-	/*	assertFalse(parser.parse("08:24:19.96 CONN"));
-		assertFalse(parser.parse("08:24:19.96 CONN 3"));
-		assertFalse(parser.parse("08:24:19.96 CONN GATE"));
-		assertFalse(parser.parse("08:24:19.96 CONN EYE"));
-		assertFalse(parser.parse("08:24:19.96 CONN EYE Phillips"));
-		assertTrue(parser.parse("08:24:19.96 CONN EYE 1"));
-		assertTrue(parser.parse("08:24:19.96 CONN GATE 1"));*/
-		
-	}
-	
-	@org.junit.Test
-	public void testTrig(){
-		ChronoTimer ct = new ChronoTimer();
-		LocalTime time = LocalTime.now();
-		String[] args = {"ABCDE"};
-		String[] args2 = {"1"};
-		// TURN TIMER ON
-		assertFalse(ct.executeCommand(time, "TRIG", args2));
-		
-		assertFalse(ct.executeCommand(time, "TRIG", args));
-		assertFalse(ct.executeCommand(time, "NEWRUN", null));
+		assertTrue(parser.parse("00:00:00.00 cmdName")); // timestamp and cmd name
+		assertTrue(parser.parse("00:00:00.00 cmdName arg1")); // timestamp, cmd name, and arg
+		assertTrue(parser.parse("00:00:00.00 cmdName arg1 arg2")); // timestamp, cmd name, and multiple args
 	}
 
-	@org.junit.Test
-	public void testFile(){
-		// It works 
+	@Test
+	public void testParseFile(){
+		assertFalse(parser.parseFile("badPath")); // bad path
+		assertTrue(parser.parseFile("output.txt")); // good path
 	}
 }

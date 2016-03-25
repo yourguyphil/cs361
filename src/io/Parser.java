@@ -54,7 +54,7 @@ public class Parser {
 			}
 			return true;
 		} catch (DateTimeParseException | IndexOutOfBoundsException e) {
-			System.out.println("Error parsing command");
+			System.out.println("Error parsing command: " + input);
 		}
 		return false;
 	}
@@ -67,8 +67,11 @@ public class Parser {
 	public boolean parseFile(String path) {
 		try {
 			Scanner fileReader = new Scanner(new File("src\\Test\\" + path));
-			while (fileReader.hasNextLine())
-				parse(fileReader.nextLine());
+			while (fileReader.hasNextLine()) {
+				String nextLine = fileReader.nextLine();
+				System.out.println(nextLine);
+				parse(nextLine);
+			}
 			
 			fileReader.close();
 			return true;
