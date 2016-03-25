@@ -1,24 +1,21 @@
 package test.io;
 
-import static org.junit.Assert.*;
-
-import java.time.LocalTime;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import io.Parser;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import chronotimer.ChronoTimer;
-import io.Parser;
 
 public class TestParser {
 	
 	private Parser parser;
 	private ChronoTimer chronotimer;
-	private LocalTime time;
 	
 	@Before
 	public void before() {
-		time = LocalTime.now();
 		chronotimer = new ChronoTimer();
 		parser = new Parser(chronotimer);
 	}

@@ -1,25 +1,12 @@
 package test.chronotimer;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
-import java.util.concurrent.Callable;
 
-
-
-import javax.crypto.ExemptionMechanismException;
-
-import junit.framework.Assert;
-
-
-
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-
-
 
 import chronotimer.Time;
 

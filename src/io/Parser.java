@@ -66,7 +66,7 @@ public class Parser {
 	 */
 	public boolean parseFile(String path) {
 		try {
-			Scanner fileReader = new Scanner(new File("src\\test\\" + path));
+			Scanner fileReader = new Scanner(new File("src\\test\\files\\" + path));
 			while (fileReader.hasNextLine()) {
 				String nextLine = fileReader.nextLine();
 				System.out.println(nextLine);

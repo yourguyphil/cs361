@@ -8,7 +8,7 @@ public class Writer {
 	 * @param contents the contents to write to output
 	 */
 	public static void write(String contents) {
-		// write contents to 'output.txt' in the 'test' package
+		// write contents to 'output.txt' in the 'test.files' package
 	}
 	
 }
