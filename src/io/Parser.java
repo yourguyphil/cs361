@@ -22,14 +22,14 @@ import chronotimer.Time;
  */
 public class Parser {
 	
-	private ChronoTimer chronoTimer;
+	private ChronoTimer chronotimer;
 	
 	/**
 	 * Parses strings and files into executable commands
-	 * @param chronoTimer chronotimer to parse the commands for
+	 * @param chronotimer chronotimer to parse the commands for
 	 */
-	public Parser(ChronoTimer chronoTimer) {
-		this.chronoTimer = chronoTimer;
+	public Parser(ChronoTimer chronotimer) {
+		this.chronotimer = chronotimer;
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class Parser {
 			if (cmdName.equals("FILE")) {
 				parseFile(args[0]);
 			} else {
-				chronoTimer.executeCommand(timeStamp, cmdName, args);
+				Command.executeCommand(chronotimer, timeStamp, cmdName, args);
 			}
 			return true;
 		} catch (DateTimeParseException | IndexOutOfBoundsException e) {

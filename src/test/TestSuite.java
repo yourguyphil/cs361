@@ -6,6 +6,7 @@ import org.junit.runners.Suite;
 import test.chronotimer.TestChannel;
 import test.chronotimer.TestChronoTimer;
 import test.chronotimer.TestTime;
+import test.io.TestCommand;
 import test.io.TestParser;
 import test.io.TestWriter;
 import test.race.TestAbstractEvent;
@@ -19,6 +20,7 @@ import test.race.TestRacer;
 	TestChronoTimer.class,
 	TestTime.class,
 	
+	TestCommand.class,
 	TestParser.class,
 	TestWriter.class,
 	

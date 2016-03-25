@@ -2,30 +2,26 @@ package test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import io.Command;
 
 import java.time.LocalTime;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import chronotimer.ChronoTimer;
 
 public class TestInit {
-   ChronoTimer chronoTimer;
-   LocalTime timeStamp = LocalTime.now(); 
+   ChronoTimer chronotimer;
+   LocalTime timeStamp;
    
    /**
     * Need to reset the chronotimer before each test so state is not persisted between jUnits
     */
    @Before 
    public void before() {
-	   chronoTimer = new ChronoTimer();
-   }
-   
-   @After
-   public void after() {
-	   chronoTimer = null;
+	   chronotimer = new ChronoTimer();
+	   timeStamp = LocalTime.now(); 
    }
 	
 	/**
@@ -33,7 +29,7 @@ public class TestInit {
 	 */
    @Test
 	public void testStartBeforeOn() {
-		assertFalse(chronoTimer.executeCommand(timeStamp, "TRIG", new String[]{ "1"}));
+		assertFalse(Command.executeCommand(chronotimer, timeStamp, "TRIG", new String[]{ "1"}));
 		
 	}
 	/**
@@ -41,7 +37,7 @@ public class TestInit {
 	 */
 	@Test
 	public void testStartAfterOn(){
-		assertTrue(chronoTimer.executeCommand(timeStamp, "ON", null));
+		assertTrue(Command.executeCommand(chronotimer, timeStamp, "ON", null));
 	}
 	
 	/**
@@ -49,7 +45,7 @@ public class TestInit {
 	 */
 	@Test
 	public void testDNFBeforeOn(){
-	    assertFalse(chronoTimer.executeCommand(timeStamp, "DNF", new String[]{ "1"}));	
+	    assertFalse(Command.executeCommand(chronotimer, timeStamp, "DNF", new String[]{ "1"}));	
 	}
 	
 	/**
@@ -57,15 +53,15 @@ public class TestInit {
 	 */
     @Test
     public void stopBeforeStart(){
-    	assertFalse(chronoTimer.executeCommand(timeStamp, "STOP", new String[]{"1"}));
+    	assertFalse(Command.executeCommand(chronotimer, timeStamp, "STOP", new String[]{"1"}));
     }
     /**
      *  call on and off in that order should work
      */
     @Test
     public void testOnOff(){
-    	assertTrue(chronoTimer.executeCommand(timeStamp, "ON", new String[]{"1"}));
-    	assertTrue(chronoTimer.executeCommand(timeStamp, "OFF", new String[]{"1"}));
+    	assertTrue(Command.executeCommand(chronotimer, timeStamp, "ON", new String[]{"1"}));
+    	assertTrue(Command.executeCommand(chronotimer, timeStamp, "OFF", new String[]{"1"}));
     	
     }
     
@@ -74,9 +70,9 @@ public class TestInit {
      */
     @Test()
     public void testOnOffCallCommand(){
-    	assertTrue(chronoTimer.executeCommand(timeStamp, "ON", new String[]{"1"}));
-    	assertTrue(chronoTimer.executeCommand(timeStamp, "OFF", new String[]{"1"}));
-    	assertFalse(chronoTimer.executeCommand(timeStamp, "START", new String[]{"1"}));
+    	assertTrue(Command.executeCommand(chronotimer, timeStamp, "ON", new String[]{"1"}));
+    	assertTrue(Command.executeCommand(chronotimer, timeStamp, "OFF", new String[]{"1"}));
+    	assertFalse(Command.executeCommand(chronotimer, timeStamp, "START", new String[]{"1"}));
     }
 	
 }

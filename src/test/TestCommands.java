@@ -1,6 +1,7 @@
 package test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import io.Command;
 import io.Parser;
 
 import java.time.LocalTime;
@@ -25,12 +26,12 @@ public class TestCommands {
 	
 	@Test
 	public void testOn() {
-		chronotimer.executeCommand(time,"ON",null);
+		Command.executeCommand(chronotimer, time,"ON",null);
 	}
 	
 	@Test
 	public void testFinish() {
-		chronotimer.executeCommand(time,"ON",null);
+		Command.executeCommand(chronotimer, time,"ON",null);
 		assertFalse(parser.parse("23.232:23 FINISH"));
 		assertFalse(parser.parse("03.23:23 FINISH"));
 		assertTrue(parser.parse("23:23:23.23 FINISH"));
@@ -40,8 +41,8 @@ public class TestCommands {
 	public void testReset() {
 		String[] args = {"123"};
 		// TURN TIMER ON
-		assertTrue(chronotimer.executeCommand(time, "ON", null));
-		assertTrue(chronotimer.executeCommand(time, "RESET", args));
+		assertTrue(Command.executeCommand(chronotimer, time, "ON", null));
+		assertTrue(Command.executeCommand(chronotimer, time, "RESET", args));
 	}
 	
 	@Test
@@ -49,19 +50,17 @@ public class TestCommands {
 		String[] args = {"1"};
 		String[] args2 = {"123"};
 		// TURN TIMER ON
-		assertTrue(chronotimer.executeCommand(time, "ON", null));
-		assertTrue(chronotimer.executeCommand(time, "CLR", args2));
-		assertTrue(chronotimer.executeCommand(time, "DISC", args));
+		assertTrue(Command.executeCommand(chronotimer, time, "ON", null));
+		assertTrue(Command.executeCommand(chronotimer, time, "CLR", args2));
+		assertTrue(Command.executeCommand(chronotimer, time, "DISC", args));
 	}
 	
 	@Test
 	public void testNum() {
 		String[] args = { "1" };
-		String[] args2 = { "123" };
-		String[] args3 = { "" };
 		// TURN TIMER ON
-		assertTrue(chronotimer.executeCommand(time, "ON", null));
-		assertTrue(chronotimer.executeCommand(time, "NUM", args));
+		assertTrue(Command.executeCommand(chronotimer, time, "ON", null));
+		assertTrue(Command.executeCommand(chronotimer, time, "NUM", args));
 				
 	}
 	
@@ -72,26 +71,25 @@ public class TestCommands {
 		String[] args3 = {""};
 		
 		// TURN TIMER ON
-		assertTrue(chronotimer.executeCommand(time, "ON", null));
-		assertTrue(chronotimer.executeCommand(time, "NUM", args));
-		assertTrue(chronotimer.executeCommand(time, "NUM", args2));
-		assertTrue(chronotimer.executeCommand(time, "START", args3));
-		assertTrue(chronotimer.executeCommand(time, "START", args3));
+		assertTrue(Command.executeCommand(chronotimer, time, "ON", null));
+		assertTrue(Command.executeCommand(chronotimer, time, "NUM", args));
+		assertTrue(Command.executeCommand(chronotimer, time, "NUM", args2));
+		assertTrue(Command.executeCommand(chronotimer, time, "START", args3));
+		assertTrue(Command.executeCommand(chronotimer, time, "START", args3));
 		
-		assertTrue(chronotimer.executeCommand(time, "SWAP", args2));
+		assertTrue(Command.executeCommand(chronotimer, time, "SWAP", args2));
 	}
 	
 	@Test
 	public void testDNF() {
 		String[] args = {"1"};
 		String[] args2 = {"123"};
-		String[] args3 = {""};
 		// TURN TIMER ON
-		assertTrue(chronotimer.executeCommand(time, "ON", null));
-		assertTrue(chronotimer.executeCommand(time, "NUM", args));
-		assertTrue(chronotimer.executeCommand(time, "START", null));
+		assertTrue(Command.executeCommand(chronotimer, time, "ON", null));
+		assertTrue(Command.executeCommand(chronotimer, time, "NUM", args));
+		assertTrue(Command.executeCommand(chronotimer, time, "START", null));
 		
-		assertTrue(chronotimer.executeCommand(time, "DNF", args2));
+		assertTrue(Command.executeCommand(chronotimer, time, "DNF", args2));
 	}
 	
 	@Test
@@ -99,10 +97,10 @@ public class TestCommands {
 		String[] args = {"ABCDE"};
 		
 		// TURN TIMER ON
-		assertTrue(chronotimer.executeCommand(time, "ON", null));
+		assertTrue(Command.executeCommand(chronotimer, time, "ON", null));
 		
-		assertTrue(chronotimer.executeCommand(time, "NEWRUN", args));
-		assertTrue(chronotimer.executeCommand(time, "NEWRUN", null));
+		assertTrue(Command.executeCommand(chronotimer, time, "NEWRUN", args));
+		assertTrue(Command.executeCommand(chronotimer, time, "NEWRUN", null));
 	}
 	
 	@Test
@@ -110,10 +108,10 @@ public class TestCommands {
 		String[] args = {"1"};
 		String[] args2 = {"123"};
 		// TURN TIMER ON
-		assertTrue(chronotimer.executeCommand(time, "ON", null));
+		assertTrue(Command.executeCommand(chronotimer, time, "ON", null));
 		
-		assertFalse(chronotimer.executeCommand(time, "DISC", args2));
-		assertTrue(chronotimer.executeCommand(time, "DISC", args));
+		assertFalse(Command.executeCommand(chronotimer, time, "DISC", args2));
+		assertTrue(Command.executeCommand(chronotimer, time, "DISC", args));
 	}
 
 }
