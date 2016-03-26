@@ -31,43 +31,48 @@ public class IND extends AbstractEvent{
 		}
 	}
 	
-	/** Marks the next active racer waiting to finish as canceled
-	 */
-	public void cancelRacer() {
-		startedRacers.element().cancel();
-		finishedRacers.add(startedRacers.remove());
-	}
-
 	/** Starts the next racer waiting to start
 	 * @param start the time the racer started at
 	 */
 	public void startRacer(LocalTime start) {
-		pendingRacers.element().setStart(start);
-		startedRacers.add(pendingRacers.remove());
+		if (pendingRacers.size() > 0) {
+			pendingRacers.peek().setStart(start);
+			startedRacers.add(pendingRacers.poll());
+		} else {
+			System.out.println("No pending racers to start");
+		}
 	}
 
 	/** Finishes the next active racer waiting to finish
 	 * @param finish the time the racer finished at
 	 */
 	public void finishRacer(LocalTime finish) {
-		startedRacers.element().setFinish(finish);
-		finishedRacers.add(startedRacers.remove());
+		if (startedRacers.size() > 0) {
+			startedRacers.peek().setFinish(finish);
+			finishedRacers.add(startedRacers.poll());
+		} else {
+			System.out.println("No started racers to finish");
+		}
 	}
 
 	/** Marks the next active racer waiting to finish as DNF
 	 */
 	public void DNFRacer() {
-		startedRacers.element().DNF();
-		finishedRacers.add(startedRacers.remove());
+		if (startedRacers.size() > 0) {
+			startedRacers.peek().DNF();
+			finishedRacers.add(startedRacers.poll());
+		} else {
+			System.out.println("No started racers to DNF");
+		}
 	}
 	
 	/** Swap the next two racers to finish
 	 */
 	public void swap() {
-		if(startedRacers.size() < 2)
-			throw new IllegalStateException("Need at least 2 racers to perform swap!");
-
-		Collections.swap(startedRacers, 0, 1);
+		if(startedRacers.size() > 2)
+			Collections.swap(startedRacers, 0, 1);
+		else
+			System.out.println("Need at least 2 started racers to swap");
 	}
 	
 	

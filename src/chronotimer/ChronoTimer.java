@@ -39,16 +39,16 @@ public class ChronoTimer {
 	 * @return the current run
 	 */
 	private AbstractEvent getCurrentRun() {
-		return getRun(runs.size());
+		return getRun(runs.size() - 1);
 	}
 	
 	/**
 	 * Gets the at run specified run number
-	 * @param runNumber to get (1-indexed)
+	 * @param runNumber to get (0-indexed)
 	 * @return the run with the specified run number
 	 */
 	private AbstractEvent getRun(int runNumber) {
-			return runs.get(runNumber - 1);
+		return runs.get(runNumber);
 	}
 
 	/**
@@ -56,6 +56,9 @@ public class ChronoTimer {
 	 * @return true if on, false otherwise
 	 */
 	public boolean isOn() {
+		if (!isOn)
+			System.out.println("ChronoTimer is OFF. Valid commands: [ON, TIME, EXIT]");
+		
 		return isOn;
 	}
 	
@@ -171,7 +174,7 @@ public class ChronoTimer {
 			break;
 
 		default:
-			throw new IllegalArgumentException("Event type not yet implemented");
+			System.out.println("Event type not yet implemented");
 		}
 	}
 
@@ -193,7 +196,8 @@ public class ChronoTimer {
 	 * Ends the current run
 	 */
 	public void ENDRUN(){
-		runs.add(null);
+		if (getCurrentRun() != null)
+			runs.add(null);
 	}
 
 	/**
@@ -267,14 +271,14 @@ public class ChronoTimer {
 	 * Start a racer on the current run
 	 */
 	public void START(){
-		TRIG(1);
+		TRIG(0);
 	}
 
 	/**
 	 * Finish a racer on the current run
 	 */
 	public void FINISH(){
-		TRIG(2);
+		TRIG(1);
 	}
 
 }

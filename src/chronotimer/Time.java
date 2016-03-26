@@ -10,7 +10,11 @@ public class Time {
 	}
 	
 	public static String toString(LocalTime time) {
-		return time.format(DateTimeFormatter.ofPattern("HH:mm:ss.SS"));
+		if (time == null) {
+			return null;
+		} else {
+			return time.format(DateTimeFormatter.ofPattern("HH:mm:ss.SS"));
+		}
 	}
 	
 }

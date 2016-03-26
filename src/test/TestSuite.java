@@ -29,7 +29,6 @@ import test.race.TestRacer;
 	TestPARIND.class,
 	TestRacer.class,
 	
-	TestCommands.class,
 	TestInit.class})
 
 public class TestSuite {

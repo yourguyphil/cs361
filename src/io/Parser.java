@@ -53,8 +53,10 @@ public class Parser {
 				Command.executeCommand(chronotimer, timeStamp, cmdName, args);
 			}
 			return true;
-		} catch (DateTimeParseException | IndexOutOfBoundsException e) {
-			System.out.println("Error parsing command: " + input);
+		} catch (DateTimeParseException e) {
+			System.out.println("Error parsing, time not formatted as HH:mm:ss.SS");
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Error parsing, no command name");
 		}
 		return false;
 	}

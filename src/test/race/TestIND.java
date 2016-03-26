@@ -10,23 +10,6 @@ import race.Racer;
 public class TestIND {
 
 	@Test
-	public void testCancel() {
-		IND ind = new IND();
-		LocalTime time = LocalTime.now();
-
-		Racer racer1 = new Racer(123);
-		ind.num(racer1.getBib());
-
-		ind.startRacer(time);
-
-		ind.cancelRacer();
-
-		// Make sure racer removed from pending Queue
-		assertTrue(ind.getPendingRacers().isEmpty());
-		assertEquals(racer1.getFinish(), null);
-	}
-
-	@Test
 	public void testQueues() {
 		LocalTime time = LocalTime.now();
 		IND ind = new IND();

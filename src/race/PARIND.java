@@ -16,11 +16,6 @@ public class PARIND extends AbstractEvent{
 		
 	}
 
-	@Override
-	public void cancelRacer() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void startRacer(LocalTime start) {
