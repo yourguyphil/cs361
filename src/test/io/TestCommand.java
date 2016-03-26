@@ -42,47 +42,33 @@ public class TestCommand {
 		String cmdWithoutArgs = "ON";
 		String cmdWithArgs = "TOGGLE";
 
-		// Fail without chronotimer
-		assertFalse(Command.executeCommand(null, time, cmdWithoutArgs, emptyArgs));
-		
-		// Fail without time
-		assertFalse(Command.executeCommand(chronotimer, null, cmdWithoutArgs, emptyArgs));
-		
-		// null, null
-		assertFalse(Command.executeCommand(chronotimer, time, null, null));
-		
-		// null, args
-		assertFalse(Command.executeCommand(chronotimer, time, null, emptyArgs));
-		assertFalse(Command.executeCommand(chronotimer, time, null, args));
-		
-		// cmd name, null
-		assertFalse(Command.executeCommand(chronotimer, time, badCmd, null));
-		assertTrue(Command.executeCommand(chronotimer, time, cmdWithoutArgs, null));
-		assertFalse(Command.executeCommand(chronotimer, time, cmdWithArgs, null));
+		// Fail with any null input
+		assertFalse(Command.execute(null, time, cmdWithoutArgs, emptyArgs));
+		assertFalse(Command.execute(chronotimer, null, cmdWithoutArgs, emptyArgs));
+		assertFalse(Command.execute(chronotimer, time, null, emptyArgs));
+		assertFalse(Command.execute(chronotimer, time, cmdWithoutArgs, null));
 		
 		// cmd name, args
-		assertFalse(Command.executeCommand(chronotimer, time, badCmd, emptyArgs));
-		assertFalse(Command.executeCommand(chronotimer, time, badCmd, args));
+		assertFalse(Command.execute(chronotimer, time, badCmd, emptyArgs));
+		assertFalse(Command.execute(chronotimer, time, badCmd, args));
 		
-		assertTrue(Command.executeCommand(chronotimer, time, cmdWithoutArgs, emptyArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, cmdWithoutArgs, args));
+		assertTrue(Command.execute(chronotimer, time, cmdWithoutArgs, emptyArgs));
+		assertFalse(Command.execute(chronotimer, time, cmdWithoutArgs, args));
 		
-		assertFalse(Command.executeCommand(chronotimer, time, cmdWithArgs, emptyArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, cmdWithArgs, args));
+		assertFalse(Command.execute(chronotimer, time, cmdWithArgs, emptyArgs));
+		assertTrue(Command.execute(chronotimer, time, cmdWithArgs, args));
 	}
 	
 	@Test
 	public void testON(){
-		assertTrue(Command.executeCommand(chronotimer, time, "ON", null));
-		assertTrue(Command.executeCommand(chronotimer, time, "ON", emptyArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, "ON", badArgs));
+		assertFalse(Command.execute(chronotimer, time, "ON", badArgs));
+		assertTrue(Command.execute(chronotimer, time, "ON", emptyArgs));
 	}
 	
 	@Test
 	public void testOFF(){
-		assertTrue(Command.executeCommand(chronotimer, time, "OFF", null));
-		assertTrue(Command.executeCommand(chronotimer, time, "OFF", emptyArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, "OFF", badArgs));
+		assertFalse(Command.execute(chronotimer, time, "OFF", badArgs));
+		assertTrue(Command.execute(chronotimer, time, "OFF", emptyArgs));
 	}
 	
 	@Test
@@ -92,131 +78,114 @@ public class TestCommand {
 	
 	@Test
 	public void testRESET(){
-		assertTrue(Command.executeCommand(chronotimer, time, "RESET", null));
-		assertTrue(Command.executeCommand(chronotimer, time, "RESET", emptyArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, "RESET", badArgs));
+		assertFalse(Command.execute(chronotimer, time, "RESET", badArgs));
+		assertTrue(Command.execute(chronotimer, time, "RESET", emptyArgs));
 	}
 	
 	@Test
 	public void testTIME(){
-		assertFalse(Command.executeCommand(chronotimer, time, "TIME", null));
-		assertFalse(Command.executeCommand(chronotimer, time, "TIME", emptyArgs));
-		assertFalse(Command.executeCommand(chronotimer, time, "TIME", badArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, "TIME", new String[] {"00:00:00.00"}));
+		assertFalse(Command.execute(chronotimer, time, "TIME", emptyArgs));
+		assertFalse(Command.execute(chronotimer, time, "TIME", badArgs));
+		assertTrue(Command.execute(chronotimer, time, "TIME", new String[] {"00:00:00.00"}));
 	}
 	
 	@Test
 	public void testTOGGLE(){
-		assertFalse(Command.executeCommand(chronotimer, time, "TOGGLE", null));
-		assertFalse(Command.executeCommand(chronotimer, time, "TOGGLE", emptyArgs));
-		assertFalse(Command.executeCommand(chronotimer, time, "TOGGLE", badArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, "TOGGLE", new String[] {"1"}));
+		assertFalse(Command.execute(chronotimer, time, "TOGGLE", emptyArgs));
+		assertFalse(Command.execute(chronotimer, time, "TOGGLE", badArgs));
+		assertTrue(Command.execute(chronotimer, time, "TOGGLE", new String[] {"1"}));
 	}
 	
 	@Test
 	public void testCONN(){
-		assertFalse(Command.executeCommand(chronotimer, time, "CONN", null));
-		assertFalse(Command.executeCommand(chronotimer, time, "CONN", emptyArgs));
-		assertFalse(Command.executeCommand(chronotimer, time, "CONN", badArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, "CONN", new String[] {"EYE", "1"}));
+		assertFalse(Command.execute(chronotimer, time, "CONN", emptyArgs));
+		assertFalse(Command.execute(chronotimer, time, "CONN", badArgs));
+		assertTrue(Command.execute(chronotimer, time, "CONN", new String[] {"EYE", "1"}));
 	}
 	
 	@Test
 	public void testDISC(){
-		assertFalse(Command.executeCommand(chronotimer, time, "DISC", null));
-		assertFalse(Command.executeCommand(chronotimer, time, "DISC", emptyArgs));
-		assertFalse(Command.executeCommand(chronotimer, time, "DISC", badArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, "DISC", new String[] {"1"}));
+		assertFalse(Command.execute(chronotimer, time, "DISC", emptyArgs));
+		assertFalse(Command.execute(chronotimer, time, "DISC", badArgs));
+		assertTrue(Command.execute(chronotimer, time, "DISC", new String[] {"1"}));
 	}
 	
 	@Test
 	public void testEVENT(){
-		assertFalse(Command.executeCommand(chronotimer, time, "EVENT", null));
-		assertFalse(Command.executeCommand(chronotimer, time, "EVENT", emptyArgs));
-		assertFalse(Command.executeCommand(chronotimer, time, "EVENT", badArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, "EVENT", new String[] {"PARIND"}));
+		assertFalse(Command.execute(chronotimer, time, "EVENT", emptyArgs));
+		assertFalse(Command.execute(chronotimer, time, "EVENT", badArgs));
+		assertTrue(Command.execute(chronotimer, time, "EVENT", new String[] {"PARIND"}));
 	}
 	
 	@Test
 	public void testNEWRUN(){
-		assertTrue(Command.executeCommand(chronotimer, time, "NEWRUN", null));
-		assertTrue(Command.executeCommand(chronotimer, time, "NEWRUN", emptyArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, "NEWRUN", badArgs));
+		assertFalse(Command.execute(chronotimer, time, "NEWRUN", badArgs));
+		assertTrue(Command.execute(chronotimer, time, "NEWRUN", emptyArgs));
 	}
 	
 	@Test
 	public void testENDRUN(){
-		assertTrue(Command.executeCommand(chronotimer, time, "ENDRUN", null));
-		assertTrue(Command.executeCommand(chronotimer, time, "ENDRUN", emptyArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, "ENDRUN", badArgs));
+		assertFalse(Command.execute(chronotimer, time, "ENDRUN", badArgs));
+		assertTrue(Command.execute(chronotimer, time, "ENDRUN", emptyArgs));
 	}
 	
 	@Test
 	public void testPRINT(){
-		assertFalse(Command.executeCommand(chronotimer, time, "PRINT", null));
-		assertFalse(Command.executeCommand(chronotimer, time, "PRINT", emptyArgs));
-		assertFalse(Command.executeCommand(chronotimer, time, "PRINT", badArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, "PRINT", new String[] {"1"}));
+		assertFalse(Command.execute(chronotimer, time, "PRINT", emptyArgs));
+		assertFalse(Command.execute(chronotimer, time, "PRINT", badArgs));
+		assertTrue(Command.execute(chronotimer, time, "PRINT", new String[] {"1"}));
 	}
 	
 	@Test
 	public void testEXPORT(){
-		assertFalse(Command.executeCommand(chronotimer, time, "EXPORT", null));
-		assertFalse(Command.executeCommand(chronotimer, time, "EXPORT", emptyArgs));
-		assertFalse(Command.executeCommand(chronotimer, time, "EXPORT", badArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, "EXPORT", new String[] {"1"}));
+		assertFalse(Command.execute(chronotimer, time, "EXPORT", emptyArgs));
+		assertFalse(Command.execute(chronotimer, time, "EXPORT", badArgs));
+		assertTrue(Command.execute(chronotimer, time, "EXPORT", new String[] {"1"}));
 	}
 	
 	@Test
 	public void testNUM(){
-		assertFalse(Command.executeCommand(chronotimer, time, "NUM", null));
-		assertFalse(Command.executeCommand(chronotimer, time, "NUM", emptyArgs));
-		assertFalse(Command.executeCommand(chronotimer, time, "NUM", badArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, "NUM", new String[] {"1"}));
+		assertFalse(Command.execute(chronotimer, time, "NUM", emptyArgs));
+		assertFalse(Command.execute(chronotimer, time, "NUM", badArgs));
+		assertTrue(Command.execute(chronotimer, time, "NUM", new String[] {"1"}));
 	}
 	
 	@Test
 	public void testCLR(){
-		assertFalse(Command.executeCommand(chronotimer, time, "CLR", null));
-		assertFalse(Command.executeCommand(chronotimer, time, "CLR", emptyArgs));
-		assertFalse(Command.executeCommand(chronotimer, time, "CLR", badArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, "CLR", new String[] {"1"}));
+		assertFalse(Command.execute(chronotimer, time, "CLR", emptyArgs));
+		assertFalse(Command.execute(chronotimer, time, "CLR", badArgs));
+		assertTrue(Command.execute(chronotimer, time, "CLR", new String[] {"1"}));
 	}
 	
 	@Test
 	public void testSWAP(){
-		assertTrue(Command.executeCommand(chronotimer, time, "SWAP", null));
-		assertTrue(Command.executeCommand(chronotimer, time, "SWAP", emptyArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, "SWAP", badArgs));
+		assertFalse(Command.execute(chronotimer, time, "SWAP", badArgs));
+		assertTrue(Command.execute(chronotimer, time, "SWAP", emptyArgs));
 	}
 	
 	@Test
 	public void testDNF(){
-		assertTrue(Command.executeCommand(chronotimer, time, "DNF", null));
-		assertTrue(Command.executeCommand(chronotimer, time, "DNF", emptyArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, "DNF", badArgs));
+		assertFalse(Command.execute(chronotimer, time, "DNF", badArgs));
+		assertTrue(Command.execute(chronotimer, time, "DNF", emptyArgs));
 	}
 	
 	@Test
 	public void testTRIG(){
-		assertFalse(Command.executeCommand(chronotimer, time, "TRIG", null));
-		assertFalse(Command.executeCommand(chronotimer, time, "TRIG", emptyArgs));
-		assertFalse(Command.executeCommand(chronotimer, time, "TRIG", badArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, "TRIG", new String[] {"1"}));
+		assertFalse(Command.execute(chronotimer, time, "TRIG", emptyArgs));
+		assertFalse(Command.execute(chronotimer, time, "TRIG", badArgs));
+		assertTrue(Command.execute(chronotimer, time, "TRIG", new String[] {"1"}));
 	}
 	
 	@Test
 	public void testSTART(){
-		assertTrue(Command.executeCommand(chronotimer, time, "START", null));
-		assertTrue(Command.executeCommand(chronotimer, time, "START", emptyArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, "START", badArgs));
+		assertFalse(Command.execute(chronotimer, time, "START", badArgs));
+		assertTrue(Command.execute(chronotimer, time, "START", emptyArgs));
 	}
 	
 	@Test
 	public void testFINISH(){
-		assertTrue(Command.executeCommand(chronotimer, time, "FINISH", null));
-		assertTrue(Command.executeCommand(chronotimer, time, "FINISH", emptyArgs));
-		assertTrue(Command.executeCommand(chronotimer, time, "FINISH", badArgs));
+		assertFalse(Command.execute(chronotimer, time, "FINISH", badArgs));
+		assertTrue(Command.execute(chronotimer, time, "FINISH", emptyArgs));
 	}
 	
 }

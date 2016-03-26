@@ -25,16 +25,15 @@ public class Command {
 	 * @param args command arguments
 	 * @return true if the command and arguments were parsed, false otherwise
 	 */
-	public static boolean executeCommand(ChronoTimer chronotimer, LocalTime timeStamp, String cmdName, String[] args) {
-		if (chronotimer == null) {
-			System.out.println("Null chronotimer");
+	public static boolean execute(ChronoTimer chronotimer, LocalTime timeStamp, String cmdName, String[] args) {
+		if (chronotimer == null || timeStamp == null || cmdName == null || args == null)
 			return false;
-		}
 		
-		try {
-			// Set the chronotimer time to that of the command's timestamp
-			chronotimer.TIME(timeStamp);
-
+		// Set the chronotimer time to that of the command's timestamp
+		chronotimer.TIME(timeStamp);
+		
+		// No arg commands
+		if (args.length == 0) {
 			switch (cmdName) {
 			case "ON":
 				chronotimer.ON();
@@ -52,48 +51,12 @@ public class Command {
 				chronotimer.RESET();
 				return true;
 
-			case "TIME":
-				chronotimer.TIME(Time.fromString(args[0]));
-				return true;
-
-			case "TOGGLE":
-				chronotimer.TOGGLE(Integer.parseInt(args[0]) - 1);
-				return true;
-
-			case "CONN":
-				chronotimer.CONN(Sensor.valueOf(args[0]), Integer.parseInt(args[1]) - 1);
-				return true;
-
-			case "DISC":
-				chronotimer.DISC(Integer.parseInt(args[0]) - 1);
-				return true;
-
-			case "EVENT":
-				chronotimer.EVENT(EventType.valueOf(args[0]));
-				return true;
-
 			case "NEWRUN":
 				chronotimer.NEWRUN();
 				return true;
 
 			case "ENDRUN":
 				chronotimer.ENDRUN();
-				return true;
-
-			case "PRINT":
-				chronotimer.PRINT(Integer.parseInt(args[0]) - 1);
-				return true;
-
-			case "EXPORT":
-				chronotimer.EXPORT(Integer.parseInt(args[0]) - 1);
-				return true;
-
-			case "NUM":
-				chronotimer.NUM(Integer.parseInt(args[0]));
-				return true;
-
-			case "CLR":
-				chronotimer.CLR(Integer.parseInt(args[0]));
 				return true;
 
 			case "SWAP":
@@ -104,10 +67,6 @@ public class Command {
 				chronotimer.DNF();
 				return true;
 
-			case "TRIG":
-				chronotimer.TRIG(Integer.parseInt(args[0]) - 1);
-				return true;
-
 			case "START":
 				chronotimer.START();
 				return true;
@@ -116,11 +75,64 @@ public class Command {
 				chronotimer.FINISH();
 				return true;
 			}
-
-		} catch (IndexOutOfBoundsException | DateTimeParseException | IllegalArgumentException | NullPointerException e) { }
+		}
 		
-		System.out.println("Illegal command: " + Time.toString(timeStamp) + " "
-				+ cmdName + " " + Arrays.toString(args));
+		// One arg commands
+		if (args.length == 1) {
+			try {
+				switch (cmdName) {
+
+				case "TIME":
+					chronotimer.TIME(Time.fromString(args[0]));
+					return true;
+
+				case "TOGGLE":
+					chronotimer.TOGGLE(Integer.parseInt(args[0]) - 1);
+					return true;
+
+				case "DISC":
+					chronotimer.DISC(Integer.parseInt(args[0]) - 1);
+					return true;
+
+				case "EVENT":
+					chronotimer.EVENT(EventType.valueOf(args[0]));
+					return true;
+
+				case "PRINT":
+					chronotimer.PRINT(Integer.parseInt(args[0]) - 1);
+					return true;
+
+				case "EXPORT":
+					chronotimer.EXPORT(Integer.parseInt(args[0]) - 1);
+					return true;
+
+				case "NUM":
+					chronotimer.NUM(Integer.parseInt(args[0]));
+					return true;
+
+				case "CLR":
+					chronotimer.CLR(Integer.parseInt(args[0]));
+					return true;
+
+				case "TRIG":
+					chronotimer.TRIG(Integer.parseInt(args[0]) - 1);
+					return true;
+				}
+			} catch (DateTimeParseException | IllegalArgumentException e) { }
+		}
+		
+		// Two arg commands
+		if (args.length == 2) {
+			try {
+				if (cmdName.equals("CONN")) {
+					chronotimer.CONN(Sensor.valueOf(args[0]), Integer.parseInt(args[1]) - 1);
+					return true;
+				}
+			} catch (IllegalArgumentException e) { }
+		}
+
+		// No remaining commands to try and execute
+		System.out.println("Illegal command: " + Time.toString(timeStamp) + " " + cmdName + " " + Arrays.toString(args));
 		return false;
 	}
 	

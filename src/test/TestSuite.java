@@ -27,9 +27,7 @@ import test.race.TestRacer;
 	TestAbstractEvent.class,
 	TestIND.class,
 	TestPARIND.class,
-	TestRacer.class,
-	
-	TestInit.class})
+	TestRacer.class})
 
 public class TestSuite {
 }

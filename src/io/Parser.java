@@ -50,7 +50,7 @@ public class Parser {
 			if (cmdName.equals("FILE")) {
 				parseFile(args[0]);
 			} else {
-				Command.executeCommand(chronotimer, timeStamp, cmdName, args);
+				Command.execute(chronotimer, timeStamp, cmdName, args);
 			}
 			return true;
 		} catch (DateTimeParseException e) {
