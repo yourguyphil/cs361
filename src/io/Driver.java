@@ -14,16 +14,17 @@ public class Driver {
 	public static void main(String[] args){
 		Scanner input = new Scanner(System.in);
 		Parser parser = new Parser(new ChronoTimer());
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mm:ss.SS");
 		
 		System.out.println("CHRONOTIMER");
 		
 		// Use the parser to read commands from the console
-		while(true){
+		while(input.hasNextLine()){
 			
 			// Retrieves input command and prepends time label to command passed to parser
-			// For testing from file use command: FILE followed by address---> location of testCommands.txt
+			// For testing from file use command: FILE followed by filename found in the test/files directory
 			parser.parse(Time.toString(LocalTime.now()) + " " + input.nextLine());
-		}																			
+		}
+		
+		input.close();
 	}
 }
