@@ -38,9 +38,8 @@ public class TestRacer {
 		//Start time should still be there
 		assertFalse(racer1.getStart() == null);
 	}
-	/*
-	 * Make sure that the total time of racer is correct
-	 */
+	
+	// Make sure that the total time of racer is correct
 	public void testGetDuration() {
 		startTime = LocalTime.now();
 		racer1.setStart(startTime);
