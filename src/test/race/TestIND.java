@@ -12,38 +12,20 @@ import race.IND;
 import race.Racer;
 
 public class TestIND {
-
+	
 	@Before
 	public void before() {
 		
 	}
 	
 	@Test
-	public void testNum() {
-	}
-	
-	@Test
-	public void testClear() {
-	}
-	
-	@Test
 	public void testStart() {
+		// TODO
 	}
-
-	@Test
-	public void testFinish() {
-	}
-
-	@Test
-	public void testDNF() {
-	}
-	
 	
 	@Test
 	public void testSwap() {
+		// TODO
 	}
-
-	@Test
-	public void testNotifyChannelTriggered() {
-	}
+	
 }

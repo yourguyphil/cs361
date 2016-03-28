@@ -63,7 +63,7 @@ public class TestTime {
 	
 	@Test
 	public void testToStringNull() {
-		assertThrows(IllegalArgumentException.class, () -> Time.toString(null));
+		assertEquals(null, Time.toString(null));
 	}
 	
 	private static void assertThrows(Class<?> throwable, Runnable runnable) {

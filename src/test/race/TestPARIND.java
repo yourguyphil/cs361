@@ -11,7 +11,7 @@ public class TestPARIND {
 	}
 	
 	@Test
-	public void test(){
-		
+	public void testStart() {
+		// TODO Test should be the same as the testStart in IND
 	}
 }
