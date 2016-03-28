@@ -53,16 +53,62 @@ public class TestAbstractEvent {
 	@Test
 	public void testSwap() {
 		// TODO
+		//Put 4 racers into pendingRacers queue
+		IND ind = new IND();
+		ind.num(123);
+		ind.num(234);
+		ind.num(345);
+		ind.num(456);
+
+		//Start 3 racers 
+		time = LocalTime.now();
+		ind.start(time, 0);
+		assertTrue(ind.getLane(0).getStartedRacers().peek().getBib() == 123);
+		time = LocalTime.now();
+		ind.start(time, 0);
+		ind.start(time, 0);
+		ind.clear(123);
+		//swap 1st two racers, 1st place should now be 234 and second should be 123
+		ind.swap();
+
+		assertTrue(ind.getLane(0).getStartedRacers().peek().getBib() == 234);
+		assertFalse(ind.getLane(0).getStartedRacers().peek().getBib() == 123);
 	}
 	
 	@Test
 	public void testNum() {
 		// TODO
+		IND ind = new IND();
+		ind.num(1);
+		assertFalse(ind.getLane(0).getPendingRacers().size() == 0);
+		assertTrue(ind.getLane(0).getPendingRacers().size() == 1);
+		
+		PARIND parind = new PARIND();
+		parind.num(1);
+		parind.num(2);
+		assertFalse(parind.getLane(0).getPendingRacers().size() == 0);
+		assertFalse(parind.getLane(1).getPendingRacers().size() == 0);
 	}
 	
 	@Test
 	public void testClear() {
 		// TODO
+		IND ind = new IND();
+		ind.num(1);
+		assertFalse(ind.getLane(0).getPendingRacers().size() == 0);
+		assertTrue(ind.getLane(0).getPendingRacers().size() == 1);
+		ind.clear(1);
+		assertTrue(ind.getLane(0).getPendingRacers().size() == 0);
+		
+		PARIND parind = new PARIND();
+		parind.num(1);
+		parind.num(2);
+		assertFalse(parind.getLane(0).getPendingRacers().size() == 0);
+		assertFalse(parind.getLane(1).getPendingRacers().size() == 0);
+		parind.clear(1);
+		assertTrue(parind.getLane(0).getPendingRacers().size() == 0);
+		assertTrue(parind.getLane(1).getPendingRacers().size() == 1);
+		
 	}
 	
 	@Test
