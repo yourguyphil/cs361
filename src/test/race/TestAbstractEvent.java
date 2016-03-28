@@ -157,8 +157,9 @@ public class TestAbstractEvent {
 		//swap 1st two racers, 1st place should now be 234 and second should be 123
 		ind.swap();
 
-		assertTrue(ind.getLane(0).getStartedRacers().peek().getBib() == 234);
 		assertFalse(ind.getLane(0).getStartedRacers().peek().getBib() == 123);
+		assertTrue(ind.getLane(0).getStartedRacers().peek().getBib() == 234);
+
 	}
 	
 	@Test
@@ -179,11 +180,14 @@ public class TestAbstractEvent {
 	public void testClear() {
 		IND ind = new IND();
 		ind.num(1);
+		// Pending racers size should be 1 since num was called once
 		assertFalse(ind.getLane(0).getPendingRacers().size() == 0);
 		assertTrue(ind.getLane(0).getPendingRacers().size() == 1);
 		ind.clear(1);
+		//Now since clear was called pendingRacres size shold be 0
 		assertTrue(ind.getLane(0).getPendingRacers().size() == 0);
 		
+		// Same as IND above
 		PARIND parind = new PARIND();
 		parind.num(1);
 		parind.num(2);
