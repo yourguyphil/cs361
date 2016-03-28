@@ -14,6 +14,7 @@ public class Writer {
 	 * @param contents the contents to write to output
 	 */
 	public static void write(String contents) {
+<<<<<<< HEAD
 		if (contents != null) {
 			Path file = Paths.get("src/test.files/output.txt");
 			try (BufferedWriter writer = Files.newBufferedWriter(file)) {
@@ -21,6 +22,15 @@ public class Writer {
 			} catch (IOException e) {
 				System.out.println("Could not print contents to output.txt");
 			}
+=======
+		// write contents to 'output.txt' in the 'test.files' package
+		Path file = Paths.get("src/test.files/output.txt");
+		try (BufferedWriter writer = Files.newBufferedWriter(file)) {
+		    writer.write(contents);
+		} catch (IOException e) {
+			System.out.println("Could not print contents to output.txt");
+			e.printStackTrace();
+>>>>>>> refs/remotes/origin/master
 		}
 	}
 	
