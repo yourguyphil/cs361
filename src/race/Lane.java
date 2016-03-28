@@ -9,6 +9,15 @@ public class Lane {
 	private LinkedList<Racer> pendingRacers;
 	
 	/**
+	 * Default constructor
+	 */
+	public Lane() {
+		startedRacers = new LinkedList<Racer>();
+		finishedRacers = new LinkedList<Racer>();
+		pendingRacers = new LinkedList<Racer>();
+	}
+	
+	/**
 	 * Gets the pending racers
 	 * @return the pending racers
 	 */

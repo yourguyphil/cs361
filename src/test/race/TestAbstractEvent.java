@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 
 import race.AbstractEvent;
 import race.Lane;
+import race.PARIND;
 import race.Racer;
 import race.IND;
 
@@ -21,6 +22,8 @@ public class TestAbstractEvent {
 	Racer racer1, racer2, racer3;
 	LocalTime time;
 	AbstractEvent event;
+	IND ind;
+	PARIND parind;
 	
 	@Before
 	public void before() {
@@ -28,6 +31,8 @@ public class TestAbstractEvent {
 		racer1 = new Racer(0);
 		racer2 = new Racer(1);
 		racer3 = new Racer(2);
+		ind = new IND();
+		parind = new PARIND();
 	}
 	
 	@Test
@@ -63,6 +68,16 @@ public class TestAbstractEvent {
 	@Test
 	public void testGetLane() {
 		// TODO
+		IND ind = new IND();
+		assertNull(ind.getLane(-1));
+		assertNotNull(ind.getLane(0));
+		assertNull(ind.getLane(1));
+		
+		PARIND parind = new PARIND();
+		assertNull(parind.getLane(-1));
+		assertNotNull(parind.getLane(0));
+		assertNotNull(parind.getLane(1));
+		assertNull(parind.getLane(2));
 	}
 	
 	@Test
