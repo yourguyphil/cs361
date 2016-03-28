@@ -2,6 +2,10 @@ package test.chronotimer;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.file.Paths;
 import java.time.LocalTime;
 
 import org.junit.Before;
@@ -13,6 +17,7 @@ import race.PARIND;
 import chronotimer.ChronoTimer;
 import chronotimer.Sensor;
 
+import java.util.Scanner;
 
 public class TestChronoTimer {
 	
@@ -117,22 +122,42 @@ public class TestChronoTimer {
 	
 	@Test
 	public void testPRINT(){
-		// TODO
+		 ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+		 
+		 System.setOut(new PrintStream(outContent));
+		 
+		 chronotimer.NEWRUN();
+		 chronotimer.PRINT(1);
+		 
+		 assertEquals(chronotimer.getRun(0).toString().length() + 2, outContent.toString().length());
 	}
 	
 	@Test
 	public void testEXPORT(){
-		// TODO
+		Scanner reader = null;
+		try {
+			reader = new Scanner(Paths.get("src\\test\\files\\output.txt"));
+		} catch (IOException e) {
+			System.out.println("No file");
+			return;
+		}
+		chronotimer.NEWRUN();
+		chronotimer.EXPORT(1);
+		while(reader.hasNextLine()){
+			assertEquals(reader.nextLine(), chronotimer.getRun(1).toJSON());
+		}
+		reader.close();
 	}
 	
+
 	@Test
 	public void testNUM(){
-		// TODO
+		//TODO
 	}
 	
 	@Test
 	public void testCLR(){
-		// TODO
+		//TODO
 	}
 	
 	@Test
