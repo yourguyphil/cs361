@@ -38,16 +38,106 @@ public class TestAbstractEvent {
 	@Test
 	public void testFinish() {
 		// TODO
+		IND ind = new IND();
+		ind.num(123);
+		ind.start(time, 0);
+		// No racers finished yet so finishedRacers size == 0
+		assertEquals(0,ind.getLane(0).getFinishedRacers().size());
+		// 1 racer finished so finishedRacers size == 1
+		ind.finish(time, 0);
+		assertEquals(1,ind.getLane(0).getFinishedRacers().size());
+		
+		PARIND parind = new PARIND();
+		parind.num(123);
+		parind.num(234);
+		
+		//Start both racers, both lanes finihsedRacers queue should be empty
+		parind.start(time, 0);
+		time = LocalTime.now();
+		parind.start(time, 1);
+		assertEquals(0,parind.getLane(0).getFinishedRacers().size());
+		assertEquals(0,parind.getLane(1).getFinishedRacers().size());
+		
+		// Finish lane 0, only lane 1's finishedQueue shold be empty
+		parind.finish(time, 0);
+		assertEquals(1,parind.getLane(0).getFinishedRacers().size());
+		assertEquals(0,parind.getLane(1).getFinishedRacers().size());
+		//Finish lane 1, both lanes finishedQueue shuold be 1
+		parind.finish(time, 1);
+		assertEquals(1,parind.getLane(0).getFinishedRacers().size());
+		assertEquals(1,parind.getLane(1).getFinishedRacers().size());
 	}
 	
 	@Test
 	public void testDNF() {
 		// TODO
+		IND ind = new IND();
+		ind.num(123);
+		ind.start(time, 0);
+		// only queue thats not empty should be startedRacers and its size should == 1
+		assertEquals(0,ind.getLane(0).getPendingRacers().size());
+		assertEquals(0,ind.getLane(0).getFinishedRacers().size());
+		assertEquals(1,ind.getLane(0).getStartedRacers().size());		
+		
+		//Racer didn't finish so only nonempty queue now should still be startedRacers
+		ind.DNF();
+		assertEquals(0,ind.getLane(0).getPendingRacers().size());
+		assertEquals(0,ind.getLane(0).getFinishedRacers().size());
+		assertEquals(1,ind.getLane(0).getStartedRacers().size());	
+		
+		//PARIND 
+		PARIND parind = new PARIND();
+		parind.num(123);
+		parind.num(234);
+		parind.num(345);
+		parind.start(time, 0);
+		parind.start(time, 1);
+		time = LocalTime.now();
+		parind.start(time, 2);
+		//For lane 0 only queue thats not empty should be startedRacers and its size should == 1
+		assertEquals(0,parind.getLane(0).getFinishedRacers().size());
+		assertEquals(1,parind.getLane(0).getStartedRacers().size());		
+		
+		//For lane 1 only queue thats not empty should be startedRacers and its size should == 1
+		assertEquals(0,parind.getLane(1).getPendingRacers().size());
+		assertEquals(0,parind.getLane(1).getFinishedRacers().size());
+		assertEquals(1,parind.getLane(1).getStartedRacers().size());				
+		
+		//Racer didn't finish so finishedRacers should be empty
+		parind.DNF();
+		assertEquals(1,parind.getLane(0).getPendingRacers().size());
+		assertEquals(0,parind.getLane(0).getFinishedRacers().size());
+		assertEquals(1,parind.getLane(0).getStartedRacers().size());		
 	}
 	
 	@Test
 	public void testNotifyChannelTriggered() {
 		// TODO
+		IND ind = new IND();
+		ind.num(123);
+		// Check that it starts and finishes racers properly
+		//finish
+		ind.notifyChannelTriggered(time, 1);
+		assertEquals(1,ind.getLane(0).getPendingRacers().size());
+		//start racer
+		ind.notifyChannelTriggered(time, 0);
+		assertEquals(0,ind.getLane(0).getPendingRacers().size());
+		//finish racer
+		ind.notifyChannelTriggered(time,1);
+		assertEquals(1,ind.getLane(0).getFinishedRacers().size());
+		
+		PARIND parind = new PARIND();
+		parind.num(123);
+		// Check that it starts and finishes racers properly
+		//finish
+		parind.notifyChannelTriggered(time, 1);
+		assertEquals(1,parind.getLane(0).getPendingRacers().size());
+		//start racer
+		parind.notifyChannelTriggered(time, 0);
+		assertEquals(0,parind.getLane(0).getPendingRacers().size());
+		//finish racer
+		parind.notifyChannelTriggered(time,1);
+		assertEquals(1,parind.getLane(0).getFinishedRacers().size());
 	}
 	
 	@Test
@@ -71,8 +161,9 @@ public class TestAbstractEvent {
 		//swap 1st two racers, 1st place should now be 234 and second should be 123
 		ind.swap();
 
-		assertTrue(ind.getLane(0).getStartedRacers().peek().getBib() == 234);
 		assertFalse(ind.getLane(0).getStartedRacers().peek().getBib() == 123);
+		assertTrue(ind.getLane(0).getStartedRacers().peek().getBib() == 234);
+
 	}
 	
 	@Test
@@ -95,11 +186,14 @@ public class TestAbstractEvent {
 		// TODO
 		IND ind = new IND();
 		ind.num(1);
+		// Pending racers size should be 1 since num was called once
 		assertFalse(ind.getLane(0).getPendingRacers().size() == 0);
 		assertTrue(ind.getLane(0).getPendingRacers().size() == 1);
 		ind.clear(1);
+		//Now since clear was called pendingRacres size shold be 0
 		assertTrue(ind.getLane(0).getPendingRacers().size() == 0);
 		
+		// Same as IND above
 		PARIND parind = new PARIND();
 		parind.num(1);
 		parind.num(2);
