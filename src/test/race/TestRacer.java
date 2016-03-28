@@ -18,7 +18,6 @@ public class TestRacer {
 	}
 	
 	@Test
-<<<<<<< HEAD
 	public void testSetStart() {
 		// TODO
 	}
@@ -33,26 +32,6 @@ public class TestRacer {
 		// TODO
 	}
 	
-	@Test
-	public void testDNF() {
-		// TODO
-	}
-
-	@Test
-	public void testGetDuration() {
-		// TODO
-=======
-	public void test(){
-	}
-	
-	//Test if cancel race will work properly
-	public void testCancel() {
-		startTime = LocalTime.now();
-		racer1.setStart(startTime);
-		racer1.cancel();
-		assertTrue(racer1.getFinish() == null);
-		assertTrue(racer1.getStart() == null);
-	}
 	//Test if Did not finish will work properly
 	public void testDNF() {
 		startTime = LocalTime.now();
@@ -70,6 +49,5 @@ public class TestRacer {
 		LocalTime finishTime = LocalTime.now();
 		racer1.setFinish(finishTime);
 		assertTrue(racer1.getDuration() == Duration.between(startTime, finishTime));
->>>>>>> refs/remotes/origin/master
 	}
 }

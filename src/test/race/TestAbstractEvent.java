@@ -15,7 +15,7 @@ public class TestAbstractEvent {
 	
 	Racer racer1, racer2, racer3;
 	LocalTime time;
-	AbstractEvent evnt;
+	AbstractEvent event;
 	
 	@Before
 	public void before() {
@@ -31,34 +31,33 @@ public class TestAbstractEvent {
 		assertFalse(racer1.getBib() == 1);
 		assertTrue(racer1.getBib() == 0);
 		IND ind = new IND();
-		evnt = ind;
+		event = ind;
 		racer1.setStart(time);
-		ind.startRacer(time);
-		assertFalse(evnt.getStartedRacers() == null);
-		assertFalse(evnt.toJSON() == null);
-		assertTrue(evnt.getPendingRacers().size() == 0);
-		racer1.cancel();
+		ind.start(time, 0);
+		assertFalse(event.getLane(0).getStartedRacers() == null);
+		assertFalse(event.toJSON() == null);
+		assertTrue(event.getLane(0).getPendingRacers().size() == 0);
 		ind.clear(0);
-		assertFalse(evnt.getStartedRacers() == null);
-		assertFalse(evnt.toJSON() == null);
-		assertFalse(evnt.getPendingRacers() == null);
-		assertFalse(evnt.getFinishedRacers() == null);
-		assertFalse(evnt.getStartedRacers() == null);
-		evnt.clear(0);
-		assertTrue(evnt.getPendingRacers().size() == 0);
+		assertFalse(event.getLane(0).getStartedRacers() == null);
+		assertFalse(event.toJSON() == null);
+		assertFalse(event.getLane(0).getPendingRacers() == null);
+		assertFalse(event.getLane(0).getFinishedRacers() == null);
+		assertFalse(event.getLane(0).getStartedRacers() == null);
+		event.clear(0);
+		assertTrue(event.getLane(0).getPendingRacers().size() == 0);
 		
 		time = LocalTime.now();
 		racer1.setStart(time);
-		ind.startRacer(time);
+		ind.start(time, 0);
 		time = LocalTime.now();
 		racer3.setStart(time);
 		
-		assertTrue(evnt.getPendingRacers().size() == 0);
-		assertFalse(evnt.toJSON() == null);
-		assertFalse(evnt.toString() == null);
+		assertTrue(event.getLane(0).getPendingRacers().size() == 0);
+		assertFalse(event.toJSON() == null);
+		assertFalse(event.toString() == null);
 		racer1 = racer2 = racer3 = null;
-		assertFalse(evnt.toJSON() == null);
-		assertTrue(evnt.getPendingRacers().toString() == "[]");
+		assertFalse(event.toJSON() == null);
+		assertTrue(event.getLane(0).getPendingRacers().toString() == "[]");
 	}
 	
 }
