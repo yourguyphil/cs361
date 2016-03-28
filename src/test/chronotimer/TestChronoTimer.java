@@ -55,7 +55,16 @@ public class TestChronoTimer {
 	
 	@Test
 	public void testRESET(){
-		// TODO
+		chronotimer.CONN(Sensor.EYE, 0);
+		chronotimer.TOGGLE(0);
+		chronotimer.NEWRUN();
+		chronotimer.NEWRUN();
+		
+		assertEquals(chronotimer.getRuns().size(), 3);
+		
+		chronotimer.RESET();
+		assertEquals(chronotimer.getRuns().size(), 1);
+		
 	}
 	
 	@Test
@@ -152,36 +161,102 @@ public class TestChronoTimer {
 
 	@Test
 	public void testNUM(){
-		//TODO
+		// Should have no pending racers yet.
+		assertEquals(0,chronotimer.getCurrentRun().getLane(0).getPendingRacers().size());
+		int num = 123;
+		//Command num 123 will start a new racer with bib 123 
+		chronotimer.NUM(123);
+		// check if racer in queue matches bib
+		assertEquals(num,chronotimer.getCurrentRun().getLane(0).getPendingRacers().peek().getBib());
 	}
 	
 	@Test
 	public void testCLR(){
-		//TODO
+		chronotimer.CONN(Sensor.EYE, 0);
+		chronotimer.TOGGLE(0);
+		chronotimer.NUM(123);
+		chronotimer.NUM(234);
+		chronotimer.NUM(345);
+		chronotimer.START();
+		
+		chronotimer.CLR(123);
+		assertNotEquals(chronotimer.getCurrentRun().getLane(0).getPendingRacers().peek().getBib(), 123);
+		
+		chronotimer.CLR(234);
+		assertNotEquals(chronotimer.getCurrentRun().getLane(0).getPendingRacers().peek().getBib(), 234);
+		
+		assertEquals(chronotimer.getCurrentRun().getLane(0).getPendingRacers().peek().getBib(), 345);
 	}
 	
 	@Test
 	public void testSWAP(){
-		// TODO
+		//Setup for race
+		chronotimer.CONN(Sensor.EYE, 0);
+		chronotimer.TOGGLE(0);
+		chronotimer.NUM(123);
+		chronotimer.NUM(234);
+		chronotimer.NUM(345);
+		chronotimer.START();
+		//123 should be bib of guy in 1st place
+		assertEquals(123,chronotimer.getCurrentRun().getLane(0).getStartedRacers().peek().getBib());
+		chronotimer.START();
+		chronotimer.START();
+		chronotimer.SWAP();
+		//swap called so now 234 should be 1st place
+		assertEquals(234,chronotimer.getCurrentRun().getLane(0).getStartedRacers().peek().getBib());
 	}
 	
 	@Test
 	public void testDNF(){
-		// TODO
+		chronotimer.CONN(Sensor.EYE, 0);
+		chronotimer.TOGGLE(0);
+		chronotimer.NUM(123);
+		chronotimer.NUM(234);
+		chronotimer.TRIG(0);
+		assertEquals(chronotimer.getCurrentRun().getLane(0).getStartedRacers().size(), 1);	
+		
+		chronotimer.DNF();
+		assertEquals(chronotimer.getCurrentRun().getLane(0).getFinishedRacers().size(), 0);
 	}
 	
 	@Test
 	public void testTRIG(){
-		// TODO
+		chronotimer.CONN(Sensor.EYE, 0);
+		chronotimer.TOGGLE(0);
+		chronotimer.NUM(123);
+		chronotimer.TRIG(0);
+		
+		assertEquals(chronotimer.getCurrentRun().getLane(0).getStartedRacers().size(), 1);	
 	}
 	
 	@Test
 	public void testSTART(){
-		// TODO
+		chronotimer.CONN(Sensor.EYE, 0);
+		chronotimer.TOGGLE(0);
+		chronotimer.NUM(123);
+		chronotimer.NUM(234);
+		chronotimer.START();
+		assertEquals(chronotimer.getCurrentRun().getLane(0).getStartedRacers().size(), 1);
+		
+		chronotimer.START();
+		assertEquals(chronotimer.getCurrentRun().getLane(0).getStartedRacers().size(), 2);
 	}
 	
 	@Test
 	public void testFINISH(){
-		// TODO
+		chronotimer.CONN(Sensor.EYE, 0);
+		chronotimer.TOGGLE(0);
+		chronotimer.NUM(123);
+		chronotimer.NUM(234);
+		chronotimer.START();
+		assertEquals(chronotimer.getCurrentRun().getLane(0).getStartedRacers().size(), 1);
+	
+		chronotimer.START();
+		assertEquals(chronotimer.getCurrentRun().getLane(0).getStartedRacers().size(), 2);
+		
+		chronotimer.FINISH();
+		assertEquals(chronotimer.getCurrentRun().getLane(0).getFinishedRacers().size(), 0);
+		
+		
 	}
 }

@@ -45,7 +45,7 @@ public class IND extends AbstractEvent{
 	public void swap() {
 		LinkedList<Racer> startedRacers = getLane(0).getStartedRacers();
 		
-		if(startedRacers.size() > 2)
+		if(startedRacers.size() >= 2)
 			Collections.swap(startedRacers, 0, 1);
 		else
 			System.out.println("Need at least 2 started racers to swap");
