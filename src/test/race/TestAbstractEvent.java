@@ -52,7 +52,6 @@ public class TestAbstractEvent {
 	
 	@Test
 	public void testSwap() {
-		// TODO
 		//Put 4 racers into pendingRacers queue
 		IND ind = new IND();
 		ind.num(123);
@@ -77,7 +76,6 @@ public class TestAbstractEvent {
 	
 	@Test
 	public void testNum() {
-		// TODO
 		IND ind = new IND();
 		ind.num(1);
 		assertFalse(ind.getLane(0).getPendingRacers().size() == 0);
@@ -92,7 +90,6 @@ public class TestAbstractEvent {
 	
 	@Test
 	public void testClear() {
-		// TODO
 		IND ind = new IND();
 		ind.num(1);
 		assertFalse(ind.getLane(0).getPendingRacers().size() == 0);
@@ -113,7 +110,6 @@ public class TestAbstractEvent {
 	
 	@Test
 	public void testGetLane() {
-		// TODO
 		IND ind = new IND();
 		assertNull(ind.getLane(-1));
 		assertNotNull(ind.getLane(0));

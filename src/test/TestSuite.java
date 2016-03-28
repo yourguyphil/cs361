@@ -9,6 +9,7 @@ import test.chronotimer.TestTime;
 import test.io.TestCommand;
 import test.io.TestParser;
 import test.io.TestWriter;
+import test.race.TestAbstractEvent;
 import test.race.TestIND;
 import test.race.TestPARIND;
 import test.race.TestRacer;
