@@ -11,7 +11,27 @@ public class TestRacer {
 	}
 	
 	@Test
-	public void test(){
-		
+	public void testSetStart() {
+		// TODO
+	}
+	
+	@Test
+	public void testSetFinish() {
+		// TODO
+	}
+	
+	@Test
+	public void testCancel() {
+		// TODO
+	}
+	
+	@Test
+	public void testDNF() {
+		// TODO
+	}
+
+	@Test
+	public void testGetDuration() {
+		// TODO
 	}
 }

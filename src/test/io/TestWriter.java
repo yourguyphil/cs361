@@ -11,7 +11,7 @@ public class TestWriter {
 	}
 	
 	@Test
-	public void test(){
-		
+	public void testWrite(){
+		// TODO
 	}
 }

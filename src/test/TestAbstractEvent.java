@@ -1,17 +1,9 @@
-package test.race;
-
-import static org.junit.Assert.*;
-
-import java.time.LocalTime;
-import java.util.Collections;
+package test;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import race.IND;
-import race.Racer;
-
-public class TestIND {
+public class TestAbstractEvent {
 
 	@Before
 	public void before() {
@@ -46,4 +38,5 @@ public class TestIND {
 	@Test
 	public void testNotifyChannelTriggered() {
 	}
+	
 }

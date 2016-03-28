@@ -1,38 +1,34 @@
 package race;
 
 import java.time.LocalTime;
+import java.util.LinkedList;
 
 public class PARIND extends AbstractEvent{
 
-	@Override
-	public void num(int bibNumber) {
-		// TODO Auto-generated method stub
-		
+	/**
+	 * Creates a PARIND event
+	 */
+	public PARIND() {
+		super(2);
 	}
-
+	
 	@Override
-	public void clear(int bibNumber) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void startRacer(LocalTime start) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void finishRacer(LocalTime finish) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void DNFRacer() {
-		// TODO Auto-generated method stub
-		
+	public void start(LocalTime start, int lane) {
+		if (start == null) {
+			System.out.println("Start cannot be null");
+		} else if (lane < 0 || lane >= lanes.length) {
+			System.out.println("PARIND only has lanes 1-" + lanes.length);
+		} else {
+			LinkedList<Racer> pendingRacers = getLane(lane).getPendingRacers();
+			LinkedList<Racer> startedRacers = getLane(lane).getStartedRacers();
+			
+			if (!pendingRacers.isEmpty()) {
+				pendingRacers.peek().setStart(start);
+				startedRacers.add(pendingRacers.poll());
+			} else {
+				System.out.println("No pending racers to start");
+			}
+		}
 	}
 
 }

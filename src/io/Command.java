@@ -28,10 +28,10 @@ public class Command {
 	public static boolean execute(ChronoTimer chronotimer, LocalTime timeStamp, String cmdName, String[] args) {
 		if (chronotimer == null || timeStamp == null || cmdName == null || args == null)
 			return false;
-		
+
 		// Set the chronotimer time to that of the command's timestamp
 		chronotimer.TIME(timeStamp);
-		
+
 		// No arg commands
 		if (args.length == 0) {
 			switch (cmdName) {
@@ -76,10 +76,10 @@ public class Command {
 				return true;
 			}
 		}
-		
-		// One arg commands
-		if (args.length == 1) {
-			try {
+
+		try {
+			// One arg commands
+			if (args.length == 1) {
 				switch (cmdName) {
 
 				case "TIME":
@@ -118,22 +118,22 @@ public class Command {
 					chronotimer.TRIG(Integer.parseInt(args[0]) - 1);
 					return true;
 				}
-			} catch (DateTimeParseException | IllegalArgumentException e) { }
-		}
-		
-		// Two arg commands
-		if (args.length == 2) {
-			try {
-				if (cmdName.equals("CONN")) {
-					chronotimer.CONN(Sensor.valueOf(args[0]), Integer.parseInt(args[1]) - 1);
-					return true;
-				}
-			} catch (IllegalArgumentException e) { }
-		}
+			}
+
+			// Two arg commands
+			if (args.length == 2) {
+				try {
+					if (cmdName.equals("CONN")) {
+						chronotimer.CONN(Sensor.valueOf(args[0]), Integer.parseInt(args[1]) - 1);
+						return true;
+					}
+				} catch (IllegalArgumentException e) { }
+			}
+		} catch (DateTimeParseException | IllegalArgumentException e) { }
 
 		// No remaining commands to try and execute
 		System.out.println("Illegal command: " + Time.toString(timeStamp) + " " + cmdName + " " + Arrays.toString(args));
 		return false;
 	}
-	
+
 }

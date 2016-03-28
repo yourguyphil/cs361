@@ -2,6 +2,7 @@ package race;
 
 import java.time.LocalTime;
 import java.util.Collections;
+import java.util.LinkedList;
 
 /** Individual timed events (such as ski races, bobsled runs) In the IND events,
  * racers queue up for single “runs” of the race. Each racer has a start event
@@ -14,67 +15,40 @@ import java.util.Collections;
  */
 public class IND extends AbstractEvent{
 	
-	/** Sets the next competitor to start
-	 * @param bibNumber the bib number of the next competitor to start
+	/**
+	 * Creates an IND event
 	 */
-	public void num(int bibNumber) {
-		pendingRacers.add(new Racer(bibNumber));
-	}
-	
-	/** Clear the next racer waiting to start
-	 * @param bibNumber the bib number of the competitor to clear
-	 */
-	public void clear(int bibNumber) {		
-		for (Racer r : pendingRacers) {
-			if (r.getBib() == bibNumber)
-				pendingRacers.remove(r);
-		}
-	}
-	
-	/** Starts the next racer waiting to start
-	 * @param start the time the racer started at
-	 */
-	public void startRacer(LocalTime start) {
-		if (pendingRacers.size() > 0) {
-			pendingRacers.peek().setStart(start);
-			startedRacers.add(pendingRacers.poll());
-		} else {
-			System.out.println("No pending racers to start");
-		}
+	public IND() {
+		super(1);
 	}
 
-	/** Finishes the next active racer waiting to finish
-	 * @param finish the time the racer finished at
-	 */
-	public void finishRacer(LocalTime finish) {
-		if (startedRacers.size() > 0) {
-			startedRacers.peek().setFinish(finish);
-			finishedRacers.add(startedRacers.poll());
+	@Override
+	public void start(LocalTime start, int lane) {
+		if (start == null) {
+			System.out.println("Start cannot be null");
+		} else if (lane < 0 || lane >= lanes.length) {
+			System.out.println("IND only has lanes 1-" + lanes.length);
 		} else {
-			System.out.println("No started racers to finish");
-		}
-	}
-
-	/** Marks the next active racer waiting to finish as DNF
-	 */
-	public void DNFRacer() {
-		if (startedRacers.size() > 0) {
-			startedRacers.peek().DNF();
-			finishedRacers.add(startedRacers.poll());
-		} else {
-			System.out.println("No started racers to DNF");
+			LinkedList<Racer> pendingRacers = getLane(lane).getPendingRacers();
+			LinkedList<Racer> startedRacers = getLane(lane).getStartedRacers();
+			
+			if (!pendingRacers.isEmpty()) {
+				pendingRacers.peek().setStart(start);
+				startedRacers.add(pendingRacers.poll());
+			} else {
+				System.out.println("No pending racers to start");
+			}
 		}
 	}
 	
-	/** Swap the next two racers to finish
-	 */
+	@Override
 	public void swap() {
+		LinkedList<Racer> startedRacers = getLane(0).getStartedRacers();
+		
 		if(startedRacers.size() > 2)
 			Collections.swap(startedRacers, 0, 1);
 		else
 			System.out.println("Need at least 2 started racers to swap");
 	}
 	
-	
-
 }

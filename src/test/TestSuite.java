@@ -9,8 +9,8 @@ import test.chronotimer.TestTime;
 import test.io.TestCommand;
 import test.io.TestParser;
 import test.io.TestWriter;
-import test.race.TestAbstractEvent;
 import test.race.TestIND;
+import test.race.TestLane;
 import test.race.TestPARIND;
 import test.race.TestRacer;
 
@@ -26,6 +26,7 @@ import test.race.TestRacer;
 	
 	TestAbstractEvent.class,
 	TestIND.class,
+	TestLane.class,
 	TestPARIND.class,
 	TestRacer.class})
 

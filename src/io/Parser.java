@@ -29,7 +29,11 @@ public class Parser {
 	 * @param chronotimer chronotimer to parse the commands for
 	 */
 	public Parser(ChronoTimer chronotimer) {
-		this.chronotimer = chronotimer;
+		if (chronotimer == null) {
+			throw new IllegalArgumentException("Chronotimer cannot be null");
+		} else {
+			this.chronotimer = chronotimer;
+		}
 	}
 
 	/**
@@ -40,23 +44,27 @@ public class Parser {
 	 * Doesn't guarantee the command was successfully executed
 	 */
 	public boolean parse(String input) {
-		try {
-			String[] buffer = input.split("\\s+");
-
-			LocalTime timeStamp = Time.fromString(buffer[0]);
-			String cmdName = buffer[1];
-			String[] args = Arrays.copyOfRange(buffer, 2, buffer.length);
-
-			if (cmdName.equals("FILE")) {
-				parseFile(args[0]);
-			} else {
-				Command.execute(chronotimer, timeStamp, cmdName, args);
+		if (input == null) {
+			System.out.println("Input cannot be null");
+		} else {
+			try {
+				String[] buffer = input.split("\\s+");
+	
+				LocalTime timeStamp = Time.fromString(buffer[0]);
+				String cmdName = buffer[1];
+				String[] args = Arrays.copyOfRange(buffer, 2, buffer.length);
+	
+				if (cmdName.equals("FILE")) {
+					parseFile(args[0]);
+				} else {
+					Command.execute(chronotimer, timeStamp, cmdName, args);
+				}
+				return true;
+			} catch (DateTimeParseException e) {
+				System.out.println("Error parsing, time not formatted as HH:mm:ss.SS");
+			} catch (IndexOutOfBoundsException e) {
+				System.out.println("Error parsing, missing command name");
 			}
-			return true;
-		} catch (DateTimeParseException e) {
-			System.out.println("Error parsing, time not formatted as HH:mm:ss.SS");
-		} catch (IndexOutOfBoundsException e) {
-			System.out.println("Error parsing, no command name");
 		}
 		return false;
 	}
@@ -67,18 +75,22 @@ public class Parser {
 	 * Doesn't guarantee every line was successfully parsed, nor executed
 	 */
 	public boolean parseFile(String path) {
-		try {
-			Scanner fileReader = new Scanner(new File("src\\test\\files\\" + path));
-			while (fileReader.hasNextLine()) {
-				String nextLine = fileReader.nextLine();
-				System.out.println(nextLine);
-				parse(nextLine);
+		if (path == null) {
+			System.out.println("Path cannot be null");
+		} else {
+			try {
+				Scanner fileReader = new Scanner(new File("src\\test\\files\\" + path));
+				while (fileReader.hasNextLine()) {
+					String nextLine = fileReader.nextLine();
+					System.out.println(nextLine);
+					parse(nextLine);
+				}
+				
+				fileReader.close();
+				return true;
+			} catch (IOException e) {
+				System.out.println("Error parsing command file");
 			}
-			
-			fileReader.close();
-			return true;
-		} catch (IOException e) {
-			System.out.println("Error parsing command file");
 		}
 		return false;
 	}

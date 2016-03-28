@@ -17,41 +17,45 @@ public class Racer {
 	 * @param bibNumber the bib number of the racer
 	 */
 	public Racer(int bibNumber) {
-		if(bibNumber > 99999 || bibNumber < 0) throw new IllegalArgumentException("Valid racer bib numbers range from 0 to 99,999");
-		this.bibNumber = bibNumber;
+		if(bibNumber > 9999 || bibNumber < 0) {
+			throw new IllegalArgumentException("Valid racer bib numbers are 0-9,999");
+		} else {
+			this.bibNumber = bibNumber;
+		}
 	}
 
 	/** Sets the start time of the racer
 	 * @param time the start time of the racer
 	 */
 	public void setStart(LocalTime time) {
-		startTime = time;
+		if (time == null) {
+			System.out.println("Time cannot be null");
+		} else {
+			startTime = time;
+		}
 	}
 	
 	/** Sets the finish time of the racer
 	 * @param time the finish time of the racer
 	 */
 	public void setFinish(LocalTime time) {
-		if (startTime == null)
-			throw new IllegalStateException("Must start before finish");
-		else
+		if (time == null) {
+			System.out.println("Time cannot be null");
+		} else if (startTime == null) {
+			System.out.println("Must start before finish");
+		} else {
 			finishTime = time;
-	}
-	
-	/** Marks the racer as canceled
-	 */
-	public void cancel() {
-		startTime = null;
-		finishTime = null;
+		}
 	}
 	
 	/** Marks the racer as DNF
 	 */
 	public void DNF() {
-		if (startTime == null)
-			throw new IllegalStateException("Must start before DNF");
-		else
+		if (startTime == null) {
+			System.out.println("Must start before DNF");
+		} else {
 			finishTime = null;
+		}
 	}
 	
 	/** Gets the start time of the racer
@@ -79,12 +83,15 @@ public class Racer {
 	 * @return the duration time of the racer
 	 */
 	public Duration getDuration() {
-		if (startTime == null || finishTime == null)
-			throw new IllegalStateException("Must have a start and finish to get duration");
-		else
+		if (startTime == null || finishTime == null) {
+			System.out.println("Must have a start and finish to get duration");
+			return null;
+		} else {
 			return Duration.between(startTime, finishTime);
+		}
 	}
 
+	@Override
 	public String toString() {
 		if (startTime == null && finishTime == null) {
 			return bibNumber + " CANCEL"; 

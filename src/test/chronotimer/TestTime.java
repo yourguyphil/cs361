@@ -61,6 +61,11 @@ public class TestTime {
 		assertEquals("23:59:59.99", Time.toString(times[5]));
 	}
 	
+	@Test
+	public void testToStringNull() {
+		assertThrows(IllegalArgumentException.class, () -> Time.toString(null));
+	}
+	
 	private static void assertThrows(Class<?> throwable, Runnable runnable) {
 		boolean fail = false;
 		try {

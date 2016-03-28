@@ -19,7 +19,11 @@ public class Channel {
 	 * @param sensor the type of sensor to be connected
 	 */
 	public void connect(Sensor sensor) {
-		this.sensor = sensor;
+		if (sensor == null) {
+			System.out.println("Sensor cannot be null");
+		} else {
+			this.sensor = sensor;
+		}
 	}
 	
 	/** Disconnects any sensor from the channel
@@ -38,6 +42,8 @@ public class Channel {
 	 * @return true if the sensor was triggered, false otherwise
 	 */
 	public boolean trigger() {
+		if (!isArmed) System.out.println("Channel unarmed");
+		if (sensor == NONE) System.out.println("No sensor connected");
 		return isArmed && sensor != NONE;
 	}
 
