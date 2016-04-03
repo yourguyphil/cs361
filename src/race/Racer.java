@@ -17,8 +17,8 @@ public class Racer {
 	 * @param bibNumber the bib number of the racer
 	 */
 	public Racer(int bibNumber) {
-		if(bibNumber > 9999 || bibNumber < 0) {
-			throw new IllegalArgumentException("Valid racer bib numbers are 0-9,999");
+		if(bibNumber > 99999 || bibNumber < 0) {
+			throw new IllegalArgumentException("Valid racer bib numbers are 0-99999");
 		} else {
 			this.bibNumber = bibNumber;
 		}

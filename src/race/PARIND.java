@@ -3,6 +3,17 @@ package race;
 import java.time.LocalTime;
 import java.util.LinkedList;
 
+/**
+ * Parallel events (e.g. skiing) with individual starts In the PARIND events,
+ * racers queue up for parallel timed “runs” of the race. Each racer has a start
+ * event and end event. By convention the start is on channel 1 and channel 3,
+ * the finish is on channel 2 and channel 4, but there is nothing particularly
+ * special about the events on each channel. When a start event is received, it
+ * is associated with the next racer in the start queue. When a finish event is
+ * received, it is associated with the next racer that is to finish. If there is
+ * more than one racer active, the finish event is associated with racers in a
+ * FIFO basis.
+ */
 public class PARIND extends AbstractEvent{
 
 	/**
