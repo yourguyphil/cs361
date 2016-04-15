@@ -2,6 +2,7 @@ package chronotimer;
 import io.Command;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
@@ -19,7 +20,7 @@ import javax.swing.JTextPane;
 
 import race.IND;
 import race.Lane;
-
+//In run config: use width 850, height 600 for this Applet
 public class ChronoTimerEmulator extends JApplet {
 
 	/**
@@ -48,7 +49,7 @@ public class ChronoTimerEmulator extends JApplet {
 		panel.setLayout(null);
 		
 		JButton powerButton = new JButton("Power");
-		powerButton.setBounds(33, 20, 68, 29);
+		powerButton.setBounds(33, 20, 80, 29);
 		powerButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -71,18 +72,18 @@ public class ChronoTimerEmulator extends JApplet {
 		panel.add(powerButton);
 		
 		
-		JTextPane consoleText = new JTextPane();
+		final JTextPane consoleText = new JTextPane();
 		consoleText.setBounds(246, 246, 252, 179);
 		panel.add(consoleText);
 		
-		JTextPane printerText = new JTextPane();
-		printerText.setBounds(516, 52, 262, 160);
+		final JTextPane printerText = new JTextPane();
+		printerText.setBounds(556, 52, 262, 160);
 		panel.add(printerText);
 		
 	
 		
 		JLabel lblNewLabel = new JLabel("CHRONOTIMER POWER RANGERS");
-		lblNewLabel.setBounds(387, 6, 140, 16);
+		lblNewLabel.setBounds(280, 6, 190, 16);
 		panel.add(lblNewLabel);
 		
 		JLabel startLbl = new JLabel("Start");
@@ -94,19 +95,19 @@ public class ChronoTimerEmulator extends JApplet {
 		panel.add(enableDisplayLbl);
 		
 		JButton channel1 = new JButton("1");
-		channel1.setBounds(291, 44, 29, 29);
+		channel1.setBounds(291, 44, 41, 29);
 		panel.add(channel1);
 		
 		JButton channel3 = new JButton("3");
-		channel3.setBounds(337, 44, 29, 29);
+		channel3.setBounds(337, 44, 41, 29);
 		panel.add(channel3);
 		
 		JButton channel5 = new JButton("5");
-		channel5.setBounds(385, 44, 29, 29);
+		channel5.setBounds(385, 44, 41, 29);
 		panel.add(channel5);
 		
 		JButton channel7 = new JButton("7");
-		channel7.setBounds(431, 44, 29, 29);
+		channel7.setBounds(431, 44, 41, 29);
 		panel.add(channel7);
 		
 		JCheckBox check1 = new JCheckBox("");
@@ -134,22 +135,22 @@ public class ChronoTimerEmulator extends JApplet {
 		panel.add(enableDisableLbl2);
 		
 		JButton finishButton2 = new JButton("2");
-		finishButton2.setBounds(291, 159, 29, 29);
+		finishButton2.setBounds(291, 159, 41, 29);
 		panel.add(finishButton2);
 		
 		JButton finishButton4 = new JButton("4");
-		finishButton4.setBounds(337, 159, 29, 29);
+		finishButton4.setBounds(337, 159, 41, 29);
 		panel.add(finishButton4);
 		
 		JButton finishButton6 = new JButton("6");
-		finishButton6.setBounds(387, 159, 29, 29);
+		finishButton6.setBounds(387, 159, 41, 29);
 		panel.add(finishButton6);
 		
 		JButton finishButton8 = new JButton("8");
-		finishButton8.setBounds(431, 159, 29, 29);
+		finishButton8.setBounds(431, 159, 41, 29);
 		panel.add(finishButton8);
 		
-		ArrayList<JButton> channelsToTrigger = new ArrayList<JButton>();
+		final ArrayList<JButton> channelsToTrigger = new ArrayList<JButton>();
 		channelsToTrigger.add(channel1);
 		channelsToTrigger.add(channel3);
 		channelsToTrigger.add(channel5);
@@ -200,7 +201,7 @@ public class ChronoTimerEmulator extends JApplet {
 		check8.setBounds(431, 196, 29, 28);
 		panel.add(check8);
 		
-		ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
+		final ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
 		checkBoxes.add(check1);
 		checkBoxes.add(check2);
 		checkBoxes.add(check3);
@@ -234,12 +235,12 @@ public class ChronoTimerEmulator extends JApplet {
 			checkBoxes.get(i).addActionListener(toggle);
 		}
 		
-		JTextArea textFromButtons = new JTextArea();
-		textFromButtons.setBounds(643, 257, 87, 20);
+		final JTextArea textFromButtons = new JTextArea();
+		textFromButtons.setBounds(643, 257, 98, 20);
 		panel.add(textFromButtons);
 		
 		JButton btnPrinterPower = new JButton("Print");
-		btnPrinterPower.setBounds(586, 20, 117, 29);
+		btnPrinterPower.setBounds(630, 20, 117, 29);
 		btnPrinterPower.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -262,58 +263,54 @@ public class ChronoTimerEmulator extends JApplet {
 	
 		
 		JButton Calc1 = new JButton("1");
-		Calc1.setBounds(643, 278, 29, 29);
+		Calc1.setBounds(643, 278, 41, 29);
 		panel.add(Calc1);
 		
 		JButton Calc2 = new JButton("2");
-		Calc2.setBounds(672, 278, 29, 29);
+		Calc2.setBounds(672, 278, 41, 29);
 		panel.add(Calc2);
 		
 		JButton Calc3 = new JButton("3");
-		Calc3.setBounds(701, 278, 29, 29);
+		Calc3.setBounds(701, 278, 41, 29);
 		panel.add(Calc3);
 		
 		JButton Calc4 = new JButton("4");
-		Calc4.setBounds(643, 305, 29, 29);
+		Calc4.setBounds(643, 305, 41, 29);
 		panel.add(Calc4);
 		
 		JButton Calc5 = new JButton("5");
-		Calc5.setBounds(672, 305, 29, 29);
+		Calc5.setBounds(672, 305, 41, 29);
 		panel.add(Calc5);
 		
 		JButton Calc6 = new JButton("6");
-		Calc6.setBounds(701, 305, 29, 29);
+		Calc6.setBounds(701, 305, 41, 29);
 		panel.add(Calc6);
 		
 		JButton Calc7 = new JButton("7");
-		Calc7.setBounds(643, 333, 29, 29);
+		Calc7.setBounds(643, 333, 41, 29);
 		panel.add(Calc7);
 		
 		JButton Calc8 = new JButton("8");
-		Calc8.setBounds(672, 333, 29, 29);
+		Calc8.setBounds(672, 333, 41, 29);
 		panel.add(Calc8);
 		
 		JButton Calc9 = new JButton("9");
-		Calc9.setBounds(701, 333, 29, 29);
+		Calc9.setBounds(701, 333, 41, 29);
 		panel.add(Calc9);
 		
 		JButton CalcStar = new JButton("*");
-		CalcStar.setBounds(643, 360, 29, 29);
+		CalcStar.setBounds(643, 360, 41, 29);
 		panel.add(CalcStar);
 		
 		JButton Calc0 = new JButton("0");
-		Calc0.setBounds(672, 360, 29, 29);
+		Calc0.setBounds(672, 360, 41, 29);
 		panel.add(Calc0);
 		
 		JButton CalcPound = new JButton("#");
-		CalcPound.setBounds(701, 360, 29, 29);
+		CalcPound.setBounds(701, 360, 41, 29);
 		panel.add(CalcPound);
 		
-		JButton calcSpecial = new JButton(":");
-		calcSpecial.setBounds(730, 360, 29, 29);
-		panel.add(calcSpecial);
-		
-		ArrayList<JButton>calcButtons = new ArrayList<JButton>();
+		final ArrayList<JButton>calcButtons = new ArrayList<JButton>();
 		calcButtons.add(Calc0);
 		calcButtons.add(Calc1);
 		calcButtons.add(Calc2);
@@ -326,7 +323,6 @@ public class ChronoTimerEmulator extends JApplet {
 		calcButtons.add(Calc9);
 		calcButtons.add(CalcStar);
 		calcButtons.add(CalcPound);
-		calcButtons.add(calcSpecial);
 		
 		ActionListener updateStringInput = new ActionListener(){
 
@@ -375,7 +371,7 @@ public class ChronoTimerEmulator extends JApplet {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnSwap.setBounds(653, 410, 60, 29);
+		btnSwap.setBounds(653, 410, 70, 29);
 		panel.add(btnSwap);
 		
 		JButton connectCommandBtn = new JButton("Connect");
@@ -425,7 +421,7 @@ public class ChronoTimerEmulator extends JApplet {
 		sensorGrp.add(padSensor);
 		sensorGrp.add(pushSensor);
 		
-		ArrayList<JRadioButton> sensorButtons = new ArrayList<JRadioButton>();
+		final ArrayList<JRadioButton> sensorButtons = new ArrayList<JRadioButton>();
 		sensorButtons.add(gateSensor);
 		sensorButtons.add(eyeSensor);
 		sensorButtons.add(padSensor);
@@ -491,7 +487,7 @@ public class ChronoTimerEmulator extends JApplet {
 		channelGroup.add(channel1Sensor);
 		channelGroup.add(channel3Sensor);
 		
-		ArrayList<JRadioButton> channelSensorButtons = new ArrayList<JRadioButton>();
+		final ArrayList<JRadioButton> channelSensorButtons = new ArrayList<JRadioButton>();
 		channelSensorButtons.add(channel1Sensor);
 		channelSensorButtons.add(channel2Sensor);
 		channelSensorButtons.add(channel3Sensor);
@@ -523,7 +519,7 @@ public class ChronoTimerEmulator extends JApplet {
 		eventGroup.add(grpEvent);
 		eventGroup.add(paraGrpEvent);
 
-		ArrayList<JRadioButton>eventTypes = new ArrayList<JRadioButton>();
+		final ArrayList<JRadioButton>eventTypes = new ArrayList<JRadioButton>();
 		eventTypes.add(indEvent);
 		eventTypes.add(indParaEvent);
 		eventTypes.add(grpEvent);
@@ -546,7 +542,7 @@ public class ChronoTimerEmulator extends JApplet {
 		}
 		
 		JButton numButton = new JButton("NUM");
-		numButton.setBounds(586, 410, 60, 29);
+		numButton.setBounds(591, 410, 60, 29);
 		numButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -569,7 +565,7 @@ public class ChronoTimerEmulator extends JApplet {
 	
 		
 		JButton timeButton = new JButton("TIME");
-		timeButton.setBounds(718, 410, 60, 29);
+		timeButton.setBounds(725, 410, 70, 29);
 		timeButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -603,7 +599,7 @@ public class ChronoTimerEmulator extends JApplet {
 		panel.add(clearButton);
 		
 		JButton btnNewButton = new JButton("NEWRUN");
-		btnNewButton.setBounds(529, 546, 117, 29);
+		btnNewButton.setBounds(565, 546, 117, 29);
 		btnNewButton.addActionListener(new ActionListener(){
 
 			@Override
@@ -623,7 +619,7 @@ public class ChronoTimerEmulator extends JApplet {
 		panel.add(btnNewButton);
 		
 		JButton btnEndrun = new JButton("ENDRUN");
-		btnEndrun.setBounds(643, 546, 117, 29);
+		btnEndrun.setBounds(680, 546, 117, 29);
 		btnEndrun.addActionListener(new ActionListener(){
 
 			@Override
@@ -656,6 +652,7 @@ public class ChronoTimerEmulator extends JApplet {
 		for(int i = 0; i < channelSensorButtons.size(); i++){
 			channelSensorButtons.get(i).addActionListener(updateChannelType);
 		}
-		
+		setVisible(true);
+		getContentPane().setSize(1000, 900);		
 	}
 }
