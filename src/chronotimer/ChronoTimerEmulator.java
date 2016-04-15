@@ -45,7 +45,7 @@ public class ChronoTimerEmulator extends JApplet {
 	JPanel panel = new JPanel();
 	JButton powerButton = new JButton("Power");
 	final JTextArea consoleText = new JTextArea();
-	final JTextPane printerText = new JTextPane();
+	final JTextArea printerText = new JTextArea();
 	JLabel lblNewLabel = new JLabel("CHRONOTIMER POWER RANGERS");	
 	JLabel startLbl = new JLabel("Start");
 	JLabel enableDisplayLbl = new JLabel("Enable/Disable");
@@ -140,8 +140,10 @@ public class ChronoTimerEmulator extends JApplet {
 		scroll.setBounds(246, 246, 252, 179);
 		panel.add(scroll);
 		
-		printerText.setBounds(556, 52, 262, 160);
-		panel.add(printerText);
+		JScrollPane scroll2 = new JScrollPane(printerText);
+		scroll2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll2.setBounds(556, 52, 262, 160);
+		panel.add(scroll2);
 	
 		lblNewLabel.setBounds(280, 6, 190, 16);
 		panel.add(lblNewLabel);
@@ -412,8 +414,8 @@ public class ChronoTimerEmulator extends JApplet {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-			if(On()) System.out.println("ON");
-			else System.out.println("OFF");
+			if(On()) updateScreen("ON");
+			else updateScreen("OFF");
 		}
 	}
 	
@@ -432,7 +434,7 @@ public class ChronoTimerEmulator extends JApplet {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						consoleText.setText(consoleText.getText() + "\n" + c);
+						updateScreen(c);
 					}
 				}
 			}
@@ -529,7 +531,7 @@ public class ChronoTimerEmulator extends JApplet {
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
-					consoleText.setText(consoleText.getText() + "\n" + test);
+					updateScreen(test);
 				}
 				
 				if(e.getSource() == numButton){
@@ -645,6 +647,10 @@ public class ChronoTimerEmulator extends JApplet {
 	
 	private void setOn(boolean state){
 		isOn = state;
+	}
+	
+	private void updateScreen(String text){
+		printerText.setText(printerText.getText() + "\n" + text);
 	}
 	
 	
