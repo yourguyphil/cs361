@@ -15,8 +15,11 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
 
 import race.IND;
 import race.Lane;
@@ -72,9 +75,12 @@ public class ChronoTimerEmulator extends JApplet {
 		panel.add(powerButton);
 		
 		
-		final JTextPane consoleText = new JTextPane();
-		consoleText.setBounds(246, 246, 252, 179);
-		panel.add(consoleText);
+		final JTextArea consoleText = new JTextArea();
+		consoleText.setEditable(false);
+		JScrollPane scroll = new JScrollPane(consoleText);
+	    scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll.setBounds(246, 246, 252, 179);
+		panel.add(scroll);
 		
 		final JTextPane printerText = new JTextPane();
 		printerText.setBounds(556, 52, 262, 160);
@@ -225,7 +231,7 @@ public class ChronoTimerEmulator extends JApplet {
 							e1.printStackTrace();
 						}
 						System.out.println(c);
-						consoleText.setText(c);
+						consoleText.setText(consoleText.getText() + "\n" + c);
 					}
 				}
 			}
@@ -388,7 +394,7 @@ public class ChronoTimerEmulator extends JApplet {
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
-				consoleText.setText(test);
+				consoleText.setText(consoleText.getText() + "\n" + test);
 			}
 			
 		});
