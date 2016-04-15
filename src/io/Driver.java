@@ -13,6 +13,22 @@ import chronotimer.Time;
 public class Driver {
 	
 	public static void main(String[] args){
-		new ChronoTimerEmulator();
+		//to use GUI launch: ChronoTimerEmulator Applet
+
+		Scanner input = new Scanner(System.in);
+		Parser parser = new Parser(new ChronoTimer());
+		
+		System.out.println("CHRONOTIMER");
+		
+		// Use the parser to read commands from the console
+		while(input.hasNextLine()){
+			
+			// Retrieves input command and prepends time label to command passed to parser
+			// For testing from file use command: FILE followed by filename found in the test/files directory
+			parser.parse(Time.toString(LocalTime.now()) + " " + input.nextLine());
+		}
+		
+		input.close();
+
 	}
 }
