@@ -110,7 +110,7 @@ public class ChronoTimerEmulator extends JApplet {
 	ButtonGroup eventGroup = new ButtonGroup();
 	final ArrayList<JRadioButton>eventTypes = new ArrayList<JRadioButton>();
 	JButton numButton = new JButton("NUM");
-	JButton timeButton = new JButton("TIME");
+	JButton exportButton = new JButton("EXPORT");
 	JButton clearButton = new JButton("CLEAR");
 	JButton btnNewButton = new JButton("NEWRUN");
 	JButton btnEndrun = new JButton("ENDRUN");
@@ -140,6 +140,8 @@ public class ChronoTimerEmulator extends JApplet {
 		scroll.setBounds(246, 246, 252, 179);
 		panel.add(scroll);
 		
+		printerText.setEditable(false);
+		printerText.setText("OFF");
 		JScrollPane scroll2 = new JScrollPane(printerText);
 		scroll2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scroll2.setBounds(556, 52, 262, 160);
@@ -377,9 +379,9 @@ public class ChronoTimerEmulator extends JApplet {
 		numButton.addActionListener(h);
 		panel.add(numButton);
 		
-		timeButton.setBounds(725, 410, 70, 29);
-		timeButton.addActionListener(h);
-		panel.add(timeButton);
+		exportButton.setBounds(725, 410, 90, 29);
+		exportButton.addActionListener(h);
+		panel.add(exportButton);
 		
 		clearButton.setBounds(626, 454, 117, 29);
 		clearButton.addActionListener(h);
@@ -404,11 +406,11 @@ public class ChronoTimerEmulator extends JApplet {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				if(!On()) {
-					Command.execute(t, currentTime,"ON",null);
+					Command.execute(t, currentTime,"ON",new String []{});
 					setOn(true);
 				}
 				else {
-					Command.execute(t, currentTime,"OFF",null);
+					Command.execute(t, currentTime,"OFF",new String []{});
 					setOn(false);
 				}
 			} catch (Exception e1) {
@@ -477,7 +479,7 @@ public class ChronoTimerEmulator extends JApplet {
 				}
 				System.out.println("PRINT");
 				Lane lane = new Lane();
-				printerText.setText("" + lane.getStartedRacers());
+				updateScreen("Print");
 			}
 		}
 	}
@@ -500,15 +502,15 @@ public class ChronoTimerEmulator extends JApplet {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(On()){
-				String c = "EVENT " + eventType;
-				System.out.println("EVENT " + eventType);
 				try {
 					currentTime = LocalTime.now();
-					Command.execute(t,currentTime,c,null);
+					Command.execute(t,currentTime,"EVENT",new String []{eventType});
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				String c = "EVENT " + eventType;
+				updateScreen(c);
 			}
 		}
 	}
@@ -519,48 +521,44 @@ public class ChronoTimerEmulator extends JApplet {
 		public void actionPerformed(ActionEvent e) {
 			if(On()){
 				if(e.getSource() == btnSwap){
-					
+					Command.execute(t, LocalTime.now(), "SWAP", new String[] {});
+					updateScreen("Swap");
 				}
 				
 				if(e.getSource() == connectCommandBtn){
-					String test = "CONN " + typeOfSensorToConnect + " " + channelToConnect;
-					System.out.println(test);
 					try {
 						currentTime = LocalTime.now();
-						Command.execute(t,currentTime,test,null);
+						Command.execute(t,currentTime,"CONN",new String[]{typeOfSensorToConnect, channelToConnect});
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
-					updateScreen(test);
+					updateScreen("CONN " + typeOfSensorToConnect + " " + channelToConnect);
 				}
 				
 				if(e.getSource() == numButton){
+					try {
+						currentTime = LocalTime.now();
+						Command.execute(t,currentTime,"NUM",new String []{inputFromCalcPad});
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					String c = "NUM " + inputFromCalcPad;
 					inputFromCalcPad = "";
-					textFromButtons.setText(inputFromCalcPad);
-					try {
-						currentTime = LocalTime.now();
-						Command.execute(t,currentTime,c,null);
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					System.out.println(c);
-					ind.start(currentTime,0);
+					updateScreen(c);
 				}
 				
-				if(e.getSource() == timeButton){
-					String command = "TIME " + inputFromCalcPad;
-					inputFromCalcPad = "";
-					textFromButtons.setText(inputFromCalcPad);
+				if(e.getSource() == exportButton){
 					try {
 						currentTime = LocalTime.now();
-						Command.execute(t,currentTime,command,null);
+						Command.execute(t,currentTime,"EXPORT",new String [] {inputFromCalcPad});
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					System.out.println(command);
+					String command = "EXPORT" + inputFromCalcPad;
+					inputFromCalcPad = "";
+					updateScreen(command);
 				}
 				
 				if(e.getSource() == clearButton){
@@ -572,24 +570,24 @@ public class ChronoTimerEmulator extends JApplet {
 					String c = "NEWRUN";
 					try {
 						currentTime = LocalTime.now();
-						Command.execute(t,currentTime,c,null);
+						Command.execute(t,currentTime,c,new String[] {});
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					System.out.println(c);
+					updateScreen(c);
 				}
 				
 				if(e.getSource() == btnEndrun){
 					String c = "ENDRUN";
 					try {
 						currentTime = LocalTime.now();
-						Command.execute(t,currentTime,c,null);
+						Command.execute(t,currentTime,c,new String [] {});
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					System.out.println(c);
+					updateScreen(c);
 				}
 			}
 		}
@@ -619,7 +617,6 @@ public class ChronoTimerEmulator extends JApplet {
 				for(int i = 0; i < eventTypes.size(); i++){
 					if(e.getSource() == eventTypes.get(i)){
 						eventType = eventTypes.get(i).getText();
-						if(eventType.equals("IND")) ind = new IND();
 					}
 				}	
 			}

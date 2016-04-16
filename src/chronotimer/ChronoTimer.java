@@ -241,7 +241,6 @@ public class ChronoTimer {
 			System.out.println(getRun(runNumber));
 		}
 	}
-
 	/**
 	 * Exports run in JSON to file
 	 * @param runNumber to export
