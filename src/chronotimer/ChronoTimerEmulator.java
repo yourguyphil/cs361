@@ -374,7 +374,6 @@ public class ChronoTimerEmulator extends JApplet {
 			eventTypes.get(i).addActionListener(new alUpdateEvent());
 		}
 		
-		JButton numButton = new JButton("NUM");
 		numButton.setBounds(591, 410, 60, 29);
 		numButton.addActionListener(h);
 		panel.add(numButton);
@@ -452,13 +451,12 @@ public class ChronoTimerEmulator extends JApplet {
 						String c = "TOGGLE " + (i+1);
 						try {
 							currentTime = LocalTime.now();
-							Command.execute(t,currentTime,c,null);
+							Command.execute(t,currentTime,"TOGGLE", new String[] {i + 1 + ""});
 						} catch (Exception e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						System.out.println(c);
-						consoleText.setText(consoleText.getText() + "\n" + c);
+						updateScreen(c);
 					}
 				}
 			}
@@ -470,14 +468,20 @@ public class ChronoTimerEmulator extends JApplet {
 		public void actionPerformed(ActionEvent e) {
 			//c = Command.commandFromString("PRINT");
 			if(On()){
+				String print = "";
 				try {
 					currentTime = LocalTime.now();
-					Command.execute(t,currentTime,"PRINT", new String []{textFromButtons.getText()});
+					print = t.PRINT(Integer.parseInt(textFromButtons.getText()));
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				updateScreen("PRINT");
+				if(print != null){
+					updateScreen("PRINT" + "\n" + print);
+				}
+				else{
+					updateScreen("PRINT");
+				}
 			}
 		}
 	}
@@ -530,7 +534,7 @@ public class ChronoTimerEmulator extends JApplet {
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
-					updateScreen("CONN " + typeOfSensorToConnect + " " + channelToConnect);
+					updateScreen("CONN " + " " + typeOfSensorToConnect + " " + channelToConnect);
 				}
 				
 				if(e.getSource() == numButton){
@@ -541,7 +545,7 @@ public class ChronoTimerEmulator extends JApplet {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					String c = "NUM " + inputFromCalcPad;
+					String c = "NUM" + " " + inputFromCalcPad;
 					inputFromCalcPad = "";
 					updateScreen(c);
 				}
