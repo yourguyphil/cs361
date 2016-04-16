@@ -1,8 +1,6 @@
 package io;
 
-import chronotimer.ChronoTimerGUI;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import chronotimer.ChronoTimer;
