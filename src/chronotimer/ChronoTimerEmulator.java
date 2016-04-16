@@ -477,9 +477,7 @@ public class ChronoTimerEmulator extends JApplet {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				System.out.println("PRINT");
-				Lane lane = new Lane();
-				updateScreen("Print");
+				updateScreen("PRINT");
 			}
 		}
 	}
