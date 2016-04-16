@@ -10,6 +10,7 @@ import test.io.TestCommand;
 import test.io.TestParser;
 import test.io.TestWriter;
 import test.race.TestAbstractEvent;
+import test.race.TestGRP;
 import test.race.TestIND;
 import test.race.TestPARIND;
 import test.race.TestRacer;
@@ -25,6 +26,7 @@ import test.race.TestRacer;
 	TestWriter.class,
 	
 	TestAbstractEvent.class,
+	TestGRP.class,
 	TestIND.class,
 	TestPARIND.class,
 	TestRacer.class})

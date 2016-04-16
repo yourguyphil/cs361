@@ -24,7 +24,7 @@ import javax.swing.ScrollPaneConstants;
 import race.IND;
 import race.Lane;
 //In run config: use width 850, height 600 for this Applet
-public class ChronoTimerEmulator extends JApplet {
+public class ChronoTimerGUI extends JApplet {
 
 	/**
 	 * 
@@ -118,7 +118,7 @@ public class ChronoTimerEmulator extends JApplet {
 	
 	
 	
-	public ChronoTimerEmulator() {
+	public ChronoTimerGUI() {
 		createContents();		
 	}
 	
