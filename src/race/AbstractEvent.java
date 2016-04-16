@@ -72,11 +72,11 @@ public abstract class AbstractEvent {
 	 * @param time the time the channel was triggered
 	 */
 	public void notifyChannelTriggered(LocalTime time, int channel) {
-		int numChannels = lanes.length * 2;
 		if (time == null) {
 			System.out.println("Time cannot be null");
 		} else if (channel < 0 || channel >= numChannels) {
 			String event = getClass().getSimpleName();
+			int numChannels = lanes.length * 2;
 			System.out.println(event + " event only accepts input on channels 1-" + numChannels);
 		} else {
 			int lane = channel / 2;
