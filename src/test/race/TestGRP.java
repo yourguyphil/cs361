@@ -34,5 +34,9 @@ public class TestGRP {
 		group.start(time, 0);
 		// Now 8 started racers since they all start at the same time.
 		assertEquals(group.getLane(0).getStartedRacers().size(), 8);
+		time = LocalTime.now();
+		group.finish(time, 0);
+		// Make sure finish works as well
+		assertEquals(group.getLane(0).getStartedRacers().size(), 7);
 	}
 }
