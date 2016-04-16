@@ -7,6 +7,7 @@ import java.util.LinkedList;
 
 import race.AbstractEvent;
 import race.EventType;
+import race.GRP;
 import race.IND;
 import race.PARIND;
 
@@ -197,6 +198,10 @@ public class ChronoTimer {
 			case PARIND:
 				runs.set(runs.size() - 1, new PARIND());
 				break;
+				
+			case GRP:
+				runs.set(runs.size() - 1, new GRP());
+				break;
 
 			default:
 				System.out.println("Event type not yet implemented");
@@ -234,12 +239,14 @@ public class ChronoTimer {
 	 * Prints a run on stdout
 	 * @param runNumber to print
 	 */
-	public void PRINT(int runNumber) {
+	public String PRINT(int runNumber) {
 		if (runNumber < 0 || runNumber >= runs.size()) {
 			System.out.println("Chronotimer only has runs 1-" + runs.size());
 		} else if (isOn()) {
 			System.out.println(getRun(runNumber));
+			return getRun(runNumber).toString();
 		}
+		return null;
 	}
 	/**
 	 * Exports run in JSON to file
