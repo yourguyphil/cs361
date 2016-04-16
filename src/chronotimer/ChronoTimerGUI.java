@@ -1,6 +1,6 @@
 package chronotimer;
 import io.Command;
-
+import java.awt.Color;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -125,6 +125,9 @@ public class ChronoTimerGUI extends JApplet {
 		panel.setLayout(null);
 		alSingleButtons h = new alSingleButtons();
 		
+		
+		powerButton.setBackground(Color.RED);
+		powerButton.setToolTipText("Turn Chronotimer ON/OFF");
 		powerButton.setBounds(33, 20, 80, 29);
 		powerButton.addActionListener(new alPower());
 		panel.add(powerButton);
@@ -637,7 +640,5 @@ public class ChronoTimerGUI extends JApplet {
 	
 	private void updateScreen(String text){
 		printerText.setText(printerText.getText() + "\n" + text);
-	}
-	
-	
+	}	
 }
