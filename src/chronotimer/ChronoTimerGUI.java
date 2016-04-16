@@ -2,7 +2,6 @@ package chronotimer;
 import io.Command;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
@@ -17,12 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 
 import race.IND;
-import race.Lane;
 //In run config: use width 850, height 600 for this Applet
 public class ChronoTimerGUI extends JApplet {
 
@@ -426,16 +422,14 @@ public class ChronoTimerGUI extends JApplet {
 			if(On()){
 				for(int i = 0; i < channelsToTrigger.size(); i++){
 					if(e.getSource() == channelsToTrigger.get(i)){
-						String c = "TRIG " + channelsToTrigger.get(i).getText();
-						System.out.println(c);
 						try {
 							currentTime = LocalTime.now();							
-							Command.execute(t,currentTime,c,null);
+							Command.execute(t,currentTime,"TRIG",new String [] { channelsToTrigger.get(i).getText()});
 						} catch (Exception e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						updateScreen(c);
+						updateScreen("TRIG " + " " + channelsToTrigger.get(i).getText());
 					}
 				}
 			}
@@ -448,7 +442,6 @@ public class ChronoTimerGUI extends JApplet {
 			if(On()){
 				for(int i = 0; i < checkBoxes.size(); i++){
 					if(e.getSource() == checkBoxes.get(i)){
-						String c = "TOGGLE " + (i+1);
 						try {
 							currentTime = LocalTime.now();
 							Command.execute(t,currentTime,"TOGGLE", new String[] {i + 1 + ""});
@@ -456,7 +449,7 @@ public class ChronoTimerGUI extends JApplet {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						updateScreen(c);
+						updateScreen("TOGGLE" + " " + (i+1));
 					}
 				}
 			}
@@ -470,7 +463,6 @@ public class ChronoTimerGUI extends JApplet {
 			if(On()){
 				String print = "";
 				try {
-					currentTime = LocalTime.now();
 					print = t.PRINT(Integer.parseInt(textFromButtons.getText()));
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -480,7 +472,7 @@ public class ChronoTimerGUI extends JApplet {
 					updateScreen("PRINT" + "\n" + print);
 				}
 				else{
-					updateScreen("PRINT");
+					updateScreen("PRINT Failed");
 				}
 			}
 		}
@@ -511,8 +503,7 @@ public class ChronoTimerGUI extends JApplet {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				String c = "EVENT " + eventType;
-				updateScreen(c);
+				updateScreen("EVENT " + " " + eventType);
 			}
 		}
 	}
@@ -545,9 +536,8 @@ public class ChronoTimerGUI extends JApplet {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					String c = "NUM" + " " + inputFromCalcPad;
+					updateScreen("NUM" + " " + inputFromCalcPad);
 					inputFromCalcPad = "";
-					updateScreen(c);
 				}
 				
 				if(e.getSource() == exportButton){
@@ -558,9 +548,8 @@ public class ChronoTimerGUI extends JApplet {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					String command = "EXPORT" + inputFromCalcPad;
+					updateScreen( "EXPORT" + " " + inputFromCalcPad);
 					inputFromCalcPad = "";
-					updateScreen(command);
 				}
 				
 				if(e.getSource() == clearButton){
@@ -569,27 +558,25 @@ public class ChronoTimerGUI extends JApplet {
 				}
 				
 				if(e.getSource() == btnNewButton){
-					String c = "NEWRUN";
 					try {
 						currentTime = LocalTime.now();
-						Command.execute(t,currentTime,c,new String[] {});
+						Command.execute(t,currentTime,"NEWRUN",new String[] {});
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					updateScreen(c);
+					updateScreen("NEWRUN");
 				}
 				
 				if(e.getSource() == btnEndrun){
-					String c = "ENDRUN";
 					try {
 						currentTime = LocalTime.now();
-						Command.execute(t,currentTime,c,new String [] {});
+						Command.execute(t,currentTime,"ENDRUN",new String [] {});
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					updateScreen(c);
+					updateScreen("ENDRUN");
 				}
 			}
 		}
