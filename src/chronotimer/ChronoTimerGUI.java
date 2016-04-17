@@ -114,7 +114,7 @@ public class ChronoTimerGUI extends JApplet {
 	JButton clearButton = new JButton("CLEAR");
 	JButton btnNewButton = new JButton("NEWRUN");
 	JButton btnEndrun = new JButton("ENDRUN");
-
+	JButton disconnectButton = new JButton("Disconnect");
 	
 	
 	
@@ -285,9 +285,13 @@ public class ChronoTimerGUI extends JApplet {
 		btnSwap.setBounds(653, 410, 70, 29);
 		panel.add(btnSwap);
 	
-		connectCommandBtn.setBounds(318, 546, 96, 29);
+		connectCommandBtn.setBounds(270, 546, 96, 29);
 		connectCommandBtn.addActionListener(h);
 		panel.add(connectCommandBtn);
+		
+		disconnectButton.setBounds(380, 546, 120, 29);
+		disconnectButton.addActionListener(h);
+		panel.add(disconnectButton);
 		
 		
 		gateSensor.setBounds(236, 455, 68, 23);
@@ -535,6 +539,17 @@ public class ChronoTimerGUI extends JApplet {
 					}
 					updateScreen("CONN " + " " + typeOfSensorToConnect + " " + channelToConnect);
 				}
+				
+				if(e.getSource() == disconnectButton){
+					try {
+						currentTime = LocalTime.now();
+						Command.execute(t,currentTime,"DISC",new String[]{channelToConnect});
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+					updateScreen("DISC" + " " + channelToConnect);
+				}
+				
 				
 				if(e.getSource() == numButton){
 					try {
