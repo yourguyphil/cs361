@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JApplet;
@@ -18,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
+import race.AbstractEvent;
 import race.IND;
 //In run config: use width 850, height 600 for this Applet
 public class ChronoTimerGUI extends JApplet {
@@ -25,6 +28,7 @@ public class ChronoTimerGUI extends JApplet {
 	/**
 	 * 
 	 */
+	private Timer time = new Timer();
 	private ChronoTimer t = new ChronoTimer();
 	IND ind;
 	private static final long serialVersionUID = 1L;
@@ -397,6 +401,7 @@ public class ChronoTimerGUI extends JApplet {
 		for(int i = 0; i < channelSensorButtons.size(); i++){
 			channelSensorButtons.get(i).addActionListener(new alChannel());
 		}	
+		time.scheduleAtFixedRate(new updateDisplay(), 0, 10);
 }
 	
 	private class alPower implements ActionListener{
@@ -640,5 +645,20 @@ public class ChronoTimerGUI extends JApplet {
 	
 	private void updateScreen(String text){
 		printerText.setText(printerText.getText() + "\n" + text);
-	}	
+	}
+	
+	private class updateDisplay extends TimerTask{
+
+		@Override
+		public void run() {
+			if(On()){
+				for(AbstractEvent y : t.getRuns()){
+					if(!y.toString().equals("")){
+						consoleText.setText(consoleText.getText() + "\n" + y.toString());
+					}
+				}
+			}
+		}
+		
+	}
 }
