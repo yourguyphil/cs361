@@ -1,7 +1,8 @@
 package chronotimer;
 import io.Command;
-import java.awt.Color;
+
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
@@ -21,7 +22,9 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
 import race.AbstractEvent;
+import race.GRP;
 import race.IND;
+import race.PARIND;
 //In run config: use width 850, height 600 for this Applet
 public class ChronoTimerGUI extends JApplet {
 
@@ -669,11 +672,19 @@ public class ChronoTimerGUI extends JApplet {
 			if(On()){
 				for(AbstractEvent y : t.getRuns()){
 					if(!y.toString().equals("")){
-						consoleText.setText(consoleText.getText() + "\n" + y.toString());
+						if(y instanceof IND) {
+							consoleText.setText("IND" + "\n" + "-----\n" + "Pending: " + y.getLane(0).getPendingRacers() + "\n" + "Started: "+ y.getLane(0).getStartedRacers() + "\n Finished: " + y.getLane(0).getFinishedRacers().peekFirst());
+						}
+						else if(y instanceof PARIND) {
+							consoleText.setText("PARIND" + "\n-----\n" + y.toString());
+						}
+						else if(y instanceof GRP) {
+							consoleText.setText("GRP" + "\n-----\n" + y.toString());
+						}
+						//consoleText.setText(consoleText.getText() + "\n" + y.toString());
 					}
 				}
 			}
 		}
-		
 	}
 }
