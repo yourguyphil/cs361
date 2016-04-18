@@ -30,7 +30,7 @@ import race.PARIND;
 public class ChronoTimerGUI extends JApplet {
 
 	/**
-	 * 
+	 * declare GUI elements
 	 */
 	private Timer time = new Timer();
 	private ChronoTimer t = new ChronoTimer();
@@ -121,11 +121,18 @@ public class ChronoTimerGUI extends JApplet {
 	JButton disconnectButton = new JButton("Disconnect");
 	
 	
-	
+	/**
+	 * call createContents()
+	 * 
+	 * */
 	public ChronoTimerGUI() {
 		createContents();		
 	}
 	
+	/**
+	 * create main panel
+	 * 
+	 * */
 	private void createContents(){
 		currentTime = LocalTime.now();
 		panel.setSize(800, 600);
@@ -412,7 +419,10 @@ public class ChronoTimerGUI extends JApplet {
 		}	
 		time.scheduleAtFixedRate(new updateDisplay(), 0, 10);
 }
-	
+	/**
+	 * Action Listener for power
+	 * 
+	 * */
 	private class alPower implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -432,7 +442,10 @@ public class ChronoTimerGUI extends JApplet {
 			else updateScreen("OFF");
 		}
 	}
-	
+	/**
+	 * Action Listener for trigger
+	 * 
+	 * */
 	private class alTrigger implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -452,7 +465,10 @@ public class ChronoTimerGUI extends JApplet {
 			}
 		}
 	}
-	
+	/**
+	 * Action Listener for toggle
+	 * 
+	 * */
 	private class alToggle implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -472,7 +488,10 @@ public class ChronoTimerGUI extends JApplet {
 			}
 		}
 	}
-	
+	/**
+	 * Action Listener for Print Button
+	 * 
+	 * */
 	private class alPrint implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -494,7 +513,10 @@ public class ChronoTimerGUI extends JApplet {
 			}
 		}
 	}
-	
+	/**
+	 * Action Listener for text from calc buttons
+	 * 
+	 * */
 	private class updateString implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -508,7 +530,10 @@ public class ChronoTimerGUI extends JApplet {
 			}
 		}
 	}
-	
+	/**
+	 * Action Listener for events
+	 * 
+	 * */
 	private class alEvent implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -524,7 +549,10 @@ public class ChronoTimerGUI extends JApplet {
 			}
 		}
 	}
-	
+	/**
+	 * Action Listener for all single buttons
+	 * 
+	 * */
 	private class alSingleButtons implements ActionListener{
 
 		@Override
@@ -624,7 +652,10 @@ public class ChronoTimerGUI extends JApplet {
 		}
 		
 	}
-	
+	/**
+	 * Action Listener for sensors
+	 * 
+	 * */
 	private class alSensor implements ActionListener{
 
 		@Override
@@ -639,7 +670,10 @@ public class ChronoTimerGUI extends JApplet {
 		}
 		
 	}	
-		
+	/**
+	 * Action Listener for events
+	 * 
+	 * */	
 	private class alUpdateEvent implements ActionListener{
 
 		@Override
@@ -652,6 +686,10 @@ public class ChronoTimerGUI extends JApplet {
 		}
 		
 	}	
+	/**
+	 * Action Listener for channels
+	 * 
+	 * */
 	private class alChannel implements ActionListener{
 
 		@Override
@@ -667,17 +705,35 @@ public class ChronoTimerGUI extends JApplet {
 		
 	}
 
+	/**
+	 * checks isOn
+	 * 
+	 * */
 	private boolean On(){
 		return isOn == true;
 	}
 	
+	/**
+	 * sets 'ON' mode
+	 * 
+	 * */
 	private void setOn(boolean state){
 		isOn = state;
 	}
 	
+	
+	/**
+	 * updates command display
+	 * 
+	 * */
 	private void updateScreen(String text){
 		printerText.setText(printerText.getText() + "\n" + text);
 	}
+	
+	/**
+	 * updates main display
+	 * 
+	 * */
 	
 	private class updateDisplay extends TimerTask{
 
