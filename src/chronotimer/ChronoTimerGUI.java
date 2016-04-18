@@ -676,12 +676,11 @@ public class ChronoTimerGUI extends JApplet {
 							consoleText.setText("IND" + "\n" + "-----\n" + "Pending: " + y.getLane(0).getPendingRacers() + "\n" + "Started: "+ y.getLane(0).getStartedRacers() + "\n Finished: " + y.getLane(0).getFinishedRacers().peekFirst());
 						}
 						else if(y instanceof PARIND) {
-							consoleText.setText("PARIND" + "\n-----\n" + y.toString());
+							consoleText.setText("PARIND" + "\n-----\n" + "Pending: " + y.getLane(0).getPendingRacers().peekFirst() + "," + y.getLane(1).getPendingRacers().peekFirst() +  "\nStarted: " + y.getLane(0).getStartedRacers() + "," + y.getLane(1).getStartedRacers() + "\nFinished: " + y.getLane(0).getFinishedRacers().peekFirst() + "," + y.getLane(1).getFinishedRacers().peekFirst());
 						}
 						else if(y instanceof GRP) {
 							consoleText.setText("GRP" + "\n-----\n" + y.toString());
 						}
-						//consoleText.setText(consoleText.getText() + "\n" + y.toString());
 					}
 				}
 			}
