@@ -292,7 +292,7 @@ public class ChronoTimerGUI extends JApplet {
 		connectCommandBtn.addActionListener(h);
 		panel.add(connectCommandBtn);
 		
-		disconnectButton.setBounds(380, 546, 120, 29);
+		disconnectButton.setBounds(380, 546, 98, 29);
 		disconnectButton.addActionListener(h);
 		panel.add(disconnectButton);
 		
@@ -387,6 +387,7 @@ public class ChronoTimerGUI extends JApplet {
 		numButton.setBounds(591, 410, 60, 29);
 		numButton.addActionListener(h);
 		panel.add(numButton);
+		CalcPound.addActionListener(h);
 		
 		exportButton.setBounds(725, 410, 90, 29);
 		exportButton.addActionListener(h);
@@ -554,7 +555,7 @@ public class ChronoTimerGUI extends JApplet {
 				}
 				
 				
-				if(e.getSource() == numButton){
+				if(e.getSource() == numButton || e.getSource() == CalcPound){
 					try {
 						currentTime = LocalTime.now();
 						Command.execute(t,currentTime,"NUM",new String []{inputFromCalcPad});
