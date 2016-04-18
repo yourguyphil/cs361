@@ -273,7 +273,7 @@ public class ChronoTimerGUI extends JApplet {
 		
 		updateString y = new updateString();
 		
-		for(int i = 0; i < calcButtons.size(); i++){
+		for(int i = 0; i < calcButtons.size()-1; i++){
 			calcButtons.get(i).addActionListener(y);
 		}
 		
@@ -556,6 +556,19 @@ public class ChronoTimerGUI extends JApplet {
 				
 				
 				if(e.getSource() == numButton || e.getSource() == CalcPound){
+					if(e.getSource() == CalcPound){
+						try {
+							currentTime = LocalTime.now();
+							Command.execute(t,currentTime,"NUM",new String []{inputFromCalcPad.substring(0, inputFromCalcPad.length())});
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						updateScreen("NUM" + " " + inputFromCalcPad.substring(0, inputFromCalcPad.length()));
+						inputFromCalcPad = "";
+						textFromButtons.setText("");
+						return;
+					}
 					try {
 						currentTime = LocalTime.now();
 						Command.execute(t,currentTime,"NUM",new String []{inputFromCalcPad});
@@ -565,6 +578,7 @@ public class ChronoTimerGUI extends JApplet {
 					}
 					updateScreen("NUM" + " " + inputFromCalcPad);
 					inputFromCalcPad = "";
+					textFromButtons.setText("");
 				}
 				
 				if(e.getSource() == exportButton){
@@ -678,7 +692,7 @@ public class ChronoTimerGUI extends JApplet {
 							consoleText.setText("PARIND" + "\n-----\n" + "Pending: " + y.getLane(0).getPendingRacers().peekFirst() + "," + y.getLane(1).getPendingRacers().peekFirst() +  "\nStarted: " + y.getLane(0).getStartedRacers() + "," + y.getLane(1).getStartedRacers() + "\nFinished: " + y.getLane(0).getFinishedRacers().peekLast() + "," + y.getLane(1).getFinishedRacers().peekLast());
 						}
 						else if(y instanceof GRP) {
-							consoleText.setText("GRP" + "\n-----\n" + y.toString());
+							consoleText.setText("GRP" + "\n-----\n" + "Started: " + "" + y.toString());
 						}
 					}
 				}
