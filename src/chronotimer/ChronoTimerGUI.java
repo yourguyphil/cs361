@@ -94,7 +94,7 @@ public class ChronoTimerGUI extends JApplet {
 	JRadioButton gateSensor = new JRadioButton("GATE");
 	JRadioButton eyeSensor = new JRadioButton("EYE");
 	JRadioButton padSensor = new JRadioButton("PAD");
-	JRadioButton pushSensor = new JRadioButton("PUSH");
+	JRadioButton pushSensor = new JRadioButton("NONE");
 	ButtonGroup sensorGrp = new ButtonGroup();
 	final ArrayList<JRadioButton> sensorButtons = new ArrayList<JRadioButton>();
 	JRadioButton channel5Sensor = new JRadioButton("5");
@@ -418,6 +418,7 @@ public class ChronoTimerGUI extends JApplet {
 			channelSensorButtons.get(i).addActionListener(new alChannel());
 		}	
 		time.scheduleAtFixedRate(new updateDisplay(), 0, 10);
+		for(int i = 0; i < checkBoxes.size(); i++){checkBoxes.get(i).setEnabled(false);}
 }
 	/**
 	 * Action Listener for power
@@ -430,10 +431,12 @@ public class ChronoTimerGUI extends JApplet {
 				if(!On()) {
 					Command.execute(t, currentTime,"ON",new String []{});
 					setOn(true);
+					for(int i = 0; i < checkBoxes.size(); i++){checkBoxes.get(i).setEnabled(true);}
 				}
 				else {
 					Command.execute(t, currentTime,"OFF",new String []{});
 					setOn(false);
+					for(int i = 0; i < checkBoxes.size(); i++){checkBoxes.get(i).setEnabled(false);}
 				}
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -660,13 +663,11 @@ public class ChronoTimerGUI extends JApplet {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(On()){
 				for(int i = 0; i < sensorButtons.size(); i++){
 					if(sensorButtons.get(i) == e.getSource()){
 						typeOfSensorToConnect = sensorButtons.get(i).getText();
 					}
 				}
-			}
 		}
 		
 	}	
@@ -694,13 +695,11 @@ public class ChronoTimerGUI extends JApplet {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(On()){
 				for(int i = 0; i < channelSensorButtons.size(); i++){
 					if(channelSensorButtons.get(i) == e.getSource()){
 						channelToConnect = channelSensorButtons.get(i).getText();
 					}
 				}
-			}
 		}
 		
 	}
