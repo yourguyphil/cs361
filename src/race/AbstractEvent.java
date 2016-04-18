@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 
 public abstract class AbstractEvent {
 
-	protected Lane[] lanes;
+	public Lane[] lanes;
 	private int numRacersAdded;
 	private boolean nextFinishDNF;
 	

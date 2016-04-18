@@ -24,6 +24,7 @@ import javax.swing.ScrollPaneConstants;
 import race.AbstractEvent;
 import race.GRP;
 import race.IND;
+import race.Lane;
 import race.PARIND;
 //In run config: use width 850, height 600 for this Applet
 public class ChronoTimerGUI extends JApplet {
@@ -686,13 +687,21 @@ public class ChronoTimerGUI extends JApplet {
 				for(AbstractEvent y : t.getRuns()){
 					if(!y.toString().equals("")){
 						if(y instanceof IND) {
-							consoleText.setText("IND" + "\n" + "-----\n" + "Pending: " + y.getLane(0).getPendingRacers() + "\n" + "Started: "+ y.getLane(0).getStartedRacers() + "\nFinished: " + y.getLane(0).getFinishedRacers().peekFirst());
+							consoleText.setText("IND" + "\n" + "-----\n" + "Pending: " + y.getLane(0).getPendingRacers() + "\n" + "Started: "+ y.getLane(0).getStartedRacers() + "\nFinished: " + y.getLane(0).getFinishedRacers().peekLast());
 						}
 						else if(y instanceof PARIND) {
 							consoleText.setText("PARIND" + "\n-----\n" + "Pending: " + y.getLane(0).getPendingRacers().peekFirst() + "," + y.getLane(1).getPendingRacers().peekFirst() +  "\nStarted: " + y.getLane(0).getStartedRacers() + "," + y.getLane(1).getStartedRacers() + "\nFinished: " + y.getLane(0).getFinishedRacers().peekLast() + "," + y.getLane(1).getFinishedRacers().peekLast());
 						}
 						else if(y instanceof GRP) {
-							consoleText.setText("GRP" + "\n-----\n" + "Started: " + "" + y.toString());
+							String started = "GRP" + "\n-----\n" +  "Started: ";
+							for(Lane x : y.lanes){
+								started += x.getStartedRacers();
+							}
+							started += "\nFinished: ";
+							for(Lane x : y.lanes){
+								started += x.getFinishedRacers().peekLast();
+							}
+							consoleText.setText(started);
 						}
 					}
 				}
