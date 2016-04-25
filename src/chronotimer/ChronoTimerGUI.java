@@ -401,7 +401,7 @@ public class ChronoTimerGUI extends JApplet {
 		exportButton.addActionListener(h);
 		panel.add(exportButton);
 		
-		clearButton.setBounds(626, 454, 117, 29);
+		clearButton.setBounds(636, 454, 117, 29);
 		clearButton.addActionListener(h);
 		panel.add(clearButton);
 		
@@ -505,7 +505,7 @@ public class ChronoTimerGUI extends JApplet {
 					print = t.PRINT(Integer.parseInt(textFromButtons.getText()));
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					updateScreen("PRINT Failed");
 				}
 				if(print != null){
 					updateScreen("PRINT" + "\n" + print);
