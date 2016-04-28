@@ -9,6 +9,7 @@ import race.AbstractEvent;
 import race.EventType;
 import race.GRP;
 import race.IND;
+import race.PARGRP;
 import race.PARIND;
 
 /**
@@ -201,6 +202,10 @@ public class ChronoTimer {
 				
 			case GRP:
 				runs.set(runs.size() - 1, new GRP());
+				break;
+				
+			case PARGRP:
+				runs.set(runs.size() - 1, new PARGRP());
 				break;
 
 			default:
