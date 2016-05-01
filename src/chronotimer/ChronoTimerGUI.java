@@ -448,8 +448,8 @@ public class ChronoTimerGUI extends JApplet {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-			if(On()) updateScreen("ON");
-			else updateScreen("OFF");
+			if(On()){ updateScreen("ON"); powerButton.setBackground(Color.GREEN);}
+			else {updateScreen("OFF"); powerButton.setBackground(Color.RED);}
 		}
 	}
 	/**
@@ -466,8 +466,7 @@ public class ChronoTimerGUI extends JApplet {
 							currentTime = LocalTime.now();							
 							Command.execute(t,currentTime,"TRIG",new String [] { channelsToTrigger.get(i).getText()});
 						} catch (Exception e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+							updateScreen("TRIG Failed");
 						}
 						updateScreen("TRIG " + " " + channelsToTrigger.get(i).getText());
 					}
@@ -489,8 +488,7 @@ public class ChronoTimerGUI extends JApplet {
 							currentTime = LocalTime.now();
 							Command.execute(t,currentTime,"TOGGLE", new String[] {i + 1 + ""});
 						} catch (Exception e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+							updateScreen("TOGGLE Failed");
 						}
 						updateScreen("TOGGLE" + " " + (i+1));
 					}
@@ -511,7 +509,6 @@ public class ChronoTimerGUI extends JApplet {
 				try {
 					print = t.PRINT(Integer.parseInt(textFromButtons.getText()));
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					updateScreen("PRINT Failed");
 				}
 				if(print != null){
