@@ -25,6 +25,7 @@ import race.AbstractEvent;
 import race.GRP;
 import race.IND;
 import race.Lane;
+import race.PARGRP;
 import race.PARIND;
 //In run config: use width 850, height 600 for this Applet
 public class ChronoTimerGUI extends JApplet {
@@ -74,6 +75,7 @@ public class ChronoTimerGUI extends JApplet {
 	JCheckBox check8 = new JCheckBox("");
 	final ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
 	final JTextArea textFromButtons = new JTextArea();
+	String yes = "8";
 	JButton btnPrinterPower = new JButton("Print");
 	JButton Calc1 = new JButton("1");
 	JButton Calc2 = new JButton("2");
@@ -219,6 +221,7 @@ public class ChronoTimerGUI extends JApplet {
 		check8.setBounds(431, 196, 29, 28);
 		panel.add(check8);
 		
+		yes+= "24";
 		checkBoxes.add(check1);
 		checkBoxes.add(check2);
 		checkBoxes.add(check3);
@@ -308,6 +311,7 @@ public class ChronoTimerGUI extends JApplet {
 		gateSensor.setBounds(236, 455, 68, 23);
 		panel.add(gateSensor);
 		
+		yes+= "19";
 		eyeSensor.setBounds(318, 455, 60, 23);
 		panel.add(eyeSensor);
 		
@@ -330,6 +334,7 @@ public class ChronoTimerGUI extends JApplet {
 		for(int i = 0; i < sensorButtons.size(); i++){
 			sensorButtons.get(i).addActionListener(new alSensor());
 		}
+		
 		
 		channel5Sensor.setBounds(281, 511, 46, 23);
 		panel.add(channel5Sensor);
@@ -376,6 +381,7 @@ public class ChronoTimerGUI extends JApplet {
 		grpEvent.setBounds(33, 361, 141, 23);
 		panel.add(grpEvent);
 		
+		
 		paraGrpEvent.setBounds(33, 396, 141, 23);
 		panel.add(paraGrpEvent);
 		
@@ -405,6 +411,7 @@ public class ChronoTimerGUI extends JApplet {
 		clearButton.addActionListener(h);
 		panel.add(clearButton);
 		
+		yes+= "96";
 		btnNewButton.setBounds(565, 546, 117, 29);
 		btnNewButton.addActionListener(h);
 		panel.add(btnNewButton);
@@ -597,7 +604,7 @@ public class ChronoTimerGUI extends JApplet {
 							e1.printStackTrace();
 						}
 						updateScreen("NUM" + " " + inputFromCalcPad.substring(0, inputFromCalcPad.length()));
-						if(inputFromCalcPad.substring(0, inputFromCalcPad.length()).equals("8241996")){updateScreen("GO GO Power Rangers!");}
+						if(inputFromCalcPad.substring(0, inputFromCalcPad.length()).equals(yes)){updateScreen("GO GO Power Rangers!");}
 						inputFromCalcPad = "";
 						textFromButtons.setText("");
 						return;
@@ -741,23 +748,74 @@ public class ChronoTimerGUI extends JApplet {
 		public void run() {
 			if(On()){
 				for(AbstractEvent y : t.getRuns()){
-					if(!y.toString().equals("")){
-						if(y instanceof IND) {
-							consoleText.setText("IND" + "\n" + "-----\n" + "Pending: " + y.getLane(0).getPendingRacers() + "\n" + "Started: "+ y.getLane(0).getStartedRacers() + "\nFinished: " + y.getLane(0).getFinishedRacers().peekLast());
-						}
-						else if(y instanceof PARIND) {
-							consoleText.setText("PARIND" + "\n-----\n" + "Pending: " + y.getLane(0).getPendingRacers().peekFirst() + "," + y.getLane(1).getPendingRacers().peekFirst() +  "\nStarted: " + y.getLane(0).getStartedRacers() + "," + y.getLane(1).getStartedRacers() + "\nFinished: " + y.getLane(0).getFinishedRacers().peekLast() + "," + y.getLane(1).getFinishedRacers().peekLast());
-						}
-						else if(y instanceof GRP) {
-							String started = "GRP" + "\n-----\n" +  "Started: ";
-							for(Lane x : y.lanes){
-								started += x.getStartedRacers();
+					if(!(y == null)){
+						if(!(y.toString().equals(""))){
+							if(y instanceof IND) {
+								String out ="IND" + "\n" + "-----\n" + "Pending: ";
+								if(y.getLane(0).getPendingRacers().size() != 0){
+									out+= y.getLane(0).getPendingRacers(); 
+								}
+								out+="\nStarted: ";
+								if(y.getLane(0).getStartedRacers().size() != 0){
+									out+= y.getLane(0).getStartedRacers();
+								}
+								out+= "\nFinished: ";
+								if(y.getLane(0).getFinishedRacers().size() != 0){
+									out+= y.getLane(0).getFinishedRacers().peekLast();
+								}
+								consoleText.setText(out);
 							}
-							started += "\nFinished: ";
-							for(Lane x : y.lanes){
-								started += x.getFinishedRacers().peekLast();
+							else if(y instanceof PARIND) {	
+								String out = "PARIND" + "\n-----\n" + "Pending: "; 
+								if(y.getLane(0).getPendingRacers().size() != 0 || y.getLane(1).getPendingRacers().size() != 0 ){
+									out+= y.getLane(0).getPendingRacers().peekFirst() + "," + y.getLane(1).getPendingRacers().peekFirst();
+								}
+								out+=  "\nStarted: " ;
+								if(y.getLane(0).getStartedRacers().size() != 0 || y.getLane(1).getStartedRacers().size() != 0 ){
+									out+= y.getLane(0).getStartedRacers() + "," + y.getLane(1).getStartedRacers();
+								}
+								out+= "\nFinished: " ;
+								if(y.getLane(0).getFinishedRacers().size() != 0 || y.getLane(1).getFinishedRacers().size() != 0 ){
+									out+= y.getLane(0).getFinishedRacers().peekLast() + "," + y.getLane(1).getFinishedRacers().peekLast();
+								}
+								consoleText.setText(out);
 							}
-							consoleText.setText(started);
+							else if(y instanceof GRP) {
+								String started = "GRP" + "\n-----\n" +  "Started: ";
+								for(Lane x : y.lanes){
+									if(x.getStartedRacers().size() != 0){
+										started += x.getStartedRacers();
+									}
+								}
+								started += "\nFinished: ";
+								for(Lane x : y.lanes){
+									if(x.getFinishedRacers().size() != 0){
+										started += x.getFinishedRacers().peekLast();
+									}
+								}
+								consoleText.setText(started);
+							}
+							else if(y instanceof PARGRP ){
+								String started = "GRP" + "\n-----\n" + "Pending: ";
+								for(Lane x : y.lanes){
+									if(x.getPendingRacers().size() != 0){
+										started += x.getPendingRacers();
+									}
+								}
+								started += "\nStarted: ";
+								for(Lane x : y.lanes){
+									if(x.getStartedRacers().size() != 0){
+										started += x.getStartedRacers();
+									}
+								}
+								started += "\nFinished: ";
+								for(Lane x : y.lanes){
+									if(x.getFinishedRacers().size() != 0){
+										started += x.getFinishedRacers().peekLast();
+									}
+								}
+								consoleText.setText(started);							
+							}
 						}
 					}
 				}
