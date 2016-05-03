@@ -508,7 +508,7 @@ public class ChronoTimerGUI extends JApplet {
 			if(On()){
 				String print = "";
 				try {
-					print = t.PRINT(Integer.parseInt(textFromButtons.getText()));
+					print = t.PRINT(Integer.parseInt(textFromButtons.getText()) - 1);
 				} catch (Exception e1) {
 					updateScreen("PRINT Failed");
 				}
