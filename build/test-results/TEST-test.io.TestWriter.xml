@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test.io.TestWriter" tests="10" skipped="0" failures="0" errors="0" timestamp="2016-05-03T01:00:01" hostname="Mitchells-MacBook-Pro.local" time="0.092">
+  <properties/>
+  <testcase name="testWriteCorrect0" classname="test.io.TestWriter" time="0.003"/>
+  <testcase name="testWriteCorrect1" classname="test.io.TestWriter" time="0.002"/>
+  <testcase name="testWriteCorrect2" classname="test.io.TestWriter" time="0.001"/>
+  <testcase name="testWriteMethod0" classname="test.io.TestWriter" time="0.001"/>
+  <testcase name="testWriteMethod1" classname="test.io.TestWriter" time="0.002"/>
+  <testcase name="testWriteCorrect0" classname="test.io.TestWriter" time="0.001"/>
+  <testcase name="testWriteCorrect1" classname="test.io.TestWriter" time="0.002"/>
+  <testcase name="testWriteCorrect2" classname="test.io.TestWriter" time="0.001"/>
+  <testcase name="testWriteMethod0" classname="test.io.TestWriter" time="0.001"/>
+  <testcase name="testWriteMethod1" classname="test.io.TestWriter" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

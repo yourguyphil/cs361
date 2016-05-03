@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test.race.TestAbstractEvent" tests="16" skipped="0" failures="0" errors="0" timestamp="2016-05-03T01:00:01" hostname="Mitchells-MacBook-Pro.local" time="0.09">
+  <properties/>
+  <testcase name="testDNF" classname="test.race.TestAbstractEvent" time="0.001"/>
+  <testcase name="testNum" classname="test.race.TestAbstractEvent" time="0.001"/>
+  <testcase name="testClear" classname="test.race.TestAbstractEvent" time="0.0"/>
+  <testcase name="testSwap" classname="test.race.TestAbstractEvent" time="0.0"/>
+  <testcase name="testGetLane" classname="test.race.TestAbstractEvent" time="0.001"/>
+  <testcase name="test" classname="test.race.TestAbstractEvent" time="0.005"/>
+  <testcase name="testNotifyChannelTriggered" classname="test.race.TestAbstractEvent" time="0.001"/>
+  <testcase name="testFinish" classname="test.race.TestAbstractEvent" time="0.0"/>
+  <testcase name="testDNF" classname="test.race.TestAbstractEvent" time="0.001"/>
+  <testcase name="testNum" classname="test.race.TestAbstractEvent" time="0.0"/>
+  <testcase name="testClear" classname="test.race.TestAbstractEvent" time="0.0"/>
+  <testcase name="testSwap" classname="test.race.TestAbstractEvent" time="0.0"/>
+  <testcase name="testGetLane" classname="test.race.TestAbstractEvent" time="0.0"/>
+  <testcase name="test" classname="test.race.TestAbstractEvent" time="0.006"/>
+  <testcase name="testNotifyChannelTriggered" classname="test.race.TestAbstractEvent" time="0.0"/>
+  <testcase name="testFinish" classname="test.race.TestAbstractEvent" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
