@@ -9,8 +9,8 @@ import com.google.gson.Gson;
 public abstract class AbstractEvent {
 
 	public Lane[] lanes;
-	private int numRacersAdded;
-	private boolean nextFinishDNF;
+	public int numRacersAdded;
+	public boolean nextFinishDNF;
 	
 	/**
 	 * Creates an event with the specified number of lanes
