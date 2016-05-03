@@ -1,16 +1,25 @@
 package chronotimer;
 
-import io.Writer;
-
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
+import com.google.gson.Gson;
+
+import io.Writer;
 import race.AbstractEvent;
 import race.EventType;
 import race.GRP;
 import race.IND;
+import race.Lane;
 import race.PARGRP;
 import race.PARIND;
+import race.Racer;
 
 /**
  * Used to time sports events.
@@ -235,8 +244,16 @@ public class ChronoTimer {
 	 */
 	public void ENDRUN() {
 		if (isOn()) {
-			if (getCurrentRun() != null)
+			if (getCurrentRun() != null){
+				try {
+					sendResults(extractRacers(runs));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+				    System.out.println("could not send data to server");
+				}
 				runs.add(null);
+			}
+				
 		}
 	}
 
@@ -327,6 +344,65 @@ public class ChronoTimer {
 	 */
 	public void FINISH() {
 		TRIG(1);
+	}
+	public String extractRacers(LinkedList<AbstractEvent> list){
+		Lane[] lanes;
+		String res = "";
+		ArrayList<Racer> racers = new ArrayList<Racer>();
+		for(AbstractEvent e: list){
+			lanes = e.lanes;
+		   for(Lane l: lanes){
+			   racers.addAll(l.getAllRacers());
+		   }
+		}
+		Gson g = new Gson();
+		res = g.toJson(racers);
+		return res;
+		
+	}
+	public void sendResults(String content) throws IOException{
+		try{
+			
+		
+		URL site = new URL("http://localhost:8000/sendresults");
+		HttpURLConnection conn = (HttpURLConnection) site.openConnection();
+
+		// now create a POST request
+		conn.setRequestMethod("POST");
+		conn.setDoOutput(true);
+		conn.setDoInput(true);
+		DataOutputStream out = new DataOutputStream(conn.getOutputStream());
+        System.out.println("sending: " + content );
+		out.writeBytes(content);
+		out.flush();
+		out.close();
+		
+		
+		System.out.println("Done sent to server");
+
+		InputStreamReader inputStr = new InputStreamReader(conn.getInputStream());
+
+		// string to hold the result of reading in the response
+		StringBuilder sb = new StringBuilder();
+
+		// read the characters from the request byte by byte and build up
+		// the Response
+		int nextChar;
+		while ((nextChar = inputStr.read()) > -1) {
+			sb = sb.append((char) nextChar);
+		}
+		System.out.println("Return String: " + sb);
+
+		
+		
+		}
+		
+		
+		
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

@@ -1,5 +1,6 @@
 package race;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Lane {
@@ -39,6 +40,14 @@ public class Lane {
 	 */
 	public LinkedList<Racer> getFinishedRacers() {
 		return finishedRacers;
+	}
+	
+	public ArrayList<Racer> getAllRacers(){
+		ArrayList<Racer> res = new ArrayList<Racer>();
+		res.addAll(this.getFinishedRacers());
+		res.addAll(this.getPendingRacers());
+		res.addAll(this.getStartedRacers());
+		return res;
 	}
 	
 	@Override

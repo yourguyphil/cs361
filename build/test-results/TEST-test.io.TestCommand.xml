@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="test.io.TestCommand" tests="42" skipped="0" failures="0" errors="0" timestamp="2016-05-03T01:00:01" hostname="Mitchells-MacBook-Pro.local" time="0.1">
+<testsuite name="test.io.TestCommand" tests="42" skipped="0" failures="0" errors="0" timestamp="2016-05-03T20:07:52" hostname="Mitchells-MBP.wi.rr.com" time="0.142">
   <properties/>
   <testcase name="testExecuteCommand" classname="test.io.TestCommand" time="0.001"/>
-  <testcase name="testCLR" classname="test.io.TestCommand" time="0.0"/>
-  <testcase name="testDNF" classname="test.io.TestCommand" time="0.0"/>
+  <testcase name="testCLR" classname="test.io.TestCommand" time="0.001"/>
+  <testcase name="testDNF" classname="test.io.TestCommand" time="0.001"/>
   <testcase name="testNUM" classname="test.io.TestCommand" time="0.0"/>
   <testcase name="testOFF" classname="test.io.TestCommand" time="0.0"/>
   <testcase name="testEVENT" classname="test.io.TestCommand" time="0.001"/>
-  <testcase name="testPRINT" classname="test.io.TestCommand" time="0.001"/>
-  <testcase name="testRESET" classname="test.io.TestCommand" time="0.0"/>
-  <testcase name="testSTART" classname="test.io.TestCommand" time="0.001"/>
-  <testcase name="testCONN" classname="test.io.TestCommand" time="0.001"/>
+  <testcase name="testPRINT" classname="test.io.TestCommand" time="0.0"/>
+  <testcase name="testRESET" classname="test.io.TestCommand" time="0.001"/>
+  <testcase name="testSTART" classname="test.io.TestCommand" time="0.0"/>
+  <testcase name="testCONN" classname="test.io.TestCommand" time="0.002"/>
   <testcase name="testDISC" classname="test.io.TestCommand" time="0.001"/>
   <testcase name="testEXIT" classname="test.io.TestCommand" time="0.0"/>
-  <testcase name="testSWAP" classname="test.io.TestCommand" time="0.002"/>
+  <testcase name="testSWAP" classname="test.io.TestCommand" time="0.0"/>
   <testcase name="testTIME" classname="test.io.TestCommand" time="0.001"/>
-  <testcase name="testTRIG" classname="test.io.TestCommand" time="0.001"/>
+  <testcase name="testTRIG" classname="test.io.TestCommand" time="0.0"/>
   <testcase name="testON" classname="test.io.TestCommand" time="0.001"/>
   <testcase name="testENDRUN" classname="test.io.TestCommand" time="0.0"/>
   <testcase name="testEXPORT" classname="test.io.TestCommand" time="0.0"/>
-  <testcase name="testFINISH" classname="test.io.TestCommand" time="0.0"/>
-  <testcase name="testNEWRUN" classname="test.io.TestCommand" time="0.001"/>
-  <testcase name="testTOGGLE" classname="test.io.TestCommand" time="0.002"/>
-  <testcase name="testExecuteCommand" classname="test.io.TestCommand" time="0.0"/>
-  <testcase name="testCLR" classname="test.io.TestCommand" time="0.001"/>
-  <testcase name="testDNF" classname="test.io.TestCommand" time="0.001"/>
-  <testcase name="testNUM" classname="test.io.TestCommand" time="0.001"/>
+  <testcase name="testFINISH" classname="test.io.TestCommand" time="0.001"/>
+  <testcase name="testNEWRUN" classname="test.io.TestCommand" time="0.0"/>
+  <testcase name="testTOGGLE" classname="test.io.TestCommand" time="0.0"/>
+  <testcase name="testExecuteCommand" classname="test.io.TestCommand" time="0.001"/>
+  <testcase name="testCLR" classname="test.io.TestCommand" time="0.003"/>
+  <testcase name="testDNF" classname="test.io.TestCommand" time="0.0"/>
+  <testcase name="testNUM" classname="test.io.TestCommand" time="0.0"/>
   <testcase name="testOFF" classname="test.io.TestCommand" time="0.0"/>
   <testcase name="testEVENT" classname="test.io.TestCommand" time="0.0"/>
-  <testcase name="testPRINT" classname="test.io.TestCommand" time="0.001"/>
-  <testcase name="testRESET" classname="test.io.TestCommand" time="0.001"/>
-  <testcase name="testSTART" classname="test.io.TestCommand" time="0.001"/>
-  <testcase name="testCONN" classname="test.io.TestCommand" time="0.0"/>
+  <testcase name="testPRINT" classname="test.io.TestCommand" time="0.0"/>
+  <testcase name="testRESET" classname="test.io.TestCommand" time="0.0"/>
+  <testcase name="testSTART" classname="test.io.TestCommand" time="0.0"/>
+  <testcase name="testCONN" classname="test.io.TestCommand" time="0.001"/>
   <testcase name="testDISC" classname="test.io.TestCommand" time="0.0"/>
-  <testcase name="testEXIT" classname="test.io.TestCommand" time="0.001"/>
-  <testcase name="testSWAP" classname="test.io.TestCommand" time="0.001"/>
-  <testcase name="testTIME" classname="test.io.TestCommand" time="0.0"/>
+  <testcase name="testEXIT" classname="test.io.TestCommand" time="0.0"/>
+  <testcase name="testSWAP" classname="test.io.TestCommand" time="0.002"/>
+  <testcase name="testTIME" classname="test.io.TestCommand" time="0.001"/>
   <testcase name="testTRIG" classname="test.io.TestCommand" time="0.0"/>
   <testcase name="testON" classname="test.io.TestCommand" time="0.0"/>
-  <testcase name="testENDRUN" classname="test.io.TestCommand" time="0.001"/>
-  <testcase name="testEXPORT" classname="test.io.TestCommand" time="0.001"/>
+  <testcase name="testENDRUN" classname="test.io.TestCommand" time="0.0"/>
+  <testcase name="testEXPORT" classname="test.io.TestCommand" time="0.0"/>
   <testcase name="testFINISH" classname="test.io.TestCommand" time="0.001"/>
-  <testcase name="testNEWRUN" classname="test.io.TestCommand" time="0.001"/>
-  <testcase name="testTOGGLE" classname="test.io.TestCommand" time="0.0"/>
+  <testcase name="testNEWRUN" classname="test.io.TestCommand" time="0.002"/>
+  <testcase name="testTOGGLE" classname="test.io.TestCommand" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

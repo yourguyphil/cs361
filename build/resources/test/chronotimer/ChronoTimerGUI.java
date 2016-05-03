@@ -236,7 +236,7 @@ public class ChronoTimerGUI extends JApplet {
 			checkBoxes.get(i).addActionListener(x);
 		}
 		
-		textFromButtons.setBounds(643, 257, 98, 20);
+		textFromButtons.setBounds(632, 257, 122, 20);
 		panel.add(textFromButtons);
 		
 		btnPrinterPower.setBounds(630, 20, 117, 29);
@@ -244,30 +244,31 @@ public class ChronoTimerGUI extends JApplet {
 		panel.add(btnPrinterPower);
 		
 		JButton Calc1 = new JButton("1");
-		Calc1.setBounds(643, 278, 41, 29);
+		Calc1.setBounds(631, 278, 41, 29);
 		panel.add(Calc1);
 		Calc2.setBounds(672, 278, 41, 29);
 		panel.add(Calc2);
-		Calc3.setBounds(701, 278, 41, 29);
+		Calc3.setBounds(713, 278, 41, 29);
 		panel.add(Calc3);
-		Calc4.setBounds(643, 305, 41, 29);
+		Calc4.setBounds(631, 305, 41, 29);
 		panel.add(Calc4);
 		Calc5.setBounds(672, 305, 41, 29);
 		panel.add(Calc5);
-		Calc6.setBounds(701, 305, 41, 29);
+		Calc6.setBounds(713, 305, 41, 29);
 		panel.add(Calc6);
-		Calc7.setBounds(643, 333, 41, 29);
+		Calc7.setBounds(631, 333, 41, 29);
 		panel.add(Calc7);
 		Calc8.setBounds(672, 333, 41, 29);
 		panel.add(Calc8);
-		Calc9.setBounds(701, 333, 41, 29);
+		Calc9.setBounds(713, 333, 41, 29);
 		panel.add(Calc9);
-		CalcStar.setBounds(643, 360, 41, 29);
+		CalcStar.setBounds(631, 360, 41, 29);
 		panel.add(CalcStar);
 		Calc0.setBounds(672, 360, 41, 29);
 		panel.add(Calc0);
-		CalcPound.setBounds(701, 360, 41, 29);
+		CalcPound.setBounds(713, 360, 41, 29);
 		panel.add(CalcPound);
+
 		
 		calcButtons.add(Calc0);
 		calcButtons.add(Calc1);
@@ -507,7 +508,7 @@ public class ChronoTimerGUI extends JApplet {
 			if(On()){
 				String print = "";
 				try {
-					print = t.PRINT(Integer.parseInt(textFromButtons.getText()));
+					print = t.PRINT(Integer.parseInt(textFromButtons.getText()) - 1);
 				} catch (Exception e1) {
 					updateScreen("PRINT Failed");
 				}

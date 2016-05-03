@@ -17,9 +17,22 @@ import java.util.LinkedList;
  * cross country race).
  */
 public class GRP extends AbstractEvent{
+	
+	private int numRacersReassigned;
+	private LocalTime start;
 
 	public GRP() {
 		super(1);
+	}
+	
+	@Override
+	public void num(int bibNumber) {
+		if (numRacersReassigned < getLane(0).getFinishedRacers().size()) {
+			getLane(0).getFinishedRacers().get(numRacersReassigned).setBib(bibNumber);
+			numRacersReassigned++;
+		} else {
+			System.out.println("Cannot manually add racers in GRP, only reassign them after finishing");
+		}
 	}
 
 	@Override
@@ -29,18 +42,29 @@ public class GRP extends AbstractEvent{
 		} else if (lane < 0 || lane >= lanes.length) {
 			System.out.println("GRP only has lanes 1-" + lanes.length);
 		} else {
-			LinkedList<Racer> pendingRacers = getLane(lane).getPendingRacers();
-			LinkedList<Racer> startedRacers = getLane(lane).getStartedRacers();
+			this.start = start;
+		}
+	}
+	
+	@Override
+	public void finish(LocalTime finish, int lane) {
+		if (finish == null) {
+			System.out.println("Finish cannot be null");
+		} else if (lane < 0 || lane >= lanes.length) {
+			String event = getClass().getSimpleName();
+			System.out.println(event + " only has lanes 1-" + lanes.length);
+		} else {
+			numRacersAdded++;
+			Racer racer = new Racer(numRacersAdded);
+			racer.setStart(start);
+			racer.setFinish(finish);
 			
-			if (!pendingRacers.isEmpty()) {
-				for (Racer racer : pendingRacers)
-					racer.setStart(start);
-				
-				startedRacers.addAll(pendingRacers);
-				pendingRacers.clear();
-			} else {
-				System.out.println("No pending racers to start");
+			if (nextFinishDNF) {
+				racer.DNF();
+				nextFinishDNF = false;
 			}
+			
+			getLane(lane).getFinishedRacers().add(racer);
 		}
 	}
 

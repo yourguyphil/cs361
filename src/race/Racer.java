@@ -2,12 +2,13 @@ package race;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.Comparator;
 
 import chronotimer.Time;
 
 /** Racer who runs in a race
  */
-public class Racer {
+public class Racer  {
 	
 	private int bibNumber;
 	private LocalTime startTime;
@@ -110,4 +111,18 @@ public class Racer {
 		}
 	}
 
+
+	
+	public static class Comparators {
+		public static Comparator<Racer> DURATION = new Comparator<Racer>() {
+			@Override
+			public int compare(Racer e1, Racer e2){
+					return e1.getDuration().compareTo(e2.getDuration());
+				
+			}
+		};
+
+	}
+
 }
+

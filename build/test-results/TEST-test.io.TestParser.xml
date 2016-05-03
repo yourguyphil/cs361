@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="test.io.TestParser" tests="4" skipped="0" failures="0" errors="0" timestamp="2016-05-03T01:00:01" hostname="Mitchells-MacBook-Pro.local" time="0.088">
+<testsuite name="test.io.TestParser" tests="4" skipped="0" failures="0" errors="0" timestamp="2016-05-03T20:07:52" hostname="Mitchells-MBP.wi.rr.com" time="0.123">
   <properties/>
   <testcase name="testParse" classname="test.io.TestParser" time="0.002"/>
   <testcase name="testParseFile" classname="test.io.TestParser" time="0.001"/>
-  <testcase name="testParse" classname="test.io.TestParser" time="0.002"/>
-  <testcase name="testParseFile" classname="test.io.TestParser" time="0.002"/>
+  <testcase name="testParse" classname="test.io.TestParser" time="0.001"/>
+  <testcase name="testParseFile" classname="test.io.TestParser" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

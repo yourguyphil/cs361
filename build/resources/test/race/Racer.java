@@ -17,11 +17,7 @@ public class Racer {
 	 * @param bibNumber the bib number of the racer
 	 */
 	public Racer(int bibNumber) {
-		if(bibNumber > 99999 || bibNumber < 0) {
-			throw new IllegalArgumentException("Valid racer bib numbers are 0-99999");
-		} else {
-			this.bibNumber = bibNumber;
-		}
+		setBib(bibNumber);
 	}
 
 	/** Sets the start time of the racer
@@ -77,6 +73,17 @@ public class Racer {
 	 */
 	public int getBib() {
 		return bibNumber;
+	}
+	
+	/** Sets the bib of the racer
+	 * @param bibNumber the bib of the racer
+	 */
+	public void setBib(int bibNumber) {
+		if(bibNumber > 99999 || bibNumber < 0) {
+			throw new IllegalArgumentException("Valid racer bib numbers are 0-99999");
+		} else {
+			this.bibNumber = bibNumber;
+		}
 	}
 
 	/** Gets the duration time of the racer
