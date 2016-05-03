@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test.chronotimer.TestChannel" tests="10" skipped="0" failures="0" errors="0" timestamp="2016-05-03T01:00:01" hostname="Mitchells-MacBook-Pro.local" time="0.238">
+  <properties/>
+  <testcase name="testTriggerUnarmed" classname="test.chronotimer.TestChannel" time="0.002"/>
+  <testcase name="testDisconnect" classname="test.chronotimer.TestChannel" time="0.0"/>
+  <testcase name="testConnect" classname="test.chronotimer.TestChannel" time="0.0"/>
+  <testcase name="testTriggerArmed" classname="test.chronotimer.TestChannel" time="0.0"/>
+  <testcase name="testToggle" classname="test.chronotimer.TestChannel" time="0.0"/>
+  <testcase name="testTriggerUnarmed" classname="test.chronotimer.TestChannel" time="0.0"/>
+  <testcase name="testDisconnect" classname="test.chronotimer.TestChannel" time="0.0"/>
+  <testcase name="testConnect" classname="test.chronotimer.TestChannel" time="0.0"/>
+  <testcase name="testTriggerArmed" classname="test.chronotimer.TestChannel" time="0.0"/>
+  <testcase name="testToggle" classname="test.chronotimer.TestChannel" time="0.0"/>
+  <system-out><![CDATA[Channel unarmed
+No sensor connected
+Channel unarmed
+No sensor connected
+Channel unarmed
+Channel unarmed
+Channel unarmed
+No sensor connected
+No sensor connected
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

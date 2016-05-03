@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test.chronotimer.TestTime" tests="12" skipped="0" failures="0" errors="0" timestamp="2016-05-03T01:00:01" hostname="Mitchells-MacBook-Pro.local" time="0.099">
+  <properties/>
+  <testcase name="testFromStringMinutes" classname="test.chronotimer.TestTime" time="0.013"/>
+  <testcase name="testToString" classname="test.chronotimer.TestTime" time="0.001"/>
+  <testcase name="testFromStringHundreths" classname="test.chronotimer.TestTime" time="0.001"/>
+  <testcase name="testFromStringSeconds" classname="test.chronotimer.TestTime" time="0.002"/>
+  <testcase name="testFromStringHours" classname="test.chronotimer.TestTime" time="0.002"/>
+  <testcase name="testToStringNull" classname="test.chronotimer.TestTime" time="0.0"/>
+  <testcase name="testFromStringMinutes" classname="test.chronotimer.TestTime" time="0.001"/>
+  <testcase name="testToString" classname="test.chronotimer.TestTime" time="0.0"/>
+  <testcase name="testFromStringHundreths" classname="test.chronotimer.TestTime" time="0.001"/>
+  <testcase name="testFromStringSeconds" classname="test.chronotimer.TestTime" time="0.001"/>
+  <testcase name="testFromStringHours" classname="test.chronotimer.TestTime" time="0.001"/>
+  <testcase name="testToStringNull" classname="test.chronotimer.TestTime" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
