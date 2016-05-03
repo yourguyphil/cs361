@@ -44,6 +44,13 @@ public class Lane {
 	
 	public ArrayList<Racer> getAllRacers(){
 		ArrayList<Racer> res = new ArrayList<Racer>();
+		//need to stop those still waiting
+		for(Racer r: this.pendingRacers){
+			//r.DNF();
+		}
+		for(Racer r: this.getStartedRacers()){
+			//r.DNF();
+		}
 		res.addAll(this.getFinishedRacers());
 		res.addAll(this.getPendingRacers());
 		res.addAll(this.getStartedRacers());

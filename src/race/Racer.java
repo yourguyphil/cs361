@@ -117,6 +117,9 @@ public class Racer  {
 		public static Comparator<Racer> DURATION = new Comparator<Racer>() {
 			@Override
 			public int compare(Racer e1, Racer e2){
+				if(e1.getDuration() == null && e2.getDuration()== null) return 0;
+				if(e1.getDuration() == null) return 1;
+				
 					return e1.getDuration().compareTo(e2.getDuration());
 				
 			}

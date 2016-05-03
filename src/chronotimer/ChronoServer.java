@@ -90,23 +90,27 @@ public class ChronoServer {
 				int i = 1;
 				Collections.sort(fromJson, Racer.Comparators.DURATION);
 				for(Racer r: fromJson){
-					
+					response += "<tr>"
+							+"<td>" +i+ "</td>";
 					if(nameLookUp.containsKey((r.getBib()))){
-						response += "<tr>"
-								+"<td>" +i+ "</td>"
-								+"<td>" +r.getBib() + "</td>"
-								+"<td>" +nameLookUp.get(r.getBib()) + "</td>"
-								+"<td>" + Time.toString(LocalTime.MIDNIGHT.plus(r.getDuration())) +"</td>" 
-								+"</tr>";
+					   response+="<td>" +r.getBib() + "</td>"
+								+"<td>" +nameLookUp.get(r.getBib()) + "</td>";
 					}
 					else{
 						response += "<tr>"
 								+"<td>" +i+ "</td>"
 								+"<td>" +r.getBib() + "</td>"
-								+"<td>" + "NOT FOUND "+ "</td>"
-								+"<td>" + Time.toString(LocalTime.MIDNIGHT.plus(r.getDuration())) +"</td>" 
+								+"<td>" + "NOT FOUND "+ "</td>";
+					}
+					if(r.getFinish() == null){
+						response +="<td>" + "DNF" +"</td>" 
 								+"</tr>";
 					}
+					else{
+						response +="<td>" + Time.toString(LocalTime.MIDNIGHT.plus(r.getDuration())) +"</td>" 
+								 +"</tr>";
+					}
+					
 					++i;
 				}
 			}
