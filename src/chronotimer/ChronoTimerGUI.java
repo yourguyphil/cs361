@@ -1,5 +1,6 @@
 package chronotimer;
 import io.Command;
+import race.GRP;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -779,12 +780,7 @@ public class ChronoTimerGUI extends JApplet {
 								consoleText.setText(out);
 							}
 							else if(y instanceof GRP) {
-								String started = "GRP" + "\n-----\n" +  "Started: ";
-								for(Lane x : y.lanes){
-									if(x.getStartedRacers().size() != 0){
-										started += x.getStartedRacers();
-									}
-								}
+								String started = "GRP" + "\n-----\n" +  "Time: " + Time.toString(LocalTime.now());
 								started += "\nFinished: ";
 								for(Lane x : y.lanes){
 									if(x.getFinishedRacers().size() != 0){
