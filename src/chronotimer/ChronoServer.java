@@ -10,11 +10,9 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -48,8 +46,9 @@ public class ChronoServer {
 			System.out.println("could not start server");
 			e.printStackTrace();
 		}
-		server.createContext("/displayResults", new DisplayHandler());
+		server.createContext("/Results", new DisplayHandler());
 		server.createContext("/sendresults",new PostHandler());
+		//server.createContext("/myStyle", new CSSHandler());
 		server.setExecutor(null); // creates a default executor
 		System.out.println("Starting Server...");
 		server.start();
@@ -72,27 +71,34 @@ public class ChronoServer {
 		@Override
 		public void handle(HttpExchange t) throws IOException {
 			t.getResponseHeaders().set("Content-Type", "text/html");
-
-			String response = "<table border='1'>"
+			String response ="<body> <link rel='stylesheet' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>"
+            +"<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js'></script>"
+			+"<script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>";
+         response += "<div class = 'container'>";
+		 response += "<table class ='table table-hover'>"
 					+ "<tr>"
 					+ "<td> Place </td>"
 					+ "<td>Bib Number</td>"
 					+ "<td>Name</td>"
 					+ "<td>Time</td>"
 					+ "</tr>";
-
 			Gson g = new Gson();
 			if (!sharedResponse.isEmpty()) {
 				System.out.println(response);
-				ArrayList<Racer> fromJson = g.fromJson(sharedResponse,
+				ArrayList<Racer> fromJson = new ArrayList<Racer>();
+				fromJson.clear();
+				 fromJson = g.fromJson(sharedResponse,
 						new TypeToken<Collection<Racer>>() {
 				}.getType());
 				int i = 1;
 				Collections.sort(fromJson, Racer.Comparators.DURATION);
+				
 				for(Racer r: fromJson){
-					response += "<tr>"
-							+"<td>" +i+ "</td>";
+					
+					
 					if(nameLookUp.containsKey((r.getBib()))){
+					 response += "<tr>"
+								 +"<td>" +i+ "</td>";
 					   response+="<td>" +r.getBib() + "</td>"
 								+"<td>" +nameLookUp.get(r.getBib()) + "</td>";
 					}
@@ -118,12 +124,13 @@ public class ChronoServer {
 				System.out.println("no data to update");
 			}
 			response += "</table>";
+			response += "</div>";
+			response += "</body>";
 			System.out.println(response);
 			t.sendResponseHeaders(200, response.length());
 			OutputStream os = t.getResponseBody();
 			os.write(response.getBytes());
 			os.close();
-
 		}
 
 	}
@@ -165,6 +172,39 @@ public class ChronoServer {
 			outputStream.close();
 		}
 	}
+	
+	static class CSSHandler implements HttpHandler {
+        public void handle(HttpExchange t) throws IOException {
+            t.getResponseHeaders().set("Content-Type", "text/html");
+            String response = "";
+            String fileName = "myStyle.css";
+            String line = "";
+            try{
+            	FileReader fr = new FileReader(fileName);
+            	 BufferedReader bufferedReader = 
+                         new BufferedReader(fr);
+
+                     while((line = bufferedReader.readLine()) != null) {
+                         System.out.println(line);
+                         response += line;
+                     } 
+                     
+                     bufferedReader.close();
+            }
+            catch(IOException e){
+            	System.out.println("something bad happened");
+            	e.printStackTrace();
+            }finally{
+            	
+            }
+            
+  
+            t.sendResponseHeaders(200, response.length());
+            OutputStream os = t.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+        }
+    }
 
 }
 
